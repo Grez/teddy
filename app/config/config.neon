@@ -6,21 +6,36 @@
 #
 parameters:
 
-
 php:
-	date.timezone: Europe/Prague
+    date.timezone: Europe/Prague
 
 
 nette:
-	application:
-		errorPresenter: Error
-		mapping:
-			*: App\*Module\Presenters\*Presenter
+    application:
+        errorPresenter: Error
+        mapping:
+            *: App\*Module\Presenters\*Presenter
 
-	session:
-		expiration: 14 days
+    session:
+        expiration: 14 days
 
 
 services:
-	- App\Model\UserManager
-	router: App\RouterFactory::createRouter
+    - App\Model\SystemLogs(@doctrine.dao(App\Model\SystemLog))
+    - App\Model\UserLogs(@doctrine.dao(App\Model\UserLog))
+    - App\Model\Stats(@doctrine.dao(App\Model\Stat))
+    - App\Model\Users(@doctrine.dao(App\Model\User))
+    router: App\RouterFactory::createRouter
+
+extensions:
+    console: Kdyby\Console\DI\ConsoleExtension
+    events: Kdyby\Events\DI\EventsExtension
+    annotations: Kdyby\Annotations\DI\AnnotationsExtension
+    doctrine: Kdyby\Doctrine\DI\OrmExtension
+
+doctrine:
+    user: root
+    password: '***'
+    dbname: teddy
+    metadata:
+        App: %appDir%
