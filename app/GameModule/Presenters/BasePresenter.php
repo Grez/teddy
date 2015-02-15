@@ -22,13 +22,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     protected function startup()
     {
         parent::startup();
-        $uid = 1;
-        $this->user = $this->users->find($uid);
-        if(!$this->user) {
+
+        $user = $this->getUser();
+        if(!$user->isLoggedIn()) {
             $this->flashMessage(_('You are not logged in'), 'error');
             $this->redirect(':Homepage:default');
         }
 
+        $this->user = $this->users->find($user->id);
         $this->template->user = $this->user;
     }
 

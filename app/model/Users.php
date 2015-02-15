@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Kdyby\Doctrine\EntityDao;
+use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Security\Passwords;
 
@@ -50,7 +52,6 @@ class Users extends Manager implements Nette\Security\IAuthenticator
 
     /**
      * Performs an authentication.
-     * @param array(login, password) $credentials
      * @return Nette\Security\Identity
      * @throws Nette\Security\AuthenticationException
      */

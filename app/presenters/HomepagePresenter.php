@@ -77,7 +77,8 @@ class HomepagePresenter extends BasePresenter
     public function loginFormSuccess(Form $form, $values)
     {
         try {
-            $this->users->authenticate(array($values->login, $values->password));
+            $this->getUser()->login($values->login, $values->password);
+
             $this->flashMessage('You were successfully logged in.');
             $this->redirect('Game:Main:');
         } catch (\Nette\Security\AuthenticationException $e) {
