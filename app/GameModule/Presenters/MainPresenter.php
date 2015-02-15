@@ -6,8 +6,10 @@ use GameModule;
 
 class MainPresenter extends BasePresenter
 {
+
     public function renderDefault()
     {
-        exit('yup');
+
     }
+
 }

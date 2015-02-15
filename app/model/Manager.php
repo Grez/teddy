@@ -27,4 +27,9 @@ class Manager extends Nette\Object
         return $this->dao->findBy($criteria, $orderBy, $limit, $offset);
     }
 
+    public function find($id)
+    {
+        return $this->dao->find($id);
+    }
+
 }

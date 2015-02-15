@@ -79,7 +79,7 @@ class HomepagePresenter extends BasePresenter
         try {
             $this->users->authenticate(array($values->login, $values->password));
             $this->flashMessage('You were successfully logged in.');
-            $this->redirect('this');
+            $this->redirect('Game:Main:');
         } catch (\Nette\Security\AuthenticationException $e) {
             $this->flashMessage($e->getMessage(), 'error');
             $this->redirect('this');
