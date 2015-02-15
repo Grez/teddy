@@ -25,7 +25,12 @@ services:
     - App\Model\UserLogs(@doctrine.dao(App\Model\UserLog))
     - App\Model\Stats(@doctrine.dao(App\Model\Stat))
     - App\Model\Users(@doctrine.dao(App\Model\User))
+    - App\Model\Logins(@doctrine.dao(App\Model\Login))
     router: App\RouterFactory::createRouter
+
+    login:
+        class: App\Events\LoginListener
+        tags: [kdyby.subscriber]
 
 extensions:
     console: Kdyby\Console\DI\ConsoleExtension
