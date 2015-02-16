@@ -19,7 +19,7 @@ class HomepagePresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $user = $this->users->getByNick('grez');
+
     }
 
     /**
@@ -28,18 +28,24 @@ class HomepagePresenter extends BasePresenter
     public function createComponentRegistrationForm()
     {
         $form = new Form();
-        $form->addText('nick', 'Nick')
-            ->addRule(array($this->users, 'validateNick'), 'This username is already taken.')
-            ->setRequired();
-        $form->addText('email', 'E-mail')
-            ->addRule(Form::EMAIL, 'Please enter valid e-mail.')
-            ->setRequired();
-        $form->addPassword('password', 'Password')
-            ->setRequired();
-        $form->addPassword('password_again', 'Password again')
-            ->setRequired()
-            ->addRule(Form::EQUAL, 'Passwords must be equal', $form['password']);
-        $form->addSubmit('submit', 'Submit');
+        $ban = $this->bans->hasRegistrationBan($_SERVER['REMOTE_ADDR']);
+        if ($ban) {
+            $form->addError('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason());
+        } else {
+            $form->addText('nick', 'Nick')
+                ->addRule(array($this->users, 'validateNick'), 'This username is already taken.')
+                ->setRequired();
+            $form->addText('email', 'E-mail')
+                ->addRule(Form::EMAIL, 'Please enter valid e-mail.')
+                ->setRequired();
+            $form->addPassword('password', 'Password')
+                ->setRequired();
+            $form->addPassword('password_again', 'Password again')
+                ->setRequired()
+                ->addRule(Form::EQUAL, 'Passwords must be equal', $form['password']);
+            $form->addSubmit('submit', 'Submit');
+        }
+
         $form->onSuccess[] = $this->registrationFormSuccess;
         return $form;
     }
@@ -61,12 +67,17 @@ class HomepagePresenter extends BasePresenter
     public function createComponentLoginForm()
     {
         $form = new Form();
-        $form->addText('login', 'Nick or email')
-            ->setRequired();
-        $form->addPassword('password', 'Password')
-            ->setRequired();
-        $form->addSubmit('submit', 'Submit');
-        $form->onSuccess[] = $this->loginFormSuccess;
+        $ban = $this->bans->hasLoginBan($_SERVER['REMOTE_ADDR']);
+        if ($ban) {
+            $form->addError('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 'Error');
+        } else {
+            $form->addText('login', 'Nick or email')
+                ->setRequired();
+            $form->addPassword('password', 'Password')
+                ->setRequired();
+            $form->addSubmit('submit', 'Submit');
+            $form->onSuccess[] = $this->loginFormSuccess;
+        }
         return $form;
     }
 
@@ -76,6 +87,7 @@ class HomepagePresenter extends BasePresenter
      */
     public function loginFormSuccess(Form $form, $values)
     {
+
         try {
             $this->getUser()->login($values->login, $values->password);
 
