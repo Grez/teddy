@@ -150,12 +150,13 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
     }
 
     /**
-     * @param bool $hidden
+     * Returns email, hides inner letters if required
+     * @param bool $hide
      * @return string
      */
-    public function getEmail($hidden = false)
+    public function getEmail($hide = false)
     {
-        if(!$hidden) {
+        if(!$hide) {
             return $this->email;
         } else {
             $parts = explode('@', $this->email, 2);
