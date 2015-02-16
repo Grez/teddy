@@ -2,15 +2,21 @@
 
 namespace App\Presenters;
 
-use Nette,
-	App\Model;
-
+use Nette;
+use App\Model;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
+    /** @var \Kdyby\Doctrine\EntityManager @inject */
+    public $em;
+
     /** @var \App\Model\Bans @inject */
     public $bans;
+
+    /** @var \App\Model\Users @inject */
+    public $users;
+
 
     protected function startup()
     {

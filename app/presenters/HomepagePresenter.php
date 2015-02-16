@@ -2,25 +2,12 @@
 
 namespace App\Presenters;
 
-use App\Model\Users;
-use App\Model\User;
+
 use Nette\Application\UI\Form;
 
 
 class HomepagePresenter extends BasePresenter
 {
-
-    /** @var \Kdyby\Doctrine\EntityManager @inject */
-    public $em;
-
-    /** @var Users @inject */
-    public $users;
-
-
-    public function renderDefault()
-    {
-
-    }
 
     /**
      * @return Form
@@ -87,7 +74,6 @@ class HomepagePresenter extends BasePresenter
      */
     public function loginFormSuccess(Form $form, $values)
     {
-
         try {
             $this->getUser()->login($values->login, $values->password);
 

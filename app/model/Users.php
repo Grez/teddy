@@ -37,6 +37,16 @@ class Users extends Manager implements Nette\Security\IAuthenticator
         return (count($data)) ? $data[0] : false;
     }
 
+    /**
+     * @param int $token
+     * @return User|false
+     */
+    public function getByToken($token)
+    {
+        $data = $this->dao->findBy(array('token' => $token, 'tokenExpiration >=' => new \DateTime()));
+        return (count($data)) ? $data[0] : false;
+    }
+
     public function register($data)
     {
         $password = \Nette\Security\Passwords::hash($data['password']);

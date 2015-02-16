@@ -106,6 +106,19 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     protected $affiliate = 0;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $token;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $tokenExpiration;
+
+    /** Token for changing password, expiration in hours */
+    const TOKEN_EXPIRATION = 1;
+
 
     public function __construct()
     {
@@ -115,5 +128,41 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
         $this->created = new \DateTime();
     }
 
+    /**
+     * Generates token
+     * @return int
+     */
+    public function generateToken()
+    {
+        $expiration = new \DateTime();
+        $expiration->setTimestamp(time() + self::TOKEN_EXPIRATION * 3600);
+        $this->token = mt_rand(100000000, 999999999);
+        $this->tokenExpiration = $expiration;
+        return $this->token;
+    }
 
+    /**
+     * Invalidates token
+     */
+    public function invalidateToken()
+    {
+        $this->tokenExpiration = new \DateTime();
+    }
+
+    /**
+     * @param bool $hidden
+     * @return string
+     */
+    public function getEmail($hidden = false)
+    {
+        if(!$hidden) {
+            return $this->email;
+        } else {
+            $parts = explode('@', $this->email, 2);
+            if(strlen($parts[0]) > 2) {
+                $parts[0] = substr($parts[0], 0, 1) . str_repeat('*', strlen($parts[0]) - 2) . substr($parts[0], -1);
+            }
+            return $parts[0] . '@' . $parts[1];
+        }
+    }
 }

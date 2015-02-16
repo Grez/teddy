@@ -19,6 +19,16 @@ class RouterFactory
         $router = new RouteList();
 
         $router[] = new Route('', 'Homepage:default');
+        $router[] = new Route('zapomenute-heslo/nastavit-nove/<token>', array(
+            'presenter' => 'ForgottenPassword',
+            'action' => 'setNew',
+            'token' => NULL,
+        ));
+        $router[] = new Route('zapomenute-heslo/<action>/<token>', array(
+            'presenter' => 'ForgottenPassword',
+            'action' => 'default',
+            'token' => NULL,
+        ));
         $router[] = new Route('cron/<action>/<id>', array(
             'module' => 'Cron',
             'presenter' => 'Cron',
