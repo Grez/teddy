@@ -16,6 +16,12 @@ class Users extends Manager implements Nette\Security\IAuthenticator
     /** int User is considered online if his last activity is in last ONLINE minutes */
     const ONLINE = 15;
 
+    /** @var array of function(string $login); Occurs when user uses wrong login */
+    public $onWrongLogin;
+
+    /** @var array of function(string $login); Occurs when user uses wrong password */
+    public $onWrongPassword;
+
 
     /**
      * @param string $nick
@@ -70,21 +76,27 @@ class Users extends Manager implements Nette\Security\IAuthenticator
         list($login, $password) = $credentials;
         $user = $this->getByNick($login);
 
-        if ($user) {
-            if (Passwords::verify($password, $user->getPassword())) {
+        $byNick = $this->getByNick($login);
+        $byEmail = $this->getByEmail($login);
+
+        if (!$byNick && !$byEmail) {
+            $this->onWrongLogin($login);
+            throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
+        }
+
+        if ($byNick) {
+            if (Passwords::verify($password, $byNick->getPassword())) {
                 return new Nette\Security\Identity($user->getId());
             }
-        } else {
-            $user = $this->getByEmail($login);
-            if(!$user) {
-                throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
-            }
+        }
 
+        if ($byEmail) {
             if (Passwords::verify($password, $user->getPassword())) {
                 return new Nette\Security\Identity($user->getId());
             }
         }
 
+        $this->onWrongPassword($login);
         throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
     }
 

@@ -26,6 +26,11 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 
     /**
      * @ORM\Column(type="string")
+     */
+    protected $login = '';
+
+    /**
+     * @ORM\Column(type="string")
      * Set in __construct()
      */
     protected $userAgent = '';
@@ -47,6 +52,14 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
      * Set in __construct()
      */
     protected $date;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $error = 0;
+
+    const WRONG_LOGIN = 1;
+    const WRONG_PASSWORD = 2;
 
 
     public function __construct()
