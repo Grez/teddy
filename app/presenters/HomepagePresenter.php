@@ -8,6 +8,10 @@ use Nette\Application\UI\Form;
 
 class HomepagePresenter extends BasePresenter
 {
+    public function renderDefault()
+    {
+        $user = $this->users->getByNick('grez');
+    }
 
     /**
      * @return Form
@@ -76,7 +80,6 @@ class HomepagePresenter extends BasePresenter
     {
         try {
             $this->getUser()->login($values->login, $values->password);
-
             $this->flashMessage('You were successfully logged in.');
             $this->redirect('Game:Main:');
         } catch (\Nette\Security\AuthenticationException $e) {

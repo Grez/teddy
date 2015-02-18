@@ -21,22 +21,18 @@ class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
     /** @var Bans */
     protected $bans;
 
-    /** @var Nette\Security\User */
-    protected $identity;
 
-
-    public function __construct(Logins $logins, Users $users, Nette\Security\User $identity, Bans $bans)
+    public function __construct(Logins $logins, Users $users, Bans $bans)
     {
         $this->logins = $logins;
         $this->users = $users;
-        $this->identity = $identity;
         $this->bans = $bans;
     }
 
-    public function onLoggedIn()
+    public function onLoggedIn($identity, $login)
     {
-        $user = $this->users->find($this->identity->id);
-        $this->logins->log($user);
+        $user = $this->users->find($identity->id);
+        $this->logins->log($user, $login);
     }
 
     public function onWrongPassword($login)
@@ -55,7 +51,7 @@ class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
     public function getSubscribedEvents()
     {
         return array(
-            '\Nette\Security\User::onLoggedIn',
+            '\App\Security\User::onLoggedIn',
             '\App\Model\Users::onWrongLogin',
             '\App\Model\Users::onWrongPassword',
         );

@@ -17,6 +17,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var \App\Model\Users @inject */
     public $users;
 
+    /** @var \App\Security\User */
+    private $user;
+
+
+    public function injectUser(\App\Security\User $user)
+    {
+        $this->user = $user;
+    }
 
     protected function startup()
     {

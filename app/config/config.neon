@@ -28,6 +28,7 @@ services:
     - App\Model\Logins(@doctrine.dao(App\Model\Login))
     - App\Model\Bans(@doctrine.dao(App\Model\Ban))
     router: App\RouterFactory::createRouter
+    user: App\Security\User
 
     login:
         class: App\Events\LoginListener
