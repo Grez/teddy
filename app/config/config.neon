@@ -27,6 +27,7 @@ services:
     - App\Model\Users(@doctrine.dao(App\Model\User))
     - App\Model\Logins(@doctrine.dao(App\Model\Login))
     - App\Model\Bans(@doctrine.dao(App\Model\Ban))
+    - App\Model\Messages(@doctrine.dao(App\Model\Message))
     router: App\RouterFactory::createRouter
     user: App\Security\User
 

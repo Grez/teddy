@@ -16,6 +16,18 @@
 
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
+    <h1>{$user->nick}</h1>
+    <ul>
+        <li>
+            <a n:href="Messages:default">Messages</a>
+            <ul>
+                <li><a n:href="default">Received</a></li>
+                <li><a n:href="new">New</a></li>
+                <li><a n:href="sent">Sent</a></li>
+            </ul>
+        </li>
+        <li><a n:href="logout">Logout</a></li>
+    </ul>
 	{include content}
 
 	{block scripts}

@@ -1,0 +1,16 @@
+{block content}
+    <h2>Messages</h2>
+    {if count($msgs)}
+        <div>
+            <div n:foreach="$msgs as $msg" n:class="msg, ($msg->unread ? unread)">
+                {$msg->getSenderNick()}
+                {$msg->subject}
+                {$msg->date->format('Y-m-d H:i:s')}
+                <a n:href="detail, id => $msg->id">Detail</a>
+                <a n:href="delete, id => $msg->id">Smazat</a>
+            </div>
+        </div>
+    {else}
+        <p>You have no messages</p>
+    {/if}
+{/block}
