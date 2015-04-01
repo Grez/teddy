@@ -32,11 +32,4 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->user = $this->users->find($user->id);
         $this->template->user = $this->user;
     }
-
-    public function actionLogout()
-    {
-        $this->getUser()->logout();
-        $this->flashMessage('You have been signed out.');
-        $this->redirect(':Homepage:default');
-    }
 }
