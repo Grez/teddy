@@ -28,6 +28,8 @@ services:
     - App\Model\Logins(@doctrine.dao(App\Model\Login))
     - App\Model\Bans(@doctrine.dao(App\Model\Ban))
     - App\Model\Messages(@doctrine.dao(App\Model\Message))
+    - App\Model\Forums(@doctrine.dao(App\Model\Forum))
+    - App\Model\ForumPosts(@doctrine.dao(App\Model\ForumPost))
     router: App\RouterFactory::createRouter
     user: App\Security\User
 

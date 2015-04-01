@@ -116,6 +116,12 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     protected $tokenExpiration;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $admin = false;
+
+
     /** Token for changing password, expiration in hours */
     const TOKEN_EXPIRATION = 1;
 
@@ -165,5 +171,13 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
             }
             return $parts[0] . '@' . $parts[1];
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->admin;
     }
 }

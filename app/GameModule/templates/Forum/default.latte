@@ -1,0 +1,6 @@
+{block content}
+    <h2>Forum</h2>
+    <ul n:if="count($forums)">
+        <li n:foreach="$forums as $forum"><a n:href="forum id => $forum->getId()">{$forum->getName()}</a></li>
+    </ul>
+{/block}
