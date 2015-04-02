@@ -24,6 +24,14 @@ class MessagesPresenter extends BasePresenter
         $this->template->msgs = $this->msgsRepository->getMessagesForUser($this->user);
     }
 
+    public function renderNew()
+    {
+        $params = $this->getRequest()->getParameters();
+        if (isset($params['to'])) {
+            $this['newMsgForm']['to']->setValue($params['to'])->setAttribute('readonly', 'readonly');
+        }
+    }
+
     /**
      * @param int $id
      */

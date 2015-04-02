@@ -53,6 +53,17 @@ class Users extends Manager implements Nette\Security\IAuthenticator
         return (count($data)) ? $data[0] : false;
     }
 
+    /**
+     * Gets list of active players
+     */
+    public function getPlayersList()
+    {
+        $criteria = array(
+            'active' => 'T',
+        );
+        return $this->findBy($criteria);
+    }
+
     public function register($data)
     {
         $password = \Nette\Security\Passwords::hash($data['password']);

@@ -1,0 +1,9 @@
+{block content}
+    {ifset $player}
+        <h1>{$player->getNick()}</h1>
+        <a n:href="Messages:new to => $player->getNick()">Send message</a>
+    {else}
+        <h1>{$user->getNick()}</h1>
+        {control updateForm}
+    {/ifset}
+{/block}
