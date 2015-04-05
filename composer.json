@@ -1,23 +1,16 @@
 {
-	"name": "nette/sandbox",
-	"description": "The sandbox is a pre-packaged Nette Framework project, basic configured structure for your application.",
-	"homepage": "http://nette.org",
+	"name": "Teddy/framework",
+	"description": "Framework for MMOBB-Games",
 	"type": "project",
 	"license": ["Unlicense"],
 	"authors": [
 		{
-			"name": "David Grudl",
-			"homepage": "http://davidgrudl.com"
-		},
-		{
-			"name": "Nette Community",
-			"homepage": "http://nette.org/contributors"
+			"name": "Tom Bartoň"
 		}
 	],
 	"require": {
 		"php": ">= 5.3.7",
 		"nette/nette": "~2.2.0",
-		"dg/adminer-custom": "~1.5",
 		"kdyby/doctrine": "~2.3"
 	},
 	"require-dev": {
