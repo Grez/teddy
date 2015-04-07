@@ -1,9 +1,31 @@
 {block content}
     {ifset $player}
         <h1>{$player->getNick()}</h1>
+        <table>
+            <tr n:if="$player->getLocation()">
+                <th>Location</th>
+                <td>{$player->getLocation()}</td>
+            </tr>
+            <tr n:if="$player->getAge()">
+                <th>Age</th>
+                <td>{$player->getAge()}</td>
+            </tr>
+            <tr n:if="$player->getName()">
+                <th>Name</th>
+                <td>{$player->getName()}</td>
+            </tr>
+            <tr n:if="$player->getGender()">
+                <th>Gender</th>
+                <td>{$player->getGender()}</td>
+            </tr>
+            <tr n:if="$player->getAvatar()">
+                <th>Avatar</th>
+                <td>{$player->getAvatar()}</td>
+            </tr>
+        </table>
         <a n:href="Messages:new to => $player->getNick()">Send message</a>
     {else}
         <h1>{$user->getNick()}</h1>
-        {control updateForm}
+        {control updateUserForm}
     {/ifset}
 {/block}

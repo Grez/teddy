@@ -3,7 +3,7 @@
 namespace App\GameModule\Presenters;
 
 use GameModule;
-use Nette\Application\UI\Form;
+use Teddy\Forms\Form;
 
 class UserPresenter extends BasePresenter
 {
@@ -30,44 +30,34 @@ class UserPresenter extends BasePresenter
     }
 
     /**
-     * @TODO: data
      * @return Form
      */
-    public function createComponentUpdateForm()
+    protected function createComponentUpdateUserForm()
     {
         $form = new Form();
-        $form->addHidden('user');
-        $form->addText('name', 'Name');
-        $form->addText('age', 'Age')
-            ->addCondition(Form::FILLED)
-                ->addRule(Form::NUMERIC);
-        $form->addText('location', 'Origin');
-        $form->addRadioList('gender', 'Gender', array(
-            'unknown' => 'Do not show',
-            'male' => 'Male',
-            'female' => 'Female',
-        ));
-        $form->addUpload('avatar', 'Avatar')
-            ->addRule(Form::IMAGE);
+        $form['user'] = new \Teddy\Forms\User\UserContainer();
+        $form['user']['personal'] = new \Teddy\Forms\User\PersonalContainer();
         $form->addSubmit('send', 'Submit');
-        $form->onSuccess[] = $this->newPostFormSuccess;
+        $form->onSuccess[] = $this->updateUserFormSuccess;
+        $form->bindEntity($this->user);
         return $form;
     }
 
     /**
+     * @TODO: img upload
      * @param Form $form
      * @param \Nette\Utils\ArrayHash $values
      */
-    public function newPostFormSuccess(Form $form, $values)
+    public function updateUserFormSuccess(Form $form, $values)
     {
-        $forum = new Forum($values['forum']);
-        if (!$forum->canWrite($this->user)) {
-            $this->flashMessage('You can\'t post here', 'error');
+        $user = $this->users->find($values['user']['id']);
+        if (!$user->canEdit($this->user)) {
+            $this->flashMessage('You can\'t edit this user', 'error');
             $this->redirect('this');
         }
 
-        $this->forumRepository->addPost($this->user, $forum, $values['subject'], $values['text'], $values['conversation']);
-        $this->flashMessage('Post sent');
+        $this->users->update($user, $values);
+        $this->flashMessage('Your info has been updated.');
         $this->redirect('this');
     }
 

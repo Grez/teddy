@@ -78,7 +78,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
      * @ORM\Column(type="datetime")
      * Generated in __construct()
      */
-    protected $created;
+    protected $registered;
 
     /**
      * @ORM\Column(type="string")
@@ -179,5 +179,14 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
     public function isAdmin()
     {
         return $this->admin;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function canEdit(User $user)
+    {
+        return ($user === $this || $user->isAdmin());
     }
 }
