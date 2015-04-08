@@ -5,6 +5,7 @@
 # http://nette.org/security-warning
 #
 parameters:
+    salt: "" # set in config.local.neon, used for comparing password; leave empty for better security; generate with "Nette\Utils\Random::generate(22, '0-9A-Za-z./')"
 
 php:
     date.timezone: Europe/Prague
@@ -24,7 +25,7 @@ services:
     - App\Model\SystemLogs(@doctrine.dao(App\Model\SystemLog))
     - App\Model\UserLogs(@doctrine.dao(App\Model\UserLog))
     - App\Model\Stats(@doctrine.dao(App\Model\Stat))
-    - App\Model\Users(@doctrine.dao(App\Model\User))
+    - App\Model\Users(%salt%, @doctrine.dao(App\Model\User))
     - App\Model\Logins(@doctrine.dao(App\Model\Login))
     - App\Model\Bans(@doctrine.dao(App\Model\Ban))
     - App\Model\Messages(@doctrine.dao(App\Model\Message))

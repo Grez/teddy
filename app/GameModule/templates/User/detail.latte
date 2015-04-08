@@ -26,6 +26,14 @@
         <a n:href="Messages:new to => $player->getNick()">Send message</a>
     {else}
         <h1>{$user->getNick()}</h1>
+
+        <h2>Personal info</h2>
         {control updateUserForm}
+
+        <h2>Change password</h2>
+        {control changePasswordForm}
+
+        <h2>Change e-mail</h2>
+        {control changeEmailForm}
     {/ifset}
 {/block}

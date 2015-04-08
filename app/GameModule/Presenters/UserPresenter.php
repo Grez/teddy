@@ -61,4 +61,63 @@ class UserPresenter extends BasePresenter
         $this->redirect('this');
     }
 
+    /**
+     * @return Form
+     */
+    protected function createComponentChangePasswordForm()
+    {
+        $form = new Form();
+        $form->addPassword('password', 'Current password')
+            ->addRule(array($this->users, 'validatePassword'), 'You\'ve entered wrong password.', $this->user->getId())
+            ->setRequired();
+        $form->addPassword('password_new', 'New password')
+            ->setRequired();
+        $form->addPassword('password_again', 'Password again')
+            ->setRequired()
+            ->addRule(Form::EQUAL, 'Passwords do not match', $form['password_new']);
+        $form->onSuccess[] = $this->changePasswordSuccess;
+        $form->addSubmit('send', 'Submit');
+        return $form;
+    }
+
+    /**
+     * @param Form $form
+     * @param \Nette\Utils\ArrayHash $values
+     */
+    public function changePasswordSuccess(Form $form, $values)
+    {
+        $this->users->changePassword($this->user, $values['password_new']);
+        $this->flashMessage('Your password has been changed');
+        $this->redirect('this');
+    }
+
+    /**
+     * @return Form
+     */
+    protected function createComponentChangeEmailForm()
+    {
+        $form = new Form();
+        $form->addPassword('password', 'Current password')
+            ->addRule(array($this->users, 'validatePassword'), 'You\'ve entered wrong password.', $this->user->getId())
+            ->setRequired();
+        $form->addText('email', 'New e-mail')
+            ->addRule(Form::EMAIL, 'Please enter valid e-mail.')
+            ->setRequired();
+        $form->onSuccess[] = $this->changeEmailSuccess;
+        $form->addSubmit('send', 'Submit');
+        return $form;
+    }
+
+    /**
+     * @param Form $form
+     * @param \Nette\Utils\ArrayHash $values
+     */
+    public function changeEmailSuccess(Form $form, $values)
+    {
+        $this->user->setEmail($values['email']);
+        $this->users->save($this->user);
+        $this->flashMessage('Your e-mail has been changed');
+        $this->redirect('this');
+    }
+
 }

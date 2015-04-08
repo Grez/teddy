@@ -8,10 +8,6 @@ use Nette\Application\UI\Form;
 
 class HomepagePresenter extends BasePresenter
 {
-    public function renderDefault()
-    {
-        $user = $this->users->getByNick('grez');
-    }
 
     /**
      * @return Form
@@ -48,7 +44,7 @@ class HomepagePresenter extends BasePresenter
     public function registrationFormSuccess(Form $form, $values)
     {
         $this->users->register($values);
-        $this->flashMessage('Your registrion was successful');
+        $this->flashMessage('Your registration was successful');
         $this->redirect('this');
     }
 

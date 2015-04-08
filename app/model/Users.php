@@ -4,6 +4,8 @@ namespace App\Model;
 
 use Nette;
 use Nette\Security\Passwords;
+use Kdyby\Doctrine\EntityDao;
+use Kdyby\Doctrine\EntityManager;
 
 class Users extends Manager implements Nette\Security\IAuthenticator
 {
@@ -20,6 +22,15 @@ class Users extends Manager implements Nette\Security\IAuthenticator
     /** @var array of function(string $login); Occurs when user uses wrong password */
     public $onWrongPassword;
 
+    /** @var string; used for comparing passwords (config.local.neon) */
+    protected $salt = '';
+
+
+    public function __construct($salt, EntityDao $dao, EntityManager $em)
+    {
+        parent::__construct($dao, $em);
+        $this->salt = $salt;
+    }
 
     /**
      * @param string $nick
@@ -62,17 +73,31 @@ class Users extends Manager implements Nette\Security\IAuthenticator
         return $this->findBy($criteria);
     }
 
+    /**
+     * @param \Nette\Utils\ArrayHash $values
+     */
     public function register($data)
     {
-        $password = \Nette\Security\Passwords::hash($data['password']);
+        $password = Passwords::hash($data['password']);
 
         $user = new User();
         $user->setNick($data->nick);
         $user->setEmail($data->email);
         $user->setPassword($password);
+        $this->save($user);
+    }
 
-        $this->em->persist($user);
-        $this->em->flush();
+    /**
+     * @param User $user
+     * @param string $password
+     * @return null
+     */
+    public function changePassword(User $user, $password)
+    {
+        $options = ($this->salt != '') ? array('salt' => $this->salt) : array();
+        $hashed = Passwords::hash($password, $options);
+        $user->setPassword($hashed);
+        $this->save($user);
     }
 
     /**
@@ -155,8 +180,7 @@ class Users extends Manager implements Nette\Security\IAuthenticator
      */
     public function validatePassword(Nette\Forms\Controls\TextInput $control, $id)
     {
-        $password = $this->getUserPassword($id);
-        return $password && $password->isEqual($control->getValue());
+        return Passwords::verify($control->getValue(), $this->find($id)->getPassword());
     }
 
 }
