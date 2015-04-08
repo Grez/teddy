@@ -49,30 +49,33 @@ class Messages extends Manager
 
     /**
      * @param User $user
-     * @param string (received|sent) $type
+     * @param string (all|received|sent) $type
      * @param bool $unreadOnly
      * @return array
      */
-    public function getMessagesForUser(User $user, $type = 'received', $unreadOnly = false)
+    public function getMessagesForUser(User $user, $type = 'all', $unreadOnly = false)
     {
+        $qb = $this->dao->createQueryBuilder('m');
+
         $allowed = array(Message::NOT_DELETED);
-        if ($type == 'received') {
-            $criteria['to'] = $user;
-            $allowed[] = Message::DELETED_SENDER;
+        if ($type == 'all') {
+            $qb->where('m.to = ?1 AND m.deleted IN (?2)');
+            $qb->orWhere('m.from = ?1 AND m.deleted IN (?3)');
+        } else if ($type == 'received') {
+            $qb->where('m.to = ?1 AND m.deleted IN (?2)');
         } else if ($type == 'sent') {
-            $criteria['from'] = $user;
-            $allowed[] = Message::DELETED_RECIPIENT;
+            $qb->where('m.from = ?1 AND m.deleted IN (?3)');
         }
-        $criteria = array('deleted' => $allowed);
+        $qb->setParameter(1, $user);
+        $qb->setParameter(2, array_merge($allowed, array(Message::DELETED_SENDER)));
+        $qb->setParameter(3, array_merge($allowed, array(Message::DELETED_RECIPIENT)));
 
         if ($unreadOnly) {
-            $criteria['unread'] = true;
+            $qb->where('m.unread = ?4');
+            $qb->setParameter(4, true);
         }
 
-        $order = array(
-            'date' => 'DESC',
-            'id' => 'DESC',
-        );
-        return $this->findBy($criteria, $order);
+        $qb->orderBy('m.id', 'DESC');
+        return $qb->getQuery()->getResult();
     }
 }
