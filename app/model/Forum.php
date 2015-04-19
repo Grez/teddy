@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model;
+namespace Teddy\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Model\Forums;
+use Teddy\Model\Forums;
 use Nette;
 
 /**

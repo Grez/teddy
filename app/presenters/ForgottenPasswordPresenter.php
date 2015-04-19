@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Presenters;
+namespace Teddy\Presenters;
 
 use Nette\Application\UI\Form;
 
 class ForgottenPasswordPresenter extends BasePresenter
 {
-    /** @var \App\Model\User */
+    /** @var \Teddy\Model\User */
     protected $user;
 
 

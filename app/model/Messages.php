@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Model;
+namespace Teddy\Model;
 
 use Kdyby\Doctrine\EntityDao;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
-use App\Model\Users;
-use App\Model\User;
+use Teddy\Model\Users;
+use Teddy\Model\User;
 
 class Messages extends Manager
 {

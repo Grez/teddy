@@ -1,14 +1,14 @@
 <?php
 
-namespace App\CronModule\Presenters;
+namespace Teddy\CronModule\Presenters;
 
-use App\Model\Stats;
-use App\Model\Stat;
-use App\Model\SystemLogs;
-use App;
+use Teddy\Model\Stats;
+use Teddy\Model\Stat;
+use Teddy\Model\SystemLogs;
+use Teddy;
 
 
-class CronPresenter extends App\Presenters\BasePresenter
+class CronPresenter extends Teddy\Presenters\BasePresenter
 {
     /** @var string */
     protected $cronName = '';

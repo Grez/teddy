@@ -1,10 +1,10 @@
 <?php
 
-namespace App\GameModule\Presenters;
+namespace Teddy\GameModule\Presenters;
 
-use App\Model\Users;
-use App\Model\User;
-use App;
+use Teddy\Model\Users;
+use Teddy\Model\User;
+use Teddy;
 use Nette;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter

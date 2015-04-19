@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace Teddy\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Nette;
@@ -105,7 +105,7 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 
     public function setType($type)
     {
-        $this->type = constant('\App\Model\Ban::' . $type);
+        $this->type = constant('\Teddy\Model\Ban::' . $type);
     }
 
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Events;
+namespace Teddy\Events;
 
 use Nette;
 use Kdyby;
-use App\Model\Bans;
-use App\Model\Login;
-use App\Model\Logins;
-use App\Model\Users;
+use Teddy\Model\Bans;
+use Teddy\Model\Login;
+use Teddy\Model\Logins;
+use Teddy\Model\Users;
 
 class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
 {
@@ -51,9 +51,9 @@ class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
     public function getSubscribedEvents()
     {
         return array(
-            '\App\Security\User::onLoggedIn',
-            '\App\Model\Users::onWrongLogin',
-            '\App\Model\Users::onWrongPassword',
+            '\Teddy\Security\User::onLoggedIn',
+            '\Teddy\Model\Users::onWrongLogin',
+            '\Teddy\Model\Users::onWrongPassword',
         );
     }
 

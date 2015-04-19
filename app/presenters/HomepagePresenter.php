@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presenters;
+namespace Teddy\Presenters;
 
 
 use Nette\Application\UI\Form;

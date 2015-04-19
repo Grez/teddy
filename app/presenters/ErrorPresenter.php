@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Presenters;
+namespace Teddy\Presenters;
 
 use Nette,
-	App\Model,
+	Teddy\Model,
 	Tracy\Debugger;
 
 

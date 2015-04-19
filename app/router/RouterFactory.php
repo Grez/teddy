@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Teddy\Router;
 
 use Nette,
 	Nette\Application\Routers\RouteList,
@@ -14,7 +14,7 @@ class RouterFactory
 	/**
 	 * @return \Nette\Application\IRouter
 	 */
-	public static function createRouter()
+	public static function create()
 	{
         $router = new RouteList();
 

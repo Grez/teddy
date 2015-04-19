@@ -1,17 +1,17 @@
 <?php
 
-namespace App\GameModule\Presenters;
+namespace Teddy\GameModule\Presenters;
 
-use App\Model\Message;
+use Teddy\Model\Message;
 use GameModule;
-use Nette\Application\UI\Form;
+use Nette\Teddylication\UI\Form;
 
 /**
  * @TODO: Get conversation
  */
 class MessagesPresenter extends BasePresenter
 {
-    /** @var \App\Model\Messages @inject */
+    /** @var \Teddy\Model\Messages @inject */
     public $msgsRepository;
 
     /** @var array */

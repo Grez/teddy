@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Presenters;
+namespace Teddy\Presenters;
 
 use Nette;
-use App\Model;
+use Teddy\Model;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
@@ -11,17 +11,17 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var \Kdyby\Doctrine\EntityManager @inject */
     public $em;
 
-    /** @var \App\Model\Bans @inject */
+    /** @var \Teddy\Model\Bans @inject */
     public $bans;
 
-    /** @var \App\Model\Users @inject */
+    /** @var \Teddy\Model\Users @inject */
     public $users;
 
-    /** @var \App\Security\User */
+    /** @var \Teddy\Security\User */
     private $user;
 
 
-    public function injectUser(\App\Security\User $user)
+    public function injectUser(\Teddy\Security\User $user)
     {
         $this->user = $user;
     }
@@ -34,4 +34,5 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             $this->error('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 403);
         }
     }
+
 }

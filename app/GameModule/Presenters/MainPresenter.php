@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GameModule\Presenters;
+namespace Teddy\GameModule\Presenters;
 
 use GameModule;
 

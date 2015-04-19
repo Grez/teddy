@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Model;
+namespace Teddy\Model;
 
 use Kdyby\Doctrine\EntityDao;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
-use App\Model\Users;
+use Teddy\Model\Users;
 
 class Stats extends Manager
 {

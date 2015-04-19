@@ -1,9 +1,9 @@
 <?php
 
-namespace App\GameModule\Presenters;
+namespace Teddy\GameModule\Presenters;
 
-use App\Model\Forum;
-use App\Model\User;
+use Teddy\Model\Forum;
+use Teddy\Model\User;
 use GameModule;
 use Nette\Application\UI\Form;
 use Nette\InvalidArgumentException;
@@ -13,10 +13,10 @@ use Nette\InvalidArgumentException;
  */
 class ForumPresenter extends BasePresenter
 {
-    /** @var \App\Model\Forums @inject */
+    /** @var \Teddy\Model\Forums @inject */
     public $forumRepository;
 
-    /** @var \App\Model\ForumPosts @inject */
+    /** @var \Teddy\Model\ForumPosts @inject */
     public $forumPostRepository;
 
 

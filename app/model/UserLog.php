@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace Teddy\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Nette;

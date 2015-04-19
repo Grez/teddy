@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace Teddy\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Nette;
@@ -64,7 +64,7 @@ class SystemLog extends \Kdyby\Doctrine\Entities\BaseEntity
             return self::$actions[$id];
         }
 
-        throw new \InvalidArgumentException('Unknown action ID "' . $id . '". Check \App\Model\Logs::$actions');
+        throw new \InvalidArgumentException('Unknown action ID "' . $id . '". Check \Teddy\Model\Logs::$actions');
     }
 
     public static function getActionId($action)
@@ -75,7 +75,7 @@ class SystemLog extends \Kdyby\Doctrine\Entities\BaseEntity
             }
         }
 
-        throw new \InvalidArgumentException('Unknown action name "' . $action . '". Check \App\Model\Logs::$scripts');
+        throw new \InvalidArgumentException('Unknown action name "' . $action . '". Check \Teddy\Model\Logs::$scripts');
     }
 
     public static function getScriptById($id)
@@ -84,7 +84,7 @@ class SystemLog extends \Kdyby\Doctrine\Entities\BaseEntity
             return self::$scripts[$id];
         }
 
-        throw new \InvalidArgumentException('Unknown script ID "' . $id . '". Check \App\Model\Logs::$scripts');
+        throw new \InvalidArgumentException('Unknown script ID "' . $id . '". Check \Teddy\Model\Logs::$scripts');
     }
 
     public static function getScriptId($script)
@@ -95,7 +95,7 @@ class SystemLog extends \Kdyby\Doctrine\Entities\BaseEntity
             }
         }
 
-        throw new \InvalidArgumentException('Unknown script name "' . $script . '". Check \App\Model\Logs::$scripts');
+        throw new \InvalidArgumentException('Unknown script name "' . $script . '". Check \Teddy\Model\Logs::$scripts');
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace Teddy\Model;
 
 use Kdyby\Doctrine\EntityDao;
 use Kdyby\Doctrine\EntityManager;

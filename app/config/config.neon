@@ -15,27 +15,27 @@ nette:
     application:
         errorPresenter: Error
         mapping:
-            *: App\*Module\Presenters\*Presenter
+            *: Teddy\*Module\Presenters\*Presenter
 
     session:
         expiration: 14 days
 
 
 services:
-    - App\Model\SystemLogs(@doctrine.dao(App\Model\SystemLog))
-    - App\Model\UserLogs(@doctrine.dao(App\Model\UserLog))
-    - App\Model\Stats(@doctrine.dao(App\Model\Stat))
-    - App\Model\Users(%salt%, @doctrine.dao(App\Model\User))
-    - App\Model\Logins(@doctrine.dao(App\Model\Login))
-    - App\Model\Bans(@doctrine.dao(App\Model\Ban))
-    - App\Model\Messages(@doctrine.dao(App\Model\Message))
-    - App\Model\Forums(@doctrine.dao(App\Model\Forum))
-    - App\Model\ForumPosts(@doctrine.dao(App\Model\ForumPost))
-    router: App\RouterFactory::createRouter
-    user: App\Security\User
+    - Teddy\Model\SystemLogs(@doctrine.dao(Teddy\Model\SystemLog))
+    - Teddy\Model\UserLogs(@doctrine.dao(Teddy\Model\UserLog))
+    - Teddy\Model\Stats(@doctrine.dao(Teddy\Model\Stat))
+    - Teddy\Model\Users(%salt%, @doctrine.dao(Teddy\Model\User))
+    - Teddy\Model\Logins(@doctrine.dao(Teddy\Model\Login))
+    - Teddy\Model\Bans(@doctrine.dao(Teddy\Model\Ban))
+    - Teddy\Model\Messages(@doctrine.dao(Teddy\Model\Message))
+    - Teddy\Model\Forums(@doctrine.dao(Teddy\Model\Forum))
+    - Teddy\Model\ForumPosts(@doctrine.dao(Teddy\Model\ForumPost))
+    router: Teddy\Router\RouterFactory::create
+    user: Teddy\Security\User
 
     login:
-        class: App\Events\LoginListener
+        class: Teddy\Events\LoginListener
         tags: [kdyby.subscriber]
 
 extensions:
@@ -49,4 +49,4 @@ doctrine:
     password: '***'
     dbname: teddy
     metadata:
-        App: %appDir%
+        Teddy: %appDir%

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace Teddy\Security;
 
 use Nette;
 
