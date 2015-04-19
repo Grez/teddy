@@ -11,7 +11,7 @@ class LogoutPresenter extends BasePresenter
     {
         $this->getUser()->logout();
         $this->flashMessage('You have been signed out.');
-        $this->redirect(':Homepage:default');
+        $this->redirect(':Index:Homepage:default');
     }
 
 }
