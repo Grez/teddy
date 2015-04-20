@@ -6,9 +6,10 @@ use Teddy\Model\Stats;
 use Teddy\Model\Stat;
 use Teddy\Model\SystemLogs;
 use Teddy;
+use Nette;
 
 
-class CronPresenter extends Teddy\Presenters\BasePresenter
+class CronPresenter extends Nette\Application\UI\Presenter
 {
     /** @var string */
     protected $cronName = '';
