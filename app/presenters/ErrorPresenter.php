@@ -1,15 +1,11 @@
 <?php
 
-namespace Teddy\IndexModule\Presenters;
+namespace Teddy\Presenters;
 
-use Nette,
-	Teddy\Model,
-	Tracy\Debugger;
+use Nette;
+use Tracy\Debugger;
 
 
-/**
- * Error presenter.
- */
 class ErrorPresenter extends BasePresenter
 {
 

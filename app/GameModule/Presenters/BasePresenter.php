@@ -7,8 +7,9 @@ use Teddy\Model\User;
 use Teddy;
 use Nette;
 
-abstract class BasePresenter extends Teddy\IndexModule\Presenters\BasePresenter
+abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 {
+
     /** @var User */
     protected $user;
 
