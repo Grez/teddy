@@ -62,6 +62,10 @@ class Configurator extends Nette\Configurator
             );
         }
 
+        if (!isset($parameters['consoleMode'])) {
+            $parameters['consoleMode'] = PHP_SAPI === 'cli';
+        }
+
         if (!isset($parameters['debugMode'])) {
             $parameters['debugMode'] = static::detectDebugMode();
         }
