@@ -7,16 +7,10 @@ use Teddy\Model\User;
 use Teddy;
 use Nette;
 
-abstract class BasePresenter extends Nette\Application\UI\Presenter
+abstract class BasePresenter extends Teddy\IndexModule\Presenters\BasePresenter
 {
     /** @var User */
     protected $user;
-
-    /** @var \Kdyby\Doctrine\EntityManager @inject */
-    public $em;
-
-    /** @var Users @inject */
-    public $users;
 
 
     protected function startup()
@@ -32,4 +26,5 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->user = $this->users->find($user->id);
         $this->template->user = $this->user;
     }
+
 }
