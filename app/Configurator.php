@@ -80,7 +80,7 @@ class Configurator extends Nette\Configurator
      */
     protected function addConfigFiles()
     {
-        if (is_file($config = __DIR__ . '/app/config/config.neon')) {
+        if (is_file($config = __DIR__ . '/config/config.neon')) {
             $this->addConfig($config);
         }
 
