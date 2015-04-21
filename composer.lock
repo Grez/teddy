@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f2aff9415ea090519e13864479e56b41",
+    "hash": "1e2ae6c58da24dbee8094851a1f829f4",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2127,6 +2127,45 @@
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
             "time": "2015-03-30 15:54:10"
+        },
+        {
+            "name": "teddy/imgtodataurl",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Grez/ImgToDataUrl.git",
+                "reference": "8a2eaf29cddc583eb881c62e84bb4f9c931a03b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Grez/ImgToDataUrl/zipball/8a2eaf29cddc583eb881c62e84bb4f9c931a03b4",
+                "reference": "8a2eaf29cddc583eb881c62e84bb4f9c931a03b4",
+                "shasum": ""
+            },
+            "require-dev": {
+                "nette/tester": "~1.4@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tom Bartoň",
+                    "email": "grez.cz@gmail.com"
+                }
+            ],
+            "description": "Converts images in .css to DataUrl",
+            "time": "2015-04-21 23:06:37"
         },
         {
             "name": "tracy/tracy",
