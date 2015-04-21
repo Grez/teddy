@@ -24,6 +24,10 @@ class Configurator extends Nette\Configurator
             throw new Nette\DirectoryNotFoundException('Temp directory "' . $this->parameters['tempDir'] . '" is not writable or doesn\'t exist.');
         }
 
+        if (!is_writable($this->parameters['wwwDir'] . '/temp')) {
+            throw new Nette\DirectoryNotFoundException('Public temp directory "' . $this->parameters['wwwDir'] . '/temp is not writable or doesn\'t exist.');
+        }
+
         $this->setupDebugger();
         $this->addConfigFiles();
     }
