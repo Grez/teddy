@@ -4,11 +4,9 @@ namespace Teddy\Model;
 
 use Nette;
 use Nette\Utils\Finder;
+use Teddy\ImgToDataUrl;
 
 
-/**
- * @TODO: Image DataStream?
- */
 class CssParser extends Nette\Object
 {
 
@@ -18,19 +16,28 @@ class CssParser extends Nette\Object
     /** @var array */
     protected $files = array();
 
+    /** @var bool */
+    protected $convertToDataUrl = true;
+
+    /** @var int */
+    protected $version = 0;
+
 
     /**
      * @param string $wwwDir
      * @param array|string $files
      */
-    public function __construct($wwwDir, $files)
+    public function __construct($wwwDir, $files, $convertToDataUrl = true)
     {
         $this->wwwDir = $wwwDir;
+        $this->convertToDataUrl = $convertToDataUrl;
+        $this->version = filemtime($this->wwwDir . '/css');
         $this->addFiles($files);
     }
 
     /**
      * @param array|string $files
+     * @return null
      */
     public function addFiles($files)
     {
@@ -46,12 +53,33 @@ class CssParser extends Nette\Object
      */
     public function getCssHeaderLink()
     {
-        $version = filemtime($this->wwwDir . '/css');
-        if (!file_exists($this->getTemp() . $version . '.css')) {
+        if (!file_exists($this->getTemp() . '/' . $this->version . '.css')) {
             $this->clean();
-            $this->parse($version);
+            $css = $this->parseLess();
+            $filePath = $this->getTemp() . '/' . $this->version . '.css';
+
+            file_put_contents($filePath, $css);
+            if ($this->convertToDataUrl) {
+                $imgToDataUrl = new ImgToDataUrl(new \SplFileInfo($filePath), $this->wwwDir);
+                $css = $imgToDataUrl->convert();
+            }
+            file_put_contents($filePath, $css);
         }
-        return '<link rel="stylesheet" media="all" href="/temp/css/' . $version . '.css">';
+        return '<link rel="stylesheet" media="all" href="/temp/css/' . $this->version . '.css">';
+    }
+
+    /**
+     * @param string $name of CSS file
+     * @throws \Exception
+     */
+    protected function parseLess()
+    {
+        $parser = new \Less_Parser(array('compress' => true));
+        foreach ($this->files as $file) {
+            $parser->parseFile($this->wwwDir . '/css/' . $file);
+        }
+
+        return $parser->getCss();
     }
 
     /**
@@ -86,21 +114,6 @@ class CssParser extends Nette\Object
         foreach (Finder::findFiles('*')->in($this->getTemp()) as $file) {
             @unlink($file->getPathname());
         }
-    }
-
-    /**
-     * @param string $name of CSS file
-     * @throws \Exception
-     */
-    protected function parse($name)
-    {
-        $parser = new \Less_Parser(array('compress' => true));
-        foreach ($this->files as $file) {
-            $parser->parseFile($this->wwwDir . '/css/' . $file);
-        }
-
-        $css = $parser->getCss();
-        file_put_contents($this->getTemp() . '/' . $name . '.css', $css);
     }
 
 }
