@@ -131,7 +131,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
         parent::__construct();
         $this->verificationCode = mt_rand(1000000, 9999999);
         $this->affiliate = mt_rand(1000000, 9999999);
-        $this->created = new \DateTime();
+        $this->registered = new \DateTime();
     }
 
     /**
