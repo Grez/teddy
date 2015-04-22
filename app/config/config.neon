@@ -44,6 +44,14 @@ extensions:
     events: Kdyby\Events\DI\EventsExtension
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
+    migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+
+migrations:
+    table: doctrine_migrations # database table for applied migrations
+    dirs: # list of dirs to load migrations from
+        - %appDir%/migrations # first dir is used for generating migrations
+    namespace: Teddy\Migrations # namespace of migration classes
+    codingStandard: spaces # "tabs" or "spaces", cs for generated classes
 
 doctrine:
     user: root
