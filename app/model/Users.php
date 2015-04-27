@@ -74,6 +74,17 @@ class Users extends Manager implements Nette\Security\IAuthenticator
     }
 
     /**
+     * @return array
+     */
+    public function getAdmins()
+    {
+        $criteria = array(
+            'admin' => true,
+        );
+        return $this->findBy($criteria);
+    }
+
+    /**
      * @param \Nette\Utils\ArrayHash $values
      */
     public function register($data)
@@ -98,6 +109,28 @@ class Users extends Manager implements Nette\Security\IAuthenticator
         $hashed = Passwords::hash($password, $options);
         $user->setPassword($hashed);
         $this->save($user);
+    }
+
+    /**
+     * @param array $permissions
+     */
+    public function setAdminPermissions($user, $permissions)
+    {
+        // Delete old
+        foreach ($user->adminPermissions as $permission) {
+            $this->em->remove($permission);
+        }
+
+        // Add new
+        foreach ($permissions as $presenter) {
+            $adminPermission = new AdminPermission();
+            $adminPermission->setUser($user);
+            $adminPermission->setPresenter($presenter);
+            $user->addAdminPermission($adminPermission);
+            $this->em->persist($adminPermission);
+        }
+
+        $this->em->flush();
     }
 
     /**

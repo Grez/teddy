@@ -2,6 +2,7 @@
 
 namespace Teddy\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Nette;
 
@@ -121,6 +122,16 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     protected $admin = false;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $adminDescription;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AdminPermission", mappedBy="user", cascade={"persist", "remove"})
+     */
+    protected $adminPermissions;
+
 
     /** Token for changing password, expiration in hours */
     const TOKEN_EXPIRATION = 1;
@@ -132,6 +143,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
         $this->verificationCode = mt_rand(1000000, 9999999);
         $this->affiliate = mt_rand(1000000, 9999999);
         $this->registered = new \DateTime();
+        $this->adminPermissions = new ArrayCollection;
     }
 
     /**
@@ -179,6 +191,43 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
     public function isAdmin()
     {
         return $this->admin;
+    }
+
+    /**
+     * Checks if user is allowed in $presenter in AdminModule
+     * @param string $presenter
+     * @return bool
+     */
+    public function isAllowed($presenter)
+    {
+        if ($presenter == 'Admin:Main') {
+            return true;
+        }
+
+        foreach ($this->adminPermissions as $permission) {
+            if ('Admin:' . $permission->getPresenter() == $presenter) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param bool $array
+     * @return array|ArrayCollection
+     */
+    public function getAdminPermissions($array = false)
+    {
+        if (!$array) {
+            return $this->adminPermissions;
+        } else {
+            $adminPermissions = array();
+            foreach ($this->adminPermissions as $adminPermission) {
+                $adminPermissions[] = $adminPermission->getPresenter();
+            }
+            return $adminPermissions;
+        }
     }
 
     /**
