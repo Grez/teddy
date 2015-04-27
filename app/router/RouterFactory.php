@@ -40,6 +40,13 @@ class RouterFactory
             'id' => NULL,
         ));
 
+        $router[] = new Route('admin/<presenter>/<action>/<id>', array(
+            'module' => 'Admin',
+            'presenter' => 'Main',
+            'action' => 'default',
+            'id' => NULL,
+        ));
+
         $router[] = new Route('<presenter>/<action>/<id>', array(
             'module' => 'Game',
             'presenter' => 'Default',
