@@ -17,14 +17,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var \Teddy\Model\Users @inject */
     public $users;
 
-    /** @var Model\CssParser @inject */
-    protected $cssParser;
+    /** @var \Teddy\Model\CssParser @inject */
+    public $cssParser;
 
-
-    public function injectCssParser(Model\CssParser $cssParser)
-    {
-        $this->cssParser = $cssParser;
-    }
 
     protected function beforeRender()
     {
