@@ -17,7 +17,10 @@
 
     <h1>Admin</h1>
     <ul>
-        <li n:foreach="$sections as $section => $name"><a n:href=":Admin:$section:">{$name}</a></li>
+        {foreach $sections as $section => $name}
+            {var $presenter = 'Admin:' . $section}
+            <li n:if="$user->isAllowed($presenter)"><a n:href=":Admin:$section:">{$name}</a></li>
+        {/foreach}
     </ul>
 
 	{include content}
