@@ -14,10 +14,13 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 
     /** @var array */
     protected $sections = array(
+        'Main' => 'Main',
         'Stats' => 'Stats',
         'Users' => 'Users',
         'Admins' => 'Admins',
         'Bans' => 'Bans',
+        'Game' => 'Gane',
+        'Antimulti' => 'Antimulti',
     );
 
 

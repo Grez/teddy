@@ -1,3 +1,9 @@
 {block content}
-
+    <table n:if="count($logs) > 0">
+        <tr n:foreach="$logs as $log">
+            <th>{$log->getDate()|date:'Y-m-d H:i:s'}</th>
+            <td>{$log->getUser()->getNick()}</td>
+            <td>{$log->getMessage()}</td>
+        </tr>
+    </table>
 {/block}
