@@ -36,7 +36,7 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $type = 0;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="array")
      */
     protected $data;
 
@@ -72,24 +72,6 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
     public function __construct()
     {
         $this->date = new \DateTime();
-    }
-
-    /**
-     * Internally stores data serialized
-     * @param mixed $data
-     * @return null
-     */
-    public function setData($data)
-    {
-        $this->data = serialize($data);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getData()
-    {
-        return unserialize($this->data);
     }
 
     /**
