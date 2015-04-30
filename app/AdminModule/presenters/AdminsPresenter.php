@@ -6,7 +6,6 @@ use Nette;
 use Teddy;
 use Teddy\Forms\Form;
 use Teddy\Model\AdminPermission;
-use Nette\Utils\Strings;
 
 
 class AdminsPresenter extends BasePresenter

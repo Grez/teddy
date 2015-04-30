@@ -75,11 +75,13 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
     }
 
     /**
+     * @TODO: refactor (\Kdyby\Translations?)
      * @return string
      */
     public function getMessage()
     {
-        return sprintf($this->getTemplate(), $this->getData());
+        $data = (is_array($this->getData())) ? $this->getData() : array($this->getData());
+        return vsprintf($this->getTemplate(), $data);
     }
 
     /**
