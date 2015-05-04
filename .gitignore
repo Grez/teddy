@@ -3,6 +3,7 @@ temp/*
 vendor/*
 !vendor/others
 www/temp/*
+!www/temp/.keep
 
 .DS_Store
 !.gitignore
