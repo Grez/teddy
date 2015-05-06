@@ -27,7 +27,7 @@
         "tracy/tracy": "~2.3.0",
         "kdyby/doctrine": "~2.3",
         "oyejorge/less.php": "~1.7",
-        "teddy/imgtodataurl": "~1",
+        "teddy/frontendcompiler": "@dev",
         "doctrine/migrations": "@dev",
         "zenify/doctrine-migrations": "~2.0"
     },

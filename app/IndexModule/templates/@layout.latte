@@ -9,8 +9,8 @@
 	<meta charset="utf-8">
 
 	<title>{ifset #title}{include title|striptags} | {/ifset}Nette Sandbox</title>
-
-    {$css|noescape}
+    {$header['css']|noescape}
+    {$header['js']|noescape}
     <link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	{block head}{/block}
 </head>

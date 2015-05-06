@@ -45,6 +45,7 @@ extensions:
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
     migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+    frontEndCompiler: Teddy\FrontEndCompiler\Extension
 
 migrations:
     table: doctrine_migrations # database table for applied migrations
@@ -54,8 +55,21 @@ migrations:
     codingStandard: spaces # "tabs" or "spaces", cs for generated classes
 
 doctrine:
-    user: root
-    password: '***'
-    dbname: teddy
+    user: ***
+    password: ***
+    dbname: ***
     metadata:
         Teddy: %appDir%
+
+frontEndCompiler:
+    imageToDataUrl: true # true|false
+    wwwDir: %wwwDir%
+    tempDir: /temp # path from wwwDir
+    css:
+        Teddy:
+            dir: %wwwDir%
+            files: [/css/style.less]
+    js:
+        Teddy:
+            dir: %wwwDir%
+            files: [/js/main.js] # files and/or dirs
