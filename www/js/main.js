@@ -48,7 +48,7 @@ var TeddyEvents = $class({
         // Chrome allows setTimeout only 1/s when tab is inactive
         // We need to use Web Workers ^^
         var that = this;
-        var worker = new Worker('/js/workers/setInterval.js');
+        var worker = new Worker('/js/workers/teddy/setInterval.js');
 
         worker.onmessage = function(e) {
             switch (e.data.tick) {
