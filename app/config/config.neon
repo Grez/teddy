@@ -71,4 +71,4 @@ frontEndCompiler:
     js:
         Teddy:
             dir: %wwwDir%
-            files: [/js/main.js] # files and/or dirs
+            files: [/js/jquery.js, /js/main.js, /js/netteForms.js]
