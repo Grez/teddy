@@ -31,7 +31,6 @@ services:
     - Teddy\Model\Messages(@doctrine.dao(Teddy\Model\Message))
     - Teddy\Model\Forums(@doctrine.dao(Teddy\Model\Forum))
     - Teddy\Model\ForumPosts(@doctrine.dao(Teddy\Model\ForumPost))
-    cssParser: Teddy\Model\CssParser(%wwwDir%, ['style.less'])
     router: Teddy\Router\RouterFactory::create
     user: Teddy\Security\User
 
