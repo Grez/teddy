@@ -77,7 +77,7 @@ class AdminsPresenter extends BasePresenter
                 ->setDefaultValue($admin->getLastActivity()->format('Y-m-d H:i:s'));
             $container->addCheckboxList('adminPermissions', 'Permissions', $this->sections)
                 ->setDefaultValue($admin->getAdminPermissions(true))
-                ->getSeparatorPrototype()->setName(NULL);
+                ->getSeparatorPrototype()->setName('inline');
         }
         $form->setCurrentGroup();
         $form->addSubmit('send', 'Edit');
