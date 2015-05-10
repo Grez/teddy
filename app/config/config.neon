@@ -67,8 +67,8 @@ frontEndCompiler:
     css:
         Teddy:
             dir: %wwwDir%
-            files: [/css/style.less]
+            files: [/css/bootstrap.css, /css/bootstrap-theme.css, /css/style.less]
     js:
         Teddy:
             dir: %wwwDir%
-            files: [/js/jquery.js, /js/main.js, /js/netteForms.js]
+            files: [/js/jquery.js, /js/bootstrap.js, /js/main.js, /js/netteForms.js]

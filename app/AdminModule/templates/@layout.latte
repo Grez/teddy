@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-
-	<title>{ifset #title}{include title|striptags} | {/ifset}Nette Sandbox</title>
+    <meta charset="utf-8">
+    <title>{ifset #title}{include title|striptags} | {/ifset}Teddy admin</title>
     {$header['css']|noescape}
     {$header['js']|noescape}
     <link rel="shortcut icon" href="{$basePath}/favicon.ico">
-	{block head}{/block}
+    {block head}{/block}
 </head>
 
 <body>
-	<script> document.documentElement.className+=' js' </script>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    {foreach $sections as $section => $name}
+                        {var $presenter = 'Admin:' . $section}
+                        <li n:if="$user->isAllowed($presenter)" n:class="(($this->params['presenter']->getName() == $presenter) ? active)"><a n:href=":Admin:$section:">{$name}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
-
-    <h1>Admin</h1>
-    <ul>
-        {foreach $sections as $section => $name}
-            {var $presenter = 'Admin:' . $section}
-            <li n:if="$user->isAllowed($presenter)"><a n:href=":Admin:$section:">{$name}</a></li>
-        {/foreach}
-    </ul>
-
-	{include content}
+    <div class="container">
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+        {include content}
+    </div>
 </body>
 </html>

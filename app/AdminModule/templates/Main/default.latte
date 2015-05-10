@@ -1,9 +1,19 @@
 {block content}
-    <table n:if="count($logs) > 0">
-        <tr n:foreach="$logs as $log">
-            <th>{$log->getDate()|date:'Y-m-d H:i:s'}</th>
-            <td>{$log->getUser()->getNick()}</td>
-            <td>{$log->getMessage()}</td>
-        </tr>
+    <h1>Logs</h1>
+    <table class="table" n:if="count($logs) > 0">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Nick</th>
+                <th>Log</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr n:foreach="$logs as $log">
+                <td>{$log->getDate()|date:'Y-m-d H:i:s'}</td>
+                <td>{$log->getUser()->getNick()}</td>
+                <td>{$log->getMessage()}</td>
+            </tr>
+        </tbody>
     </table>
 {/block}
