@@ -14,9 +14,6 @@ class MainPresenter extends BasePresenter
     /** @var Persistent */
     public $page;
 
-    /** @var \Teddy\Model\UserLogs @inject */
-    public $userLogs;
-
 
     public function renderDefault()
     {

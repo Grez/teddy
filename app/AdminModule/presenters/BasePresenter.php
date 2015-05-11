@@ -12,6 +12,9 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
     /** @var User */
     protected $user;
 
+    /** @var \Teddy\Model\UserLogs @inject */
+    public $userLogs;
+
     /** @var array */
     protected $sections = array(
         'Main' => 'Main',
