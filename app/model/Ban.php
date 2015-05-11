@@ -103,9 +103,4 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
         }
     }
 
-    public function setType($type)
-    {
-        $this->type = constant('\Teddy\Model\Ban::' . $type);
-    }
-
 }

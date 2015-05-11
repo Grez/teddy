@@ -14,7 +14,7 @@ class Bans extends Manager
      * @param string $type
      * @return NULL
      */
-    public function ban($ip, $reason = '', $days = 0, $type = 'GAME')
+    public function ban($ip, $reason = '', $days = 0, $type = Ban::GAME)
     {
         // Max && default ban = 10 years
         if($days == 0 || $days >= 3650) {
@@ -119,6 +119,11 @@ class Bans extends Manager
             }
         }
         return false;
+    }
+
+    public function getBans()
+    {
+        return $this->findBy(array());
     }
 
 }
