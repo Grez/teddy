@@ -43,12 +43,12 @@ class AdminsPresenter extends BasePresenter
     {
         $user = $this->users->getByNick($values['user']);
         if (!$user) {
-            $this->flashMessage('This user doesn\'t exist', 'error');
+            $this->flashMessage('This user doesn\'t exist', 'danger');
             return '';
         }
 
         if ($user->isAdmin()) {
-            $this->flashMessage('This user is already an admin', 'error');
+            $this->flashMessage('This user is already an admin', 'danger');
             return '';
         }
 
@@ -59,46 +59,62 @@ class AdminsPresenter extends BasePresenter
     }
 
     /**
-     * @return Form
+     * @return Nette\Application\UI\Multiplier
      */
-    protected function createComponentAdminPermissionsForm()
+    protected function createComponentAdminForm()
     {
-        $form = new Form();
-        foreach ($this->admins as $admin) {
-            $form->addGroup($admin->getNick());
-            $container = $form->addContainer($admin->getId());
-            $container->addText('adminDescription', 'Description')
+        return new Nette\Application\UI\Multiplier(function($id) {
+            $admin = $this->users->find($id);
+            $form = new Form();
+            $form->addHidden('id', $admin->getId());
+            $form->addText('adminDescription', 'Description')
                 ->setDefaultValue($admin->getAdminDescription());
-            $container->addText('lastLogin', 'Last login')
+            $form->addText('lastLogin', 'Last login')
                 ->setDisabled()
                 ->setDefaultValue($admin->getLastLogin()->format('Y-m-d H:i:s'));
-            $container->addText('lastActivity', 'Last activity')
+            $form->addText('lastActivity', 'Last activity')
                 ->setDisabled()
                 ->setDefaultValue($admin->getLastActivity()->format('Y-m-d H:i:s'));
-            $container->addCheckboxList('adminPermissions', 'Permissions', $this->sections)
+            $form->addCheckboxList('adminPermissions', 'Permissions', $this->sections)
                 ->setDefaultValue($admin->getAdminPermissions(true))
                 ->getSeparatorPrototype()->setName('inline');
-        }
-        $form->setCurrentGroup();
-        $form->addSubmit('send', 'Edit');
-        $form->onSuccess[] = $this->adminPermissionsFormSuccess;
-        return $form;
+            $form->addSubmit('send', 'Edit');
+            $form->addSubmit('delete', 'Delete')
+                ->onClick[] = array($this, 'adminFormDelete');
+            $form->onSuccess[] = $this->adminFormSuccess;
+            return $form;
+        });
     }
 
     /**
-     * @TODO: how to do this better?
+     * @param Nette\Forms\Controls\SubmitButton $button
+     */
+    public function adminFormDelete(Nette\Forms\Controls\SubmitButton $button)
+    {
+        $id = $button->getForm()->getValues()->id;
+        $admin = $this->users->find($id);
+
+        if (!$admin->isAdmin()) {
+            $this->flashMessage('This user isn\'t admin', 'danger');
+            $this->redirect('this');
+        }
+
+        $this->users->deleteAdmin($admin);
+        $this->flashMessage('Admin deleted', 'success');
+        $this->redirect('this');
+    }
+
+    /**
      * @param Form $form
      * @param $values
      */
-    public function adminPermissionsFormSuccess(Form $form, $values)
+    public function adminFormSuccess(Form $form, $values)
     {
-        foreach ($values as $id => $data) {
-            $admin = $this->users->find($id);
-            $this->users->setAdminPermissions($admin, $data['adminPermissions']);
-            $admin->setAdminDescription($data['adminDescription']);
-            $this->users->save($admin);
-        }
-        $this->flashMessage('Permissions updated');
+        $admin = $this->users->find($values->id);
+        $this->users->setAdminPermissions($admin, $values['adminPermissions']);
+        $admin->setAdminDescription($values['adminDescription']);
+        $this->users->save($admin);
+        $this->flashMessage('Admin edited', 'success');
         $this->redirect('this');
     }
 

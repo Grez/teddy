@@ -3,5 +3,9 @@
     {control createAdminForm}
 
     <h2>Admins</h2>
-    {control adminPermissionsForm}
+    {foreach $admins as $admin}
+        <h3>{$admin->getNick()}</h3>
+        {control "adminForm-".$admin->getId()}
+        <hr n:if="!$iterator->isLast()">
+    {/foreach}
 {/block}

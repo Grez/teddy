@@ -112,14 +112,35 @@ class Users extends Manager implements Nette\Security\IAuthenticator
     }
 
     /**
-     * @param array $permissions
+     * @param User $user
      */
-    public function setAdminPermissions($user, $permissions)
+    public function deleteAdminPermissions(User $user)
     {
-        // Delete old
         foreach ($user->adminPermissions as $permission) {
             $this->em->remove($permission);
         }
+        $this->em->flush();
+    }
+
+    /**
+     * @param User $user
+     */
+    public function deleteAdmin(User $user)
+    {
+        $this->deleteAdminPermissions($user);
+        $user->setAdminDescription('');
+        $user->setAdmin(false);
+        $this->save($user);
+    }
+
+    /**
+     * @param User $user
+     * @param array $permissions
+     */
+    public function setAdminPermissions(User $user, $permissions)
+    {
+        // Delete old
+        $this->deleteAdminPermissions($user);
 
         // Add new
         foreach ($permissions as $presenter) {
