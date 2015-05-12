@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2a4f937de73f0ddaadbd3f1ef7eb33b6",
+    "hash": "1fc8a040a574e5638fea01d50caa82fb",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -661,6 +661,71 @@
                 "orm"
             ],
             "time": "2014-12-16 13:45:01"
+        },
+        {
+            "name": "ipub/visual-paginator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iPublikuj/visual-paginator.git",
+                "reference": "4fc73afd6c5c532a79298c4ab361c440865fcb6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iPublikuj/visual-paginator/zipball/4fc73afd6c5c532a79298c4ab361c440865fcb6d",
+                "reference": "4fc73afd6c5c532a79298c4ab361c440865fcb6d",
+                "shasum": ""
+            },
+            "require": {
+                "latte/latte": "~2.2",
+                "nette/application": "~2.2",
+                "nette/di": "~2.2",
+                "nette/utils": "~2.2",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "janmarek/mockista": "@dev",
+                "nette/bootstrap": "~2.2",
+                "nette/forms": "~2.2",
+                "nette/mail": "~2.2",
+                "nette/robot-loader": "~2.2",
+                "nette/safe-stream": "~2.2",
+                "nette/tester": "@dev",
+                "tracy/tracy": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "IPub\\VisualPaginator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Kadlec",
+                    "homepage": "http://www.ipublikuj.eu/"
+                },
+                {
+                    "name": "David Grudl",
+                    "email": "david@grudl.com"
+                }
+            ],
+            "description": "Visual paginator for Nette Framework",
+            "homepage": "https://github.com/iPublikuj/visual-paginator.git",
+            "keywords": [
+                "ipub",
+                "ipublikuj",
+                "nette",
+                "paginator",
+                "paging",
+                "tools"
+            ],
+            "time": "2015-03-02 13:08:29"
         },
         {
             "name": "kdyby/annotations",
@@ -2194,12 +2259,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Grez/frontEndCompiler.git",
-                "reference": "c3b20a5d869ec91e20ed7a1f049e52669fa40ef5"
+                "reference": "eba898b83b458458ef68eee3453dd147cace884d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Grez/frontEndCompiler/zipball/c3b20a5d869ec91e20ed7a1f049e52669fa40ef5",
-                "reference": "c3b20a5d869ec91e20ed7a1f049e52669fa40ef5",
+                "url": "https://api.github.com/repos/Grez/frontEndCompiler/zipball/eba898b83b458458ef68eee3453dd147cace884d",
+                "reference": "eba898b83b458458ef68eee3453dd147cace884d",
                 "shasum": ""
             },
             "require": {
@@ -2229,7 +2294,7 @@
                 }
             ],
             "description": "FrontEndCompiler compiles CSS & JS & allows you to copy /vendor folders to public directory",
-            "time": "2015-05-06 23:17:12"
+            "time": "2015-05-07 17:01:51"
         },
         {
             "name": "teddy/imgtodataurl",
@@ -2440,7 +2505,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "teddy/frontendcompiler": 20,
-        "doctrine/migrations": 20
+        "doctrine/migrations": 20,
+        "ipub/visual-paginator": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
