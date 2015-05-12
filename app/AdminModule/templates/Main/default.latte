@@ -1,5 +1,10 @@
 {block content}
     <h1>Logs</h1>
+
+    <h2>Filter</h2>
+    {control filterForm}
+
+    <h2>Logs</h2>
     <table class="table" n:if="count($logs) > 0">
         <thead>
             <tr>
@@ -10,10 +15,11 @@
         </thead>
         <tbody>
             <tr n:foreach="$logs as $log">
-                <td>{$log->getDate()|date:'Y-m-d H:i:s'}</td>
+                <td><a n:href="delete id => $log->getId()">{$log->getDate()|date:'Y-m-d H:i:s'}</a></td>
                 <td>{$log->getUser()->getNick()}</td>
                 <td>{$log->getMessage()}</td>
             </tr>
         </tbody>
     </table>
+    {control visualPaginator}
 {/block}
