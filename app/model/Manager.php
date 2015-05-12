@@ -5,6 +5,7 @@ namespace Teddy\Model;
 use Kdyby\Doctrine\Entities\BaseEntity;
 use Kdyby\Doctrine\EntityDao;
 use Kdyby\Doctrine\EntityManager;
+use Kdyby\Doctrine\QueryObject;
 use Nette;
 
 abstract class Manager extends Nette\Object
@@ -42,6 +43,31 @@ abstract class Manager extends Nette\Object
     public function find($id)
     {
         return $this->dao->find($id);
+    }
+
+    /**
+     * @param QueryObject $query
+     * @return array|\Kdyby\Doctrine\ResultSet
+     */
+    public function fetch(QueryObject $query)
+    {
+        return $this->dao->fetch($query);
+    }
+
+    /**
+     * Fetches all records like $key => $value pairs
+     *
+     * @param array $criteria parameter can be skipped
+     * @param string $value mandatory
+     * @param array $orderBy parameter can be skipped
+     * @param string $key optional
+     *
+     * @throws QueryException
+     * @return array
+     */
+    public function findPairs($criteria, $value = NULL, $orderBy = array(), $key = NULL)
+    {
+        return $this->dao->findPairs($criteria, $value, $orderBy, $key);
     }
 
     /**
