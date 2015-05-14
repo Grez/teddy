@@ -2,10 +2,8 @@
 <html>
 <head>
 	<meta charset="utf-8">
-
 	<title>{ifset #title}{include title|striptags} | {/ifset}Teddy framework</title>
-    {$header['css']|noescape}
-    {$header['js']|noescape}
+    {$css|noescape}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	{block head}{/block}
 </head>
@@ -29,5 +27,7 @@
     </ul>
 
 	{include content}
+
+    {$js|noescape}
 </body>
 </html>

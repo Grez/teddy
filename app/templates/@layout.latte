@@ -3,8 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>{ifset #title}{include title|striptags} | {/ifset}Teddy</title>
-    {$header['css']|noescape}
-    {$header['js']|noescape}
+    {$css|noescape}
     <link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	{block head}{/block}
 </head>
@@ -15,5 +14,7 @@
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
 	{include content}
+
+    {$js|noescape}
 </body>
 </html>

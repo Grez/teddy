@@ -25,9 +25,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         parent::beforeRender();
         $this->frontEndCompiler->publicizeDirs();
-        $this->template->header = array('css' => '', 'js' => '');
-        $this->template->header['css'] = $this->frontEndCompiler->getCss();
-        $this->template->header['js'] = $this->frontEndCompiler->getJs();
+        $this->template->css = $this->frontEndCompiler->getCss();
+        $this->template->js = $this->frontEndCompiler->getJs();
     }
 
     protected function startup()
