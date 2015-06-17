@@ -17,16 +17,29 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var \Teddy\Model\Users @inject */
     public $users;
 
-    /** @var \Teddy\FrontEndCompiler\Loader @inject */
-    public $frontEndCompiler;
+    /** @var \WebLoader\Nette\LoaderFactory @inject */
+    public $webLoader;
+
+
+    /** @return CssLoader */
+    protected function createComponentCss()
+    {
+        return $this->webLoader->createCssLoader('default');
+    }
+
+    /** @return JavaScriptLoader */
+    protected function createComponentJs()
+    {
+        return $this->webLoader->createJavaScriptLoader('default');
+    }
 
 
     protected function beforeRender()
     {
         parent::beforeRender();
-        $this->frontEndCompiler->publicizeDirs();
-        $this->template->css = $this->frontEndCompiler->getCss();
-        $this->template->js = $this->frontEndCompiler->getJs();
+//        $this->frontEndCompiler->publicizeDirs();
+//        $this->template->css = $this->frontEndCompiler->getCss();
+//        $this->template->js = $this->frontEndCompiler->getJs();
     }
 
     protected function startup()

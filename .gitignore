@@ -2,8 +2,8 @@ log/*
 temp/*
 vendor/*
 !vendor/others
-www/temp/*
-!www/temp/.keep
+www/webtemp/*
+!www/webtemp/.keep
 
 .DS_Store
 !.gitignore

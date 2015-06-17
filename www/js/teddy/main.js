@@ -65,3 +65,12 @@ var TeddyEvents = $class({
 });
 
 var events = new TeddyEvents();
+
+var options = {swfPath: '/js/teddy/fingerprint2/flash/compiled/FontList.swf', excludeUserAgent: false};
+var d1 = new Date();
+var fp = new Fingerprint2(options);
+fp.get(function(result) {
+    var d2 = new Date();
+    console.log("Time took to calculate the fingerprint: " + (d2 - d1) + "ms");
+    console.log(result);
+});

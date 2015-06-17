@@ -33,6 +33,8 @@ services:
     - Teddy\Model\ForumPosts(@doctrine.dao(Teddy\Model\ForumPost))
     router: Teddy\Router\RouterFactory::create
     user: Teddy\Security\User
+    wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
+    lessFilter: WebLoader\Filter\LessFilter
 
     login:
         class: Teddy\Events\LoginListener
@@ -44,8 +46,8 @@ extensions:
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
     migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
-    frontEndCompiler: Teddy\FrontEndCompiler\Extension
     visualPaginator: IPub\VisualPaginator\DI\VisualPaginatorExtension
+    webloader: WebLoader\Nette\Extension
 
 migrations:
     table: doctrine_migrations # database table for applied migrations
@@ -61,15 +63,23 @@ doctrine:
     metadata:
         Teddy: %appDir%
 
-frontEndCompiler:
-    imageToDataUrl: true # true|false
-    wwwDir: %wwwDir%
-    tempDir: /temp # path from wwwDir
+webloader:
     css:
-        Teddy:
-            dir: %wwwDir%
-            files: [/css/bootstrap.css, /css/bootstrap-theme.css, /css/style.less]
+        default:
+            files:
+                - teddy/bootstrap.css
+                - teddy/bootstrap-theme.css
+                - teddy/style.less
+            fileFilters:
+                - @lessFilter
+                - @wlCssFilter
+        admin:
+            files:
+                - teddy/admin.less
     js:
-        Teddy:
-            dir: %wwwDir%
-            files: [/js/jquery.js, /js/bootstrap.js, /js/main.js, /js/netteForms.js]
+        default:
+            files:
+                - teddy/jquery.js
+                - teddy/bootstrap.js
+                - teddy/main.js
+                - teddy/netteForms.js

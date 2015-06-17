@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>{ifset #title}{include title|striptags} | {/ifset}Teddy Admin</title>
-    {$css|noescape}
+    {control css}
+    {control cssAdmin}
     <link rel="shortcut icon" href="{$basePath}/favicon.ico">
     {block head}{/block}
 </head>
@@ -35,6 +36,6 @@
         {include content}
     </div>
 
-    {$js|noescape}
+    {control js}
 </body>
 </html>

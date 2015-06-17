@@ -55,4 +55,16 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
         $this->template->sections = $this->sections;
     }
 
+    /** @return CssLoader */
+    protected function createComponentCssAdmin()
+    {
+        return $this->webLoader->createCssLoader('admin');
+    }
+
+    /** @return JsLoader */
+    protected function createComponentJsAdmin()
+    {
+        return $this->webLoader->createJsLoader('admin');
+    }
+
 }
