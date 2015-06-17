@@ -47,6 +47,7 @@ extensions:
     doctrine: Kdyby\Doctrine\DI\OrmExtension
     migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
     visualPaginator: IPub\VisualPaginator\DI\VisualPaginatorExtension
+    publisher: Teddy\Publisher\Extension
     webloader: WebLoader\Nette\Extension
 
 migrations:

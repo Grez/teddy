@@ -30,6 +30,7 @@
         "doctrine/migrations": "@dev",
         "zenify/doctrine-migrations": "~2.0",
         "ipub/visual-paginator": "@dev",
+        "teddy/publisher": "@dev",
         "janmarek/webloader": "^2.4"
     },
     "require-dev": {

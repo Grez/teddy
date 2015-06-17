@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9f48f0eb38545233e0c5ddff772b7405",
+    "hash": "7c8c99e099eaaa2fead70a566833972f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2361,6 +2361,44 @@
             "time": "2015-06-10 15:30:22"
         },
         {
+            "name": "teddy/publisher",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Grez/Publisher.git",
+                "reference": "0db66feb86f67e99bdb5b35ca0bb4fedea8bd7d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Grez/Publisher/zipball/0db66feb86f67e99bdb5b35ca0bb4fedea8bd7d8",
+                "reference": "0db66feb86f67e99bdb5b35ca0bb4fedea8bd7d8",
+                "shasum": ""
+            },
+            "require": {
+                "nette/di": "~2.3@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tom Bartoň <grez.cz@gmail.com>"
+                }
+            ],
+            "description": "Publisher copies files/folders from private folders to public",
+            "time": "2015-06-17 23:44:36"
+        },
+        {
             "name": "tracy/tracy",
             "version": "v2.3.2",
             "source": {
@@ -2530,7 +2568,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "doctrine/migrations": 20,
-        "ipub/visual-paginator": 20
+        "ipub/visual-paginator": 20,
+        "teddy/publisher": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
