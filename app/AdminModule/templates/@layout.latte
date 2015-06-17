@@ -26,6 +26,7 @@
                         {var $presenter = 'Admin:' . $section}
                         <li n:if="$user->isAllowed($presenter)" n:class="(($this->params['presenter']->getName() == $presenter) ? active)"><a n:href=":Admin:$section:">{$name}</a></li>
                     {/foreach}
+                    <li><a n:href=":Game:Logout:">Logout</a></li>
                 </ul>
             </div>
         </div>
