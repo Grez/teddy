@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7c8c99e099eaaa2fead70a566833972f",
+    "hash": "0ae34d9349d94271f0177f13e3cce20d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1301,6 +1301,64 @@
             "time": "2015-05-04 14:29:27"
         },
         {
+            "name": "nella/forms-datetime",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nella/forms-datetime.git",
+                "reference": "e7afe1d2e5355f7f7f8b44949451460cf249a224"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nella/forms-datetime/zipball/e7afe1d2e5355f7f7f8b44949451460cf249a224",
+                "reference": "e7afe1d2e5355f7f7f8b44949451460cf249a224",
+                "shasum": ""
+            },
+            "require": {
+                "nette/forms": "~2.2,<2.4.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "jakub-onderka/php-console-highlighter": "~0.3.1",
+                "jakub-onderka/php-parallel-lint": "~0.8.0",
+                "nella/coding-standard": "~2.0.0",
+                "nette/tester": "~1.4.0",
+                "satooshi/php-coveralls": "dev-master#2fbf803"
+            },
+            "suggest": {
+                "latte/latte": "For manual rendering support"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nella\\Forms\\DateTime\\": "src/Nella/Forms/DateTime"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patrik Votoček",
+                    "email": "patrik@votocek.cz",
+                    "homepage": "http://patrik.votocek.cz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Date/DateTime control for Nette Forms.",
+            "homepage": "http://doc.nellafw.org/forms/datetime",
+            "keywords": [
+                "Forms",
+                "control",
+                "date",
+                "datetime",
+                "input",
+                "nette"
+            ],
+            "time": "2015-04-20 11:43:03"
+        },
+        {
             "name": "nette/application",
             "version": "v2.3.3",
             "source": {
@@ -2366,12 +2424,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Grez/Publisher.git",
-                "reference": "0db66feb86f67e99bdb5b35ca0bb4fedea8bd7d8"
+                "reference": "9bbacbbadfde2a71d961f7c2264bfe66245d18cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Grez/Publisher/zipball/0db66feb86f67e99bdb5b35ca0bb4fedea8bd7d8",
-                "reference": "0db66feb86f67e99bdb5b35ca0bb4fedea8bd7d8",
+                "url": "https://api.github.com/repos/Grez/Publisher/zipball/9bbacbbadfde2a71d961f7c2264bfe66245d18cf",
+                "reference": "9bbacbbadfde2a71d961f7c2264bfe66245d18cf",
                 "shasum": ""
             },
             "require": {
@@ -2396,7 +2454,7 @@
                 }
             ],
             "description": "Publisher copies files/folders from private folders to public",
-            "time": "2015-06-17 23:44:36"
+            "time": "2015-06-18 12:59:18"
         },
         {
             "name": "tracy/tracy",

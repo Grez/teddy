@@ -71,6 +71,7 @@ webloader:
                 - teddy/bootstrap.css
                 - teddy/bootstrap-theme.css
                 - teddy/style.less
+                - teddy/bootstrap-datepicker/bootstrap-datepicker.css
             fileFilters:
                 - @lessFilter
                 - @wlCssFilter
@@ -80,7 +81,10 @@ webloader:
     js:
         default:
             files:
+#                - teddy/fingerprint2/fingerprint2.js # asynchro loading & execution?
                 - teddy/jquery.js
                 - teddy/bootstrap.js
                 - teddy/main.js
                 - teddy/netteForms.js
+                - teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
+                - teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
