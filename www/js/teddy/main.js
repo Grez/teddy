@@ -66,11 +66,21 @@ var TeddyEvents = $class({
 
 var events = new TeddyEvents();
 
-var options = {swfPath: '/js/teddy/fingerprint2/flash/compiled/FontList.swf', excludeUserAgent: false};
-var d1 = new Date();
-var fp = new Fingerprint2(options);
-fp.get(function(result) {
-    var d2 = new Date();
-    console.log("Time took to calculate the fingerprint: " + (d2 - d1) + "ms");
-    console.log(result);
+$(function() {
+    $('input[data-nella-date-format]').datepicker({
+        autoclose: true,
+        format: 'dd.mm.yyyy',
+        language: 'cs',
+        weekStart: 1,
+        orientation: 'top',
+    });
 });
+
+//var options = {swfPath: '/js/teddy/fingerprint2/flash/compiled/FontList.swf', excludeUserAgent: false};
+//var d1 = new Date();
+//var fp = new Fingerprint2(options);
+//fp.get(function(result) {
+//    var d2 = new Date();
+//    console.log("Time took to calculate the fingerprint: " + (d2 - d1) + "ms");
+//    console.log(result);
+//});
