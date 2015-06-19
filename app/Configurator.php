@@ -95,7 +95,7 @@ class Configurator extends Nette\Configurator
         $appDir = $this->parameters['appDir'];
 
         // Global config
-        if (is_file($config = "$appDir/config/config.neon")) {
+        if ($appDir != __DIR__ && is_file($config = "$appDir/config/config.neon")) {
             $this->addConfig($config);
         }
 
