@@ -30,6 +30,9 @@ class Configurator extends Nette\Configurator
 
         $this->setupDebugger();
         $this->addConfigFiles();
+
+        \Nella\Forms\DateTime\DateInput::register();
+        \Nella\Forms\DateTime\DateTimeInput::register();
     }
 
     /**
