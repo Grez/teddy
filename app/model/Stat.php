@@ -19,10 +19,16 @@ class Stat extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * Generated in __construct()
      */
     protected $date;
+
+    /**
+     * @ORM\Column(type="time")
+     * Generated in __construct()
+     */
+    protected $time;
 
     /**
      * @ORM\Column(type="integer")
@@ -58,6 +64,7 @@ class Stat extends \Kdyby\Doctrine\Entities\BaseEntity
     public function __construct()
     {
         $this->date = new \DateTime();
+        $this->time = new \DateTime();
     }
 
 }
