@@ -64,7 +64,7 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
     /** @return JsLoader */
     protected function createComponentJsAdmin()
     {
-        return $this->webLoader->createJsLoader('admin');
+        return $this->webLoader->createJavaScriptLoader('admin');
     }
 
 }

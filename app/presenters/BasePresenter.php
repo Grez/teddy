@@ -33,15 +33,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         return $this->webLoader->createJavaScriptLoader('default');
     }
 
-
-    protected function beforeRender()
-    {
-        parent::beforeRender();
-//        $this->frontEndCompiler->publicizeDirs();
-//        $this->template->css = $this->frontEndCompiler->getCss();
-//        $this->template->js = $this->frontEndCompiler->getJs();
-    }
-
     protected function startup()
     {
         parent::startup();
