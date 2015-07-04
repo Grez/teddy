@@ -24,7 +24,8 @@ nette:
 services:
     - Teddy\Model\SystemLogs(@doctrine.dao(Teddy\Model\SystemLog))
     - Teddy\Model\UserLogs(@doctrine.dao(Teddy\Model\UserLog))
-    - Teddy\Model\Stats(@doctrine.dao(Teddy\Model\Stat))
+    - Teddy\Model\StatDetailedManager(@doctrine.dao(Teddy\Model\StatDetailed))
+    - Teddy\Model\StatDailyManager(@doctrine.dao(Teddy\Model\StatDaily))
     - Teddy\Model\Users(%salt%, @doctrine.dao(Teddy\Model\User))
     - Teddy\Model\Logins(@doctrine.dao(Teddy\Model\Login))
     - Teddy\Model\Bans(@doctrine.dao(Teddy\Model\Ban))
@@ -90,3 +91,5 @@ webloader:
                 - teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
         admin:
             files:
+                - teddy/charts/Chart.Core.js
+                - {files: ['*.js'], from: 'teddy/charts'}

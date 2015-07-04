@@ -8,7 +8,7 @@ use Nette;
 /**
  * @ORM\Entity
  */
-class Stat extends \Kdyby\Doctrine\Entities\BaseEntity
+class StatDetailed extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
     /**
@@ -33,7 +33,7 @@ class Stat extends \Kdyby\Doctrine\Entities\BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    protected $players;
+    protected $playersTotal;
 
     /**
      * @ORM\Column(type="integer")

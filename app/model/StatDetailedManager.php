@@ -7,7 +7,8 @@ use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Teddy\Model\Users;
 
-class Stats extends Manager
+
+class StatDetailedManager extends Manager
 {
 
     /** @var Users */
@@ -25,11 +26,12 @@ class Stats extends Manager
      * Used by cron_minute
      * @return NULL
      */
-    public function createMinuteStats()
+    public function create()
     {
         $stat = new Stat();
         $stat->setDate(new \DateTime());
-        $stat->setPlayers($this->users->getTotal());
+        $stat->setTime(new \DateTime());
+        $stat->setPlayersTotal($this->users->getTotal());
         $stat->setPlayersActive($this->users->getTotal(true));
         $stat->setPlayersOnline($this->users->getOnline());
 
@@ -43,4 +45,28 @@ class Stats extends Manager
         $this->em->persist($stat);
         $this->em->flush();
     }
+
+    /**
+     * @param \DateTime|null $from
+     * @param \DateTime|null $to
+     * @return array
+     */
+    public function getStats($from = null, $to = null, $types = [])
+    {
+        $criteria = [];
+
+        if (!$from instanceof \DateTime) {
+            $from = new \DateTime('now -1 month');
+        }
+
+        if (!$to instanceof \DateTime) {
+            $to = new \DateTime('now');
+        }
+
+        $criteria['date >='] = $from;
+        $criteria['date <='] = $to;
+
+        return $this->dao->findBy($criteria, ['date' => 'DESC'], 30);
+    }
+
 }

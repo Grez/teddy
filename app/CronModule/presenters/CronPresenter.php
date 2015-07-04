@@ -2,22 +2,23 @@
 
 namespace Teddy\CronModule\Presenters;
 
-use Teddy\Model\Stats;
-use Teddy\Model\Stat;
-use Teddy\Model\SystemLogs;
 use Teddy;
 use Nette;
 
 
 class CronPresenter extends Nette\Application\UI\Presenter
 {
+
     /** @var string */
     protected $cronName = '';
 
-    /** @var Stats @inject */
-    public $stats;
+    /** @var Teddy\Model\StatDailyManager @inject */
+    public $statsDailyManager;
 
-    /** @var SystemLogs @inject */
+    /** @var Teddy\Model\StatDetailedManager @inject */
+    public $statsDetailedManager;
+
+    /** @var Teddy\Model\SystemLogs @inject */
     public $systemLogs;
 
 
@@ -35,7 +36,7 @@ class CronPresenter extends Nette\Application\UI\Presenter
     public function actionMinute()
     {
         $this->cronName = 'cron_minute';
-        $this->stats->createMinuteStats();
+        $this->statsDetailedManager->create();
     }
 
     /**
@@ -53,6 +54,7 @@ class CronPresenter extends Nette\Application\UI\Presenter
     public function actionMidnight()
     {
         $this->cronName = 'cron_midnight';
+        $this->statsDailyManager->create(new \DateTime('yesterday'));
     }
 
     /**
