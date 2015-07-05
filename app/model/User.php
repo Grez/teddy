@@ -125,7 +125,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
     /**
      * @ORM\Column(type="string")
      */
-    protected $adminDescription;
+    protected $adminDescription = '';
 
     /**
      * @ORM\OneToMany(targetEntity="AdminPermission", mappedBy="user", cascade={"persist", "remove"})
