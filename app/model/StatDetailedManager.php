@@ -27,7 +27,7 @@ class StatDetailedManager extends Manager
      */
     public function create()
     {
-        $stat = new Stat();
+        $stat = new StatDetailed();
         $stat->setDate(new \DateTime());
         $stat->setTime(new \DateTime());
         $stat->setPlayersTotal($this->users->getTotal());
