@@ -9,15 +9,10 @@ use Kdyby\Doctrine\EntityManager;
 class StatDetailedManager extends Manager
 {
 
-    /** @var Users */
-    protected $users;
-
-
-    public function __construct(EntityManager $em, Users $users)
+    public function __construct(EntityManager $em)
     {
         parent::__construct($em);
         $this->dao = $this->em->getRepository(\Teddy\Model\StatDetailed::class);
-        $this->users = $users;
     }
 
     /**
@@ -27,12 +22,18 @@ class StatDetailedManager extends Manager
      */
     public function create()
     {
+        $userRepository = $this->em->getRepository(\Teddy\Model\User::class);
+        $userListQuery = new UserListQuery();
+        $total = $userListQuery->count($userRepository);
+        $active = $userListQuery->onlyActive()->count($userRepository);
+        $online = $userListQuery->onlyOnline()->count($userRepository);
+
         $stat = new StatDetailed();
         $stat->setDate(new \DateTime());
         $stat->setTime(new \DateTime());
-        $stat->setPlayersTotal($this->users->getTotal());
-        $stat->setPlayersActive($this->users->getTotal(true));
-        $stat->setPlayersOnline($this->users->getOnline());
+        $stat->setPlayersTotal($total);
+        $stat->setPlayersActive($active);
+        $stat->setPlayersOnline($online);
 
         if(function_exists('sys_getloadavg')) {
             $load = sys_getloadavg();

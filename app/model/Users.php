@@ -189,31 +189,6 @@ class Users extends Manager implements Nette\Security\IAuthenticator
         throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
     }
 
-    /**
-     * Returns number of ($active?) players
-     * @param bool $onlyActive
-     * @return int
-     */
-    public function getTotal($onlyActive = false)
-    {
-        $date = new \DateTime();
-        $date->setTimestamp(time() - (self::ONLINE * 24 * 60 * 60));
-        $resource = ($onlyActive) ? $this->dao->findAll() : $this->dao->findBy(array('lastLogin >=' => $date));
-        return count($resource);
-    }
-
-    /**
-     * Returns number of online players
-     * @return int
-     */
-    public function getOnline()
-    {
-        $date = new \DateTime();
-        $date->setTimestamp(time() - (self::ONLINE * 60));
-        $resource = $this->dao->findBy(array('lastActivity >=' => $date));
-        return count($resource);
-    }
-
     /******************** Validators ********************/
 
     /***
