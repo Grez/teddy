@@ -3,10 +3,17 @@
 namespace Teddy\Model;
 
 use Nette;
+use Kdyby\Doctrine\EntityManager;
 
 
 class StatDailyManager extends Manager
 {
+
+    public function __construct(EntityManager $em)
+    {
+        parent::__construct($em);
+        $this->dao = $this->em->getRepository(\Teddy\Model\StatDetailed::class);
+    }
 
     /**
      * Saves statistics for day

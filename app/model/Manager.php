@@ -11,16 +11,18 @@ use Nette;
 abstract class Manager extends Nette\Object
 {
 
+    /** @var \Kdyby\Doctrine\EntityManager */
+    protected $em;
+
     /** @var \Kdyby\Doctrine\EntityDao */
     protected $dao;
 
-    /** @var \Kdyby\Doctrine\EntityManager @inject */
-    protected $em;
 
-
-    public function __construct(EntityDao $dao, EntityManager $em)
+    /**
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
     {
-        $this->dao = $dao;
         $this->em = $em;
     }
 

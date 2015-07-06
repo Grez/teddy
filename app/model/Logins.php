@@ -3,6 +3,8 @@
 namespace Teddy\Model;
 
 use Nette;
+use Kdyby\Doctrine\EntityManager;
+
 
 class Logins extends Manager
 {
@@ -10,6 +12,12 @@ class Logins extends Manager
     /** Max number of attempts in one hour before auto-ban */
     const ATTEMPTS = 15;
 
+
+    public function __construct(EntityManager $em)
+    {
+        parent::__construct($em);
+        $this->dao = $this->em->getRepository(\Teddy\Model\Login::class);
+    }
 
     /**
      * @param User $user

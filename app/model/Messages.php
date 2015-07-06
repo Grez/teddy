@@ -2,11 +2,9 @@
 
 namespace Teddy\Model;
 
-use Kdyby\Doctrine\EntityDao;
-use Kdyby\Doctrine\EntityManager;
 use Nette;
-use Teddy\Model\Users;
-use Teddy\Model\User;
+use Kdyby\Doctrine\EntityManager;
+
 
 class Messages extends Manager
 {
@@ -15,10 +13,11 @@ class Messages extends Manager
     protected $users;
 
 
-    public function __construct(EntityDao $dao, EntityManager $em, Users $users)
+    public function __construct(EntityManager $em, Users $users)
     {
-        parent::__construct($dao, $em);
+        parent::__construct($em);
         $this->users = $users;
+        $this->dao = $this->em->getRepository(\Teddy\Model\Message::class);
     }
 
     /**

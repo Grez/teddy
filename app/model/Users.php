@@ -4,8 +4,8 @@ namespace Teddy\Model;
 
 use Nette;
 use Nette\Security\Passwords;
-use Kdyby\Doctrine\EntityDao;
 use Kdyby\Doctrine\EntityManager;
+
 
 class Users extends Manager implements Nette\Security\IAuthenticator
 {
@@ -26,10 +26,11 @@ class Users extends Manager implements Nette\Security\IAuthenticator
     protected $salt = '';
 
 
-    public function __construct($salt, EntityDao $dao, EntityManager $em)
+    public function __construct($salt, EntityManager $em)
     {
-        parent::__construct($dao, $em);
+        parent::__construct($em);
         $this->salt = $salt;
+        $this->dao = $this->em->getRepository(\Teddy\Model\User::class);
     }
 
     /**

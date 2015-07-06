@@ -2,11 +2,17 @@
 
 namespace Teddy\Model;
 
-use Kdyby\Doctrine\EntityDao;
-use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Kdyby\Doctrine\EntityManager;
+
 
 class ForumPosts extends Manager
 {
+
+    public function __construct(EntityManager $em)
+    {
+        parent::__construct($em);
+        $this->dao = $this->em->getRepository(\Teddy\Model\ForumPost::class);
+    }
 
 }

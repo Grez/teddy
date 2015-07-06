@@ -2,9 +2,9 @@
 
 namespace Teddy\Model;
 
-use Kdyby\Doctrine\EntityDao;
-use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Kdyby\Doctrine\EntityManager;
+
 
 class Forums extends Manager
 {
@@ -22,10 +22,11 @@ class Forums extends Manager
     const BUGS = 7;
 
 
-    public function __construct(EntityDao $dao, EntityManager $em, ForumPosts $forumPosts)
+    public function __construct(EntityManager $em, ForumPosts $forumPosts)
     {
-        parent::__construct($dao, $em);
+        parent::__construct($em);
         $this->forumsPostsRepository = $forumPosts;
+        $this->dao = $this->em->getRepository(\Teddy\Model\Forum::class);
     }
 
     /**

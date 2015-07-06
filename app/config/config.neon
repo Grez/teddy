@@ -22,16 +22,16 @@ nette:
 
 
 services:
-    - Teddy\Model\SystemLogs(@doctrine.dao(Teddy\Model\SystemLog))
-    - Teddy\Model\UserLogs(@doctrine.dao(Teddy\Model\UserLog))
-    - Teddy\Model\StatDetailedManager(@doctrine.dao(Teddy\Model\StatDetailed))
-    - Teddy\Model\StatDailyManager(@doctrine.dao(Teddy\Model\StatDaily))
-    - Teddy\Model\Users(%salt%, @doctrine.dao(Teddy\Model\User))
-    - Teddy\Model\Logins(@doctrine.dao(Teddy\Model\Login))
-    - Teddy\Model\Bans(@doctrine.dao(Teddy\Model\Ban))
-    - Teddy\Model\Messages(@doctrine.dao(Teddy\Model\Message))
-    - Teddy\Model\Forums(@doctrine.dao(Teddy\Model\Forum))
-    - Teddy\Model\ForumPosts(@doctrine.dao(Teddy\Model\ForumPost))
+    - Teddy\Model\SystemLogs()
+    - Teddy\Model\UserLogs()
+    - Teddy\Model\StatDetailedManager()
+    - Teddy\Model\StatDailyManager()
+    - Teddy\Model\Users(%salt%)
+    - Teddy\Model\Logins()
+    - Teddy\Model\Bans()
+    - Teddy\Model\Messages()
+    - Teddy\Model\Forums()
+    - Teddy\Model\ForumPosts()
     router: Teddy\Router\RouterFactory::create
     user: Teddy\Security\User
     wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
