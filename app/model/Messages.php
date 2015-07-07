@@ -17,7 +17,7 @@ class Messages extends Manager
     {
         parent::__construct($em);
         $this->users = $users;
-        $this->dao = $this->em->getRepository(\Teddy\Model\Message::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\Message::class);
     }
 
     /**
@@ -54,7 +54,7 @@ class Messages extends Manager
      */
     public function getMessagesForUser(User $user, $type = 'all', $unreadOnly = false)
     {
-        $qb = $this->dao->createQueryBuilder('m');
+        $qb = $this->repository->createQueryBuilder('m');
 
         $allowed = array(Message::NOT_DELETED);
         if ($type == 'all') {

@@ -16,7 +16,7 @@ class Logins extends Manager
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->dao = $this->em->getRepository(\Teddy\Model\Login::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\Login::class);
     }
 
     /**

@@ -12,7 +12,7 @@ class Bans extends Manager
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->dao = $this->em->getRepository(\Teddy\Model\Ban::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\Ban::class);
     }
 
     /**
@@ -55,7 +55,7 @@ class Bans extends Manager
             'start =' => $long,
             'until >=' => new \DateTime(),
         );
-        $data = $this->dao->findBy($criteria);
+        $data = $this->repository->findBy($criteria);
 
         if (count($data)) {
             return $data;
@@ -66,7 +66,7 @@ class Bans extends Manager
             'end >=' => $long,
             'until >=' => new \DateTime(),
         );
-        $data = $this->dao->findBy($criteria);
+        $data = $this->repository->findBy($criteria);
 
         if (count($data)) {
             return $data;

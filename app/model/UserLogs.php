@@ -12,7 +12,7 @@ class UserLogs extends Manager
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->dao = $this->em->getRepository(\Teddy\Model\UserLog::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\UserLog::class);
     }
 
     public function log(User $user, $type, $action, $data = null)

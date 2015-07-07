@@ -3,19 +3,20 @@
 namespace Teddy\Model;
 
 use Kdyby\Doctrine\Entities\BaseEntity;
-use Kdyby\Doctrine\EntityDao;
 use Kdyby\Doctrine\EntityManager;
+use Kdyby\Doctrine\EntityRepository;
 use Kdyby\Doctrine\QueryObject;
 use Nette;
+
 
 abstract class Manager extends Nette\Object
 {
 
-    /** @var \Kdyby\Doctrine\EntityManager */
+    /** @var EntityManager */
     protected $em;
 
-    /** @var \Kdyby\Doctrine\EntityDao */
-    protected $dao;
+    /** @var EntityRepository */
+    protected $repository;
 
 
     /**
@@ -35,7 +36,7 @@ abstract class Manager extends Nette\Object
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->dao->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -44,7 +45,7 @@ abstract class Manager extends Nette\Object
      */
     public function find($id)
     {
-        return $this->dao->find($id);
+        return $this->repository->find($id);
     }
 
     /**
@@ -53,7 +54,7 @@ abstract class Manager extends Nette\Object
      */
     public function fetch(QueryObject $query)
     {
-        return $this->dao->fetch($query);
+        return $this->repository->fetch($query);
     }
 
     /**
@@ -69,7 +70,7 @@ abstract class Manager extends Nette\Object
      */
     public function findPairs($criteria, $value = NULL, $orderBy = array(), $key = NULL)
     {
-        return $this->dao->findPairs($criteria, $value, $orderBy, $key);
+        return $this->repository->findPairs($criteria, $value, $orderBy, $key);
     }
 
     /**

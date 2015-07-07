@@ -12,7 +12,7 @@ class ForumPosts extends Manager
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->dao = $this->em->getRepository(\Teddy\Model\ForumPost::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\ForumPost::class);
     }
 
 }

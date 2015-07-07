@@ -30,7 +30,7 @@ class Users extends Manager implements Nette\Security\IAuthenticator
     {
         parent::__construct($em);
         $this->salt = $salt;
-        $this->dao = $this->em->getRepository(\Teddy\Model\User::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\User::class);
     }
 
     /**
@@ -39,7 +39,7 @@ class Users extends Manager implements Nette\Security\IAuthenticator
      */
     public function getByNick($nick)
     {
-        $data = $this->dao->findBy(array('nick' => $nick));
+        $data = $this->repository->findBy(array('nick' => $nick));
         return (count($data)) ? $data[0] : false;
     }
 
@@ -49,7 +49,7 @@ class Users extends Manager implements Nette\Security\IAuthenticator
      */
     public function getByEmail($email)
     {
-        $data = $this->dao->findBy(array('email' => $email));
+        $data = $this->repository->findBy(array('email' => $email));
         return (count($data)) ? $data[0] : false;
     }
 
@@ -59,7 +59,7 @@ class Users extends Manager implements Nette\Security\IAuthenticator
      */
     public function getByToken($token)
     {
-        $data = $this->dao->findBy(array('token' => $token, 'tokenExpiration >=' => new \DateTime()));
+        $data = $this->repository->findBy(array('token' => $token, 'tokenExpiration >=' => new \DateTime()));
         return (count($data)) ? $data[0] : false;
     }
 

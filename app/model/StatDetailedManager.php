@@ -12,7 +12,7 @@ class StatDetailedManager extends Manager
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->dao = $this->em->getRepository(\Teddy\Model\StatDetailed::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\StatDetailed::class);
     }
 
     /**
@@ -66,7 +66,7 @@ class StatDetailedManager extends Manager
         $criteria['date >='] = $from;
         $criteria['date <='] = $to;
 
-        return $this->dao->findBy($criteria, ['date' => 'DESC'], 30);
+        return $this->repository->findBy($criteria, ['date' => 'DESC'], 30);
     }
 
 }

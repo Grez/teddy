@@ -59,6 +59,7 @@ migrations:
     codingStandard: spaces # "tabs" or "spaces", cs for generated classes
 
 doctrine:
+    defaultRepositoryClassName: Kdyby\Doctrine\EntityRepository
     user: ***
     password: ***
     dbname: ***

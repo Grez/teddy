@@ -26,7 +26,7 @@ class Forums extends Manager
     {
         parent::__construct($em);
         $this->forumsPostsRepository = $forumPosts;
-        $this->dao = $this->em->getRepository(\Teddy\Model\Forum::class);
+        $this->repository = $this->em->getRepository(\Teddy\Model\Forum::class);
     }
 
     /**
