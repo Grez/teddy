@@ -4,6 +4,7 @@ namespace Teddy\Presenters;
 
 use Nette;
 use Teddy\Model;
+use IPub\VisualPaginator\Components as VisualPaginator;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
@@ -42,4 +43,15 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         }
     }
 
+    /**
+     * @return VisualPaginator\Control
+     */
+    protected function createComponentVisualPaginator()
+    {
+        $control = new VisualPaginator\Control;
+        $control->setTemplateFile('bootstrap.latte');
+        return $control;
+    }
+
 }
+

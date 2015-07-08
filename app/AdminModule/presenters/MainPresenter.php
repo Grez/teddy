@@ -6,7 +6,6 @@ use Nette;
 use Teddy;
 use Teddy\Forms\Form;
 use Teddy\Model\UserLogsQuery;
-use IPub\VisualPaginator\Components as VisualPaginator;
 
 
 class MainPresenter extends BasePresenter
@@ -47,16 +46,6 @@ class MainPresenter extends BasePresenter
 
         $form->addSubmit('send', 'Filter');
         return $form;
-    }
-
-    /**
-     * @return VisualPaginator\Control
-     */
-    protected function createComponentVisualPaginator()
-    {
-        $control = new VisualPaginator\Control;
-        $control->setTemplateFile('bootstrap.latte');
-        return $control;
     }
 
 }
