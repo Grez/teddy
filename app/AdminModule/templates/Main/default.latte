@@ -15,8 +15,8 @@
         </thead>
         <tbody>
             <tr n:foreach="$logs as $log">
-                <td><a n:href="delete id => $log->getId()">{$log->getDate()|date:'Y-m-d H:i:s'}</a></td>
-                <td>{$log->getUser()->getNick()}</td>
+                <td>{$log->getDate()|date:'Y-m-d H:i:s'}</td>
+                <td><a n:href="this userId => $log->getUser()->getId()">{$log->getUser()->getNick()}</a></td>
                 <td>{$log->getMessage()}</td>
             </tr>
         </tbody>

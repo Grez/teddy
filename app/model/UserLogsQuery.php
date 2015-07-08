@@ -7,7 +7,7 @@ use Kdyby\Doctrine\QueryObject;
 use Kdyby\Persistence\Queryable;
 
 
-class UserLogsQuery extends QueryObject
+class UserLogsListQuery extends QueryObject
 {
 
     /**
@@ -21,6 +21,10 @@ class UserLogsQuery extends QueryObject
     private $select = [];
 
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function byUser(User $user)
     {
         $this->filter[] = function (QueryBuilder $qb) use ($user) {
@@ -29,6 +33,22 @@ class UserLogsQuery extends QueryObject
         return $this;
     }
 
+    /**
+     * @param int $type
+     * @return $this
+     */
+    public function byType($type)
+    {
+        $this->filter[] = function (QueryBuilder $qb) use ($type) {
+            $qb->andWhere('l.type = :type')->setParameter('type', $type);
+        };
+        return $this;
+    }
+
+    /**
+     * @param string $order
+     * @return $this
+     */
     public function sortByDate($order = 'DESC')
     {
         $this->select[] = function (QueryBuilder $qb) use ($order) {
@@ -44,7 +64,7 @@ class UserLogsQuery extends QueryObject
     protected function doCreateQuery(Queryable $repository)
     {
         $qb = $this->createBasicDql($repository)
-            ->addSelect('partial l.{id}, partial u.{id, name}');
+            ->addSelect('partial u.{id, nick}');
 
         foreach ($this->select as $modifier) {
             $modifier($qb);

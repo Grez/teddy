@@ -4,24 +4,23 @@ namespace Teddy\AdminModule\Presenters;
 
 use Nette;
 use Teddy;
-use Teddy\Forms\Form;
-use Teddy\Model\UserLogsQuery;
 
 
 class MainPresenter extends BasePresenter
 {
 
-    /** @var user_id @persistent */
-    public $userId;
+    /** @var Teddy\Forms\IUserLogsFilterFormFactory @inject */
+    public $filterFormFactory;
 
 
-    public function renderDefault($page)
+    public function renderDefault()
     {
-        $query = (new UserLogsQuery())
+        $query = (new Teddy\Model\UserLogsListQuery())
+            ->byType(Teddy\Model\UserLog::ADMIN)
             ->sortByDate();
 
-        if ($this->getRequest()->getParameter('userId') > 0) {
-            $query->byUser($this->users->find($this->getRequest()->getParameter('userId')));
+        if ($this['filterForm']->userId > 0) {
+            $query->byUser($this->users->find($this['filterForm']->userId));
         }
 
         $result = $this->userLogs->fetch($query);
@@ -29,23 +28,9 @@ class MainPresenter extends BasePresenter
         $this->template->logs = $result;
     }
 
-    /**
-     * @TODO: filter actions, persistent parameters?
-     * @return Form
-     */
     protected function createComponentFilterForm()
     {
-        $form = new Form();
-        $form->setMethod('GET');
-        $select = $form->addSelect('userId', 'Admin')
-            ->setItems([0 => 'All'] + $this->users->findPairs(['admin' => true], "nick", [], "id"));
-
-        if ($this->getRequest()->getParameter('userId') > 0) {
-            $select->setDefaultValue($this->getRequest()->getParameter('userId'));
-        }
-
-        $form->addSubmit('send', 'Filter');
-        return $form;
+        return $this->filterFormFactory->create();
     }
 
 }
