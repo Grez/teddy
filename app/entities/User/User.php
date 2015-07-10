@@ -101,7 +101,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $active = 0;
+    protected $activated = false;
 
     /**
      * @ORM\Column(type="string")
