@@ -1,18 +1,19 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Stats;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
 
 
-class StatDailyManager extends Manager
+class StatDailyManager extends Entities\Manager
 {
 
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->repository = $this->em->getRepository(\Teddy\Model\StatDetailed::class);
+        $this->repository = $this->em->getRepository(StatDetailed::class);
     }
 
     /**

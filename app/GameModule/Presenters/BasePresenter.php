@@ -2,10 +2,10 @@
 
 namespace Teddy\GameModule\Presenters;
 
-use Teddy\Model\Users;
-use Teddy\Model\User;
 use Teddy;
+use Teddy\Entities\User\User;
 use Nette;
+
 
 abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 {

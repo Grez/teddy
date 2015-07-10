@@ -15,8 +15,8 @@ class MainPresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $query = (new Teddy\Model\UserLogsListQuery())
-            ->byType(Teddy\Model\UserLog::ADMIN)
+        $query = (new Teddy\Entities\Logs\UserLogsListQuery())
+            ->byType(Teddy\Entities\Logs\UserLog::ADMIN)
             ->sortByDate();
 
         if ($this['filterForm']->userId > 0) {

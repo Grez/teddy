@@ -2,21 +2,20 @@
 
 namespace Teddy\GameModule\Presenters;
 
-use Teddy\Model\Forum;
-use Teddy\Model\User;
-use GameModule;
-use Nette\Application\UI\Form;
-use Nette\InvalidArgumentException;
+use Teddy\Entities\Forum;
+use Teddy\Forms\Form;
+
 
 /**
  * @TODO: Get conversation
  */
 class ForumPresenter extends BasePresenter
 {
-    /** @var \Teddy\Model\Forums @inject */
+
+    /** @var \Teddy\Entities\Forum\Forums @inject */
     public $forumRepository;
 
-    /** @var \Teddy\Model\ForumPosts @inject */
+    /** @var \Teddy\Entities\Forum\ForumPosts @inject */
     public $forumPostRepository;
 
 

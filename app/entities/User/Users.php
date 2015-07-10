@@ -1,13 +1,14 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\User;
 
 use Nette;
+use Teddy\Entities;
 use Nette\Security\Passwords;
 use Kdyby\Doctrine\EntityManager;
 
 
-class Users extends Manager implements Nette\Security\IAuthenticator
+class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 {
 
     /** int User is active if he logged in last ACTIVE days */
@@ -30,7 +31,7 @@ class Users extends Manager implements Nette\Security\IAuthenticator
     {
         parent::__construct($em);
         $this->salt = $salt;
-        $this->repository = $this->em->getRepository(\Teddy\Model\User::class);
+        $this->repository = $this->em->getRepository(User::class);
     }
 
     /**

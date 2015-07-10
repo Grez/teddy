@@ -1,10 +1,12 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Forum;
 
-use Doctrine\ORM\Mapping as ORM;
-use Teddy\Model\Forums;
 use Nette;
+use Teddy\Entities;
+use Doctrine\ORM\Mapping as ORM;
+use Teddy\Entities\User\User;
+
 
 /**
  * @ORM\Entity

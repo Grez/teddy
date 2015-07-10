@@ -1,18 +1,19 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Logs;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
 
 
-class SystemLogs extends Manager
+class SystemLogs extends Entities\Manager
 {
 
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->repository = $this->em->getRepository(\Teddy\Model\SystemLog::class);
+        $this->repository = $this->em->getRepository(SystemLog::class);
     }
 
     /**

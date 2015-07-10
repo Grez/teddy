@@ -1,12 +1,14 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Forum;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
+use Teddy\Entities\User\User;
 
 
-class Forums extends Manager
+class Forums extends Entities\Manager
 {
 
     /** @var ForumPosts */
@@ -26,7 +28,7 @@ class Forums extends Manager
     {
         parent::__construct($em);
         $this->forumsPostsRepository = $forumPosts;
-        $this->repository = $this->em->getRepository(\Teddy\Model\Forum::class);
+        $this->repository = $this->em->getRepository(Forum::class);
     }
 
     /**

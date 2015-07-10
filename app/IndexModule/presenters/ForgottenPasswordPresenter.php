@@ -2,11 +2,13 @@
 
 namespace Teddy\IndexModule\Presenters;
 
-use Nette\Application\UI\Form;
+use Teddy\Forms\Form;
+
 
 class ForgottenPasswordPresenter extends BasePresenter
 {
-    /** @var \Teddy\Model\User */
+
+    /** @var \Teddy\Entities\User\User */
     protected $user;
 
 

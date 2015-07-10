@@ -1,9 +1,11 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Logs;
 
-use Doctrine\ORM\Mapping as ORM;
 use Nette;
+use Teddy\Entities;
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity
@@ -19,7 +21,7 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;

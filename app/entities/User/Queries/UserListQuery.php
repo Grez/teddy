@@ -1,6 +1,6 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\User;
 
 use Doctrine\ORM\QueryBuilder;
 use Kdyby\Persistence\Queryable;

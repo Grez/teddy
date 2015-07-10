@@ -12,13 +12,13 @@ class CronPresenter extends Nette\Application\UI\Presenter
     /** @var string */
     protected $cronName = '';
 
-    /** @var Teddy\Model\StatDailyManager @inject */
+    /** @var Teddy\Entities\Stats\StatDailyManager @inject */
     public $statsDailyManager;
 
-    /** @var Teddy\Model\StatDetailedManager @inject */
+    /** @var Teddy\Entities\Stats\StatDetailedManager @inject */
     public $statsDetailedManager;
 
-    /** @var Teddy\Model\SystemLogs @inject */
+    /** @var Teddy\Entities\Logs\SystemLogs @inject */
     public $systemLogs;
 
 

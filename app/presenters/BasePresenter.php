@@ -3,8 +3,9 @@
 namespace Teddy\Presenters;
 
 use Nette;
-use Teddy\Model;
+use Teddy\Entities;
 use IPub\VisualPaginator\Components as VisualPaginator;
+
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
@@ -12,23 +13,27 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var \Kdyby\Doctrine\EntityManager @inject */
     public $em;
 
-    /** @var \Teddy\Model\Bans @inject */
+    /** @var \Teddy\Entities\Bans\Bans @inject */
     public $bans;
 
-    /** @var \Teddy\Model\Users @inject */
+    /** @var \Teddy\Entities\User\Users @inject */
     public $users;
 
     /** @var \WebLoader\Nette\LoaderFactory @inject */
     public $webLoader;
 
 
-    /** @return CssLoader */
+    /**
+     * @return \WebLoader\Nette\CssLoader
+     */
     protected function createComponentCss()
     {
         return $this->webLoader->createCssLoader('default');
     }
 
-    /** @return JavaScriptLoader */
+    /**
+     * @return \WebLoader\Nette\JavaScriptLoader
+     */
     protected function createComponentJs()
     {
         return $this->webLoader->createJavaScriptLoader('default');

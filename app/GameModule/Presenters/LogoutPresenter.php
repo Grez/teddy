@@ -2,8 +2,6 @@
 
 namespace Teddy\GameModule\Presenters;
 
-use GameModule;
-
 class LogoutPresenter extends BasePresenter
 {
 

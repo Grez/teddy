@@ -1,12 +1,15 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\PM;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
+use Teddy\Entities\User\User;
+use Teddy\Entities\User\Users;
 
 
-class Messages extends Manager
+class Messages extends Entities\Manager
 {
 
     /** @var Users */
@@ -17,7 +20,7 @@ class Messages extends Manager
     {
         parent::__construct($em);
         $this->users = $users;
-        $this->repository = $this->em->getRepository(\Teddy\Model\Message::class);
+        $this->repository = $this->em->getRepository(Message::class);
     }
 
     /**

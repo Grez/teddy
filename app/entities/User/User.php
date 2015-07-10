@@ -1,10 +1,12 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\User;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Nette;
+use Teddy\Entities;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * @ORM\Entity

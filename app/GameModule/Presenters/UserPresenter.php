@@ -2,8 +2,8 @@
 
 namespace Teddy\GameModule\Presenters;
 
-use GameModule;
 use Teddy\Forms\Form;
+
 
 class UserPresenter extends BasePresenter
 {

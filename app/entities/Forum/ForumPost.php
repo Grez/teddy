@@ -1,9 +1,12 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Forum;
 
-use Doctrine\ORM\Mapping as ORM;
 use Nette;
+use Teddy\Entities;
+use Doctrine\ORM\Mapping as ORM;
+use Teddy\Entities\User\User;
+
 
 /**
  * @ORM\Entity
@@ -25,7 +28,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $forum;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $author;
@@ -52,7 +55,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $deleted;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
      * @ORM\JoinColumn(name="deleted_by", referencedColumnName="id")
      */
     protected $deleteBy;

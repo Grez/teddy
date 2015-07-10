@@ -1,10 +1,11 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Logs;
 
 use Kdyby\Doctrine\QueryBuilder;
 use Kdyby\Doctrine\QueryObject;
 use Kdyby\Persistence\Queryable;
+use Teddy\Entities\User\User;
 
 
 class UserLogsListQuery extends QueryObject
@@ -80,7 +81,7 @@ class UserLogsListQuery extends QueryObject
     private function createBasicDql(Queryable $repository)
     {
         $qb = $repository->createQueryBuilder()
-            ->select('l')->from('Teddy\Model\UserLog', 'l')
+            ->select('l')->from(UserLog::class, 'l')
             ->innerJoin('l.user', 'u');
 
         foreach ($this->filter as $modifier) {

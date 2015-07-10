@@ -4,7 +4,8 @@ namespace Teddy\AdminModule\Presenters;
 
 use Nette;
 use Teddy;
-
+use Teddy\Entities\User\User;
+use Teddy\Entities\Logs\UserLogs;
 
 class BasePresenter extends Teddy\Presenters\BasePresenter
 {
@@ -12,7 +13,7 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
     /** @var User */
     protected $user;
 
-    /** @var \Teddy\Model\UserLogs @inject */
+    /** @var UserLogs @inject */
     public $userLogs;
 
     /** @var array */
@@ -55,13 +56,17 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
         $this->template->sections = $this->sections;
     }
 
-    /** @return CssLoader */
+    /**
+     * @return \WebLoader\Nette\CssLoader
+     */
     protected function createComponentCssAdmin()
     {
         return $this->webLoader->createCssLoader('admin');
     }
 
-    /** @return JsLoader */
+    /**
+     * @return \WebLoader\Nette\JavaScriptLoader
+     */
     protected function createComponentJsAdmin()
     {
         return $this->webLoader->createJavaScriptLoader('admin');

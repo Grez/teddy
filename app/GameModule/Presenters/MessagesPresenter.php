@@ -2,16 +2,17 @@
 
 namespace Teddy\GameModule\Presenters;
 
-use Teddy\Model\Message;
-use GameModule;
-use Nette\Teddylication\UI\Form;
+use Teddy\Forms\Form;
+use Teddy\Entities\PM\Messages;
+
 
 /**
  * @TODO: Get conversation
  */
 class MessagesPresenter extends BasePresenter
 {
-    /** @var \Teddy\Model\Messages @inject */
+
+    /** @var Messages @inject */
     public $msgsRepository;
 
     /** @var array */
@@ -38,8 +39,8 @@ class MessagesPresenter extends BasePresenter
     public function renderDetail($id)
     {
         $msg = $this->msgsRepository->find($id);
-        if(!$msg || ($this->user != $msg->getTo() && $this->user == $msg->getFrom())) {
-            $this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'error');
+        if(!$msg || ($this->user != $msg->getTo() && $this->user != $msg->getFrom())) {
+            $this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'danger');
             $this->redirect('default');
         }
 
@@ -65,8 +66,8 @@ class MessagesPresenter extends BasePresenter
     public function actionDelete($id)
     {
         $msg = $this->msgsRepository->find($id);
-        if(!$msg || ($this->user != $msg->getTo() && $this->user == $msg->getFrom())) {
-            $this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'error');
+        if(!$msg || ($this->user != $msg->getTo() && $this->user != $msg->getFrom())) {
+            $this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'danger');
             $this->redirect('default');
         }
 
@@ -103,7 +104,7 @@ class MessagesPresenter extends BasePresenter
     {
         $recipient = $this->users->getByNick($values['to']);
         if(!$recipient) {
-            $this->flashMessage('This user doesn\'t exist.', 'error');
+            $this->flashMessage('This user doesn\'t exist.', 'danger');
             $this->redirect('this');
         }
 

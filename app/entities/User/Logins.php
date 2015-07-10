@@ -1,12 +1,13 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\User;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
 
 
-class Logins extends Manager
+class Logins extends Entities\Manager
 {
 
     /** Max number of attempts in one hour before auto-ban */
@@ -16,7 +17,7 @@ class Logins extends Manager
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->repository = $this->em->getRepository(\Teddy\Model\Login::class);
+        $this->repository = $this->em->getRepository(Login::class);
     }
 
     /**

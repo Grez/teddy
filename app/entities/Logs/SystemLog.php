@@ -1,9 +1,11 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Logs;
 
-use Doctrine\ORM\Mapping as ORM;
 use Nette;
+use Teddy\Entities;
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity

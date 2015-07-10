@@ -22,16 +22,16 @@ nette:
 
 
 services:
-    - Teddy\Model\SystemLogs()
-    - Teddy\Model\UserLogs()
-    - Teddy\Model\StatDetailedManager()
-    - Teddy\Model\StatDailyManager()
-    - Teddy\Model\Users(%salt%)
-    - Teddy\Model\Logins()
-    - Teddy\Model\Bans()
-    - Teddy\Model\Messages()
-    - Teddy\Model\Forums()
-    - Teddy\Model\ForumPosts()
+    - Teddy\Entities\Logs\SystemLogs()
+    - Teddy\Entities\Logs\UserLogs()
+    - Teddy\Entities\Stats\StatDetailedManager()
+    - Teddy\Entities\Stats\StatDailyManager()
+    - Teddy\Entities\User\Users(%salt%)
+    - Teddy\Entities\User\Logins()
+    - Teddy\Entities\Bans\Bans()
+    - Teddy\Entities\PM\Messages()
+    - Teddy\Entities\Forum\Forums()
+    - Teddy\Entities\Forum\ForumPosts()
 
     - Teddy\Forms\IUserLogsFilterFormFactory
     router: Teddy\Router\RouterFactory::create
@@ -40,7 +40,7 @@ services:
     lessFilter: WebLoader\Filter\LessFilter
 
     login:
-        class: Teddy\Events\LoginListener
+        class: Teddy\Entities\User\LoginListener
         tags: [kdyby.subscriber]
 
 extensions:

@@ -10,10 +10,10 @@ use Teddy\Forms\Form;
 class StatsPresenter extends BasePresenter
 {
 
-    /** @var Teddy\Model\StatDailyManager @inject */
+    /** @var Teddy\Entities\Stats\StatDailyManager @inject */
     public $statsDailyManager;
 
-    /** @var Teddy\Model\StatDetailedManager @inject */
+    /** @var Teddy\Entities\Stats\StatDetailedManager @inject */
     public $statsDetailedManager;
 
     /** @var \DateTime|null */
@@ -21,6 +21,7 @@ class StatsPresenter extends BasePresenter
 
     /** @var \DateTime|null */
     protected $to = null;
+
 
     public function startup()
     {

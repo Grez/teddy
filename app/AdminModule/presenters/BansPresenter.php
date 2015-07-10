@@ -3,9 +3,10 @@
 namespace Teddy\AdminModule\Presenters;
 
 use Teddy\Forms\Form;
-use Teddy\Model\Ban;
-use Teddy\Model\Bans;
-use Teddy\Model\UserLog;
+use Teddy\Entities\Bans\Ban;
+use Teddy\Entities\Bans\Bans;
+use Teddy\Entities\Logs\UserLog;
+
 
 class BansPresenter extends BasePresenter
 {

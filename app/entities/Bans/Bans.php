@@ -1,18 +1,19 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Bans;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
 
 
-class Bans extends Manager
+class Bans extends Entities\Manager
 {
 
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->repository = $this->em->getRepository(\Teddy\Model\Ban::class);
+        $this->repository = $this->em->getRepository(Ban::class);
     }
 
     /**

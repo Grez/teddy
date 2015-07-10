@@ -1,18 +1,20 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Logs;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
+use Teddy\Entities\User\User;
 
 
-class UserLogs extends Manager
+class UserLogs extends Entities\Manager
 {
 
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->repository = $this->em->getRepository(\Teddy\Model\UserLog::class);
+        $this->repository = $this->em->getRepository(UserLog::class);
     }
 
     public function log(User $user, $type, $action, $data = null)

@@ -1,13 +1,11 @@
 <?php
 
-namespace Teddy\Events;
+namespace Teddy\Entities\User;
 
 use Nette;
 use Kdyby;
-use Teddy\Model\Bans;
-use Teddy\Model\Login;
-use Teddy\Model\Logins;
-use Teddy\Model\Users;
+use Teddy\Entities\Bans\Bans;
+
 
 class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
 {

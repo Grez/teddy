@@ -1,9 +1,12 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\PM;
 
-use Doctrine\ORM\Mapping as ORM;
 use Nette;
+use Teddy\Entities;
+use Doctrine\ORM\Mapping as ORM;
+use Teddy\Entities\User\User;
+
 
 /**
  * @ORM\Entity
@@ -19,13 +22,13 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
      * @ORM\JoinColumn(name="to_user_id", referencedColumnName="id")
      */
     protected $to;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
      * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id")
      */
     protected $from;

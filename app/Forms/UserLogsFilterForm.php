@@ -6,6 +6,7 @@ use Teddy;
 use Nette;
 use Kdyby;
 
+
 class UserLogsFilterForm extends Nette\Application\UI\Control
 {
 
@@ -15,11 +16,11 @@ class UserLogsFilterForm extends Nette\Application\UI\Control
     /** @var Kdyby\Doctrine\EntityManager */
     private $em;
 
-    /** @var Teddy\Model\Users */
+    /** @var Teddy\Entities\User\Users */
     private $users;
 
 
-    public function __construct(Kdyby\Doctrine\EntityManager $em, Teddy\Model\Users $users)
+    public function __construct(Kdyby\Doctrine\EntityManager $em, Teddy\Entities\User\Users $users)
     {
         $this->em = $em;
         $this->users = $users;

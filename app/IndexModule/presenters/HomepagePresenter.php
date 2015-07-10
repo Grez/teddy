@@ -2,8 +2,7 @@
 
 namespace Teddy\IndexModule\Presenters;
 
-
-use Nette\Application\UI\Form;
+use Teddy\Forms\Form;
 
 
 class HomepagePresenter extends BasePresenter
@@ -79,7 +78,7 @@ class HomepagePresenter extends BasePresenter
             $this->flashMessage('You were successfully logged in.');
             $this->redirect(':Game:Main:');
         } catch (\Nette\Security\AuthenticationException $e) {
-            $this->flashMessage($e->getMessage(), 'error');
+            $this->flashMessage($e->getMessage(), 'danger');
             $this->redirect('this');
         }
     }

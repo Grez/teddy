@@ -3,9 +3,8 @@
 namespace Teddy\AdminModule\Presenters;
 
 use Nette;
-use Teddy;
 use Teddy\Forms\Form;
-use Teddy\Model\AdminPermission;
+use Teddy\Entities\Logs\UserLog;
 
 
 class AdminsPresenter extends BasePresenter
@@ -54,7 +53,7 @@ class AdminsPresenter extends BasePresenter
 
         $user->setAdmin(true);
         $this->users->save($user);
-        $this->userLogs->log($this->user, Teddy\Model\UserLog::ADMIN, Teddy\Model\UserLog::ADMIN_CREATE_ADMIN, $user->getNick());
+        $this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_CREATE_ADMIN, $user->getNick());
         $this->flashMessage('Admin created');
         $this->redirect('this');
     }
@@ -101,7 +100,7 @@ class AdminsPresenter extends BasePresenter
         }
 
         $this->users->deleteAdmin($admin);
-        $this->userLogs->log($this->user, Teddy\Model\UserLog::ADMIN, Teddy\Model\UserLog::ADMIN_DELETE_ADMIN, $admin->getNick());
+        $this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_DELETE_ADMIN, $admin->getNick());
         $this->flashMessage('Admin deleted', 'success');
         $this->redirect('this');
     }
@@ -116,7 +115,7 @@ class AdminsPresenter extends BasePresenter
         $this->users->setAdminPermissions($admin, $values['adminPermissions']);
         $admin->setAdminDescription($values['adminDescription']);
         $this->users->save($admin);
-        $this->userLogs->log($this->user, Teddy\Model\UserLog::ADMIN, Teddy\Model\UserLog::ADMIN_EDIT_ADMIN, $admin->getNick());
+        $this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_EDIT_ADMIN, $admin->getNick());
         $this->flashMessage('Admin edited', 'success');
         $this->redirect('this');
     }

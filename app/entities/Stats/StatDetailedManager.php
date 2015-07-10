@@ -1,18 +1,19 @@
 <?php
 
-namespace Teddy\Model;
+namespace Teddy\Entities\Stats;
 
 use Nette;
+use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
 
 
-class StatDetailedManager extends Manager
+class StatDetailedManager extends Entities\Manager
 {
 
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->repository = $this->em->getRepository(\Teddy\Model\StatDetailed::class);
+        $this->repository = $this->em->getRepository(StatDetailed::class);
     }
 
     /**
@@ -22,7 +23,7 @@ class StatDetailedManager extends Manager
      */
     public function create()
     {
-        $userRepository = $this->em->getRepository(\Teddy\Model\User::class);
+        $userRepository = $this->em->getRepository(Entities\User\User::class);
         $userListQuery = new UserListQuery();
         $total = $userListQuery->count($userRepository);
         $active = $userListQuery->onlyActive()->count($userRepository);
