@@ -65,28 +65,6 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
     }
 
     /**
-     * Gets list of active players
-     */
-    public function getPlayersList()
-    {
-        $criteria = array(
-            'active' => 'T',
-        );
-        return $this->findBy($criteria);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAdmins()
-    {
-        $criteria = array(
-            'admin' => true,
-        );
-        return $this->findBy($criteria);
-    }
-
-    /**
      * @param \Nette\Utils\ArrayHash $values
      */
     public function register($data)

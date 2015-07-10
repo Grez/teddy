@@ -17,7 +17,8 @@ class AdminsPresenter extends BasePresenter
     public function startup()
     {
         parent::startup();
-        $this->admins = $this->users->getAdmins();
+        $query = (new \Teddy\Entities\User\UserListQuery())->onlyAdmins();
+        $this->admins = $this->users->fetch($query);
         $this->template->admins = $this->admins;
     }
 

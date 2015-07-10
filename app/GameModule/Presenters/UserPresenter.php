@@ -10,8 +10,10 @@ class UserPresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $players = $this->users->getPlayersList();
-        $this->template->players = $players;
+        $query = (new \Teddy\Entities\User\UserListQuery())->onlyActivated();
+        $result = $this->users->fetch($query);
+        $result->applyPaginator($this['visualPaginator']->getPaginator(), 20);
+        $this->template->players = $result;
     }
 
     /**

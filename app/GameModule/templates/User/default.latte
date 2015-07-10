@@ -4,4 +4,5 @@
     <ul n:if="count($players)">
         <li n:foreach="$players as $player"><a n:href="detail id => $player->getNick()">{$player->getNick()}</a></li>
     </ul>
+    {control visualPaginator}
 {/block}

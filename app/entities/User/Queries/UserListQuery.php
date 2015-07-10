@@ -22,6 +22,17 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 
 
     /**
+     * @return $this
+     */
+    public function onlyActivated()
+    {
+        $this->filter[] = function (QueryBuilder $qb) {
+            $qb->andWhere('u.activated = TRUE');
+        };
+        return $this;
+    }
+
+    /**
      * @param int $days
      * @return $this
      */
