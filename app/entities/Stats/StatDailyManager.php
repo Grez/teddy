@@ -13,7 +13,7 @@ class StatDailyManager extends Entities\Manager
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
-        $this->repository = $this->em->getRepository(StatDetailed::class);
+        $this->repository = $this->em->getRepository(StatDaily::class);
     }
 
     /**
