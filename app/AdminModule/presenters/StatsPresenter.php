@@ -13,14 +13,21 @@ class StatsPresenter extends BasePresenter
     /** @var Teddy\Entities\Stats\StatDailyManager @inject */
     public $statsDailyManager;
 
-    /** @var Teddy\Entities\Stats\StatDetailedManager @inject */
-    public $statsDetailedManager;
-
     /** @var \DateTime|null */
     protected $from = null;
 
     /** @var \DateTime|null */
     protected $to = null;
+
+    /** @var array */
+    protected $metrics = [];
+
+    /** @var array */
+    protected $availableMetrics = [
+        'players_total' => 'Players total',
+        'players_active' => 'Players active',
+        'players_online' => 'Players online',
+    ];
 
 
     public function startup()
@@ -28,64 +35,15 @@ class StatsPresenter extends BasePresenter
         parent::startup();
         $this->from = DateTime::from(strtotime('now -1 month'));
         $this->to = new DateTime();
+        $this->metrics = array_keys($this->availableMetrics);
     }
-
 
     public function renderDefault()
     {
-//        set_time_limit(1000);
-//        $time = strtotime('2014-01-01');
-//        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
-//        for($i = 0; $i <= 365; $i++) {
-//            $this->statsDailyManager->create(\Nette\Utils\DateTime::from($time + 86400 * $i));
-//            $this->em->clear();
-//        }
-
-//        $query = (new Teddy\Model\StatQuery())
-//            ->filtered($this['filter']->getFilter());
-//        $this->template->stats = $this->stats->fetch($query);
-//        $this->template->stats = $this->stats->getStats($this->from, $this->to);
-//        barDump('render');
-
-//        $count = 0;
-//        $objectsPerChunk = 1000;
-//set_time_limit(1000);
-//
-//        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
-//
-//        $time = strtotime('2015-01-01');
-//        for ($i = 0; $i < 1440 * 3; $i++) {
-//            $stat = new Teddy\Model\Stat();
-//            $stat->setDate(DateTime::from($time + 60 * $i));
-//            $stat->setTime(DateTime::from($time + 60 * $i));
-//            $stat->setPlayers(mt_rand(3000, 5000));
-//            $stat->setPlayersOnline(mt_rand(0, 300));
-//            $stat->setPlayersActive(mt_rand(1000, 3000));
-//            $this->em->persist($stat);
-//
-//            $count++;
-//            if ($count%$objectsPerChunk == 0) {
-//                $this->em->flush();
-//                $this->em->clear();
-//            }
-//
-//            unset($stat);
-//        }
-//        $this->em->flush();
-//        exit('yup');
         $this->template->stats = $this->statsDailyManager->getStats($this->from, $this->to);
-        barDump('ren');
+        $this->template->metrics = $this->metrics;
+        $this['statsFilterForm']['metrics']->setValue($this->metrics);
     }
-
-    public function actionDefault()
-    {
-        barDump('act');
-    }
-
-//    protected function createComponentFilter()
-//    {
-//        return $this->filterFormFactory->create();
-//    }
 
     /**
      * @return Form
@@ -93,6 +51,7 @@ class StatsPresenter extends BasePresenter
     protected function createComponentStatsFilterForm()
     {
         $form = new Form();
+        $form->setMethod('GET');
         $form->addDate('from', 'From', 'd.m.Y')
             ->setDefaultValue($this->from)
             ->setRequired('Please fill date')
@@ -101,11 +60,8 @@ class StatsPresenter extends BasePresenter
             ->setDefaultValue($this->to)
             ->setRequired('Please fill date')
             ->addRule([$form['to'], 'validateDate'], 'Date is invalid');
-        $form->addCheckboxList('metrics', 'Metrics', array(
-            'players_total' => 'Players total',
-            'players_online' => 'Players online',
-            'players_active' => 'Players active',
-        ));
+        $form->addCheckboxList('metrics', 'Metrics', $this->availableMetrics)
+            ->setDefaultValue(array_keys($this->availableMetrics));
         $form->addSubmit('submit');
         $form->onSuccess[] = $this->statsFormSuccess;
         return $form;
@@ -124,6 +80,8 @@ class StatsPresenter extends BasePresenter
         if ($values['to'] instanceof \DateTimeImmutable) {
             $this->to = \Nette\Utils\DateTime::from($values['to']->getTimestamp());
         }
+
+        $this->metrics = ($values['metrics']) ?: array_keys($this->availableMetrics);
     }
 
 }

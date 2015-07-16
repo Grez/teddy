@@ -52,7 +52,7 @@ class StatDailyManager extends Entities\Manager
         $criteria['date >='] = $from;
         $criteria['date <='] = $to;
 
-        return $this->findBy($criteria, ['date' => 'DESC']);
+        return $this->findBy($criteria, ['date' => 'ASC']);
     }
 
 }
