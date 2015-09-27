@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0ae34d9349d94271f0177f13e3cce20d",
+    "hash": "7f4beef11fca94c4536d60c4526ba8b8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -539,7 +539,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/67f02686c6c779ae50489728b91026bc8199720c",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/6c527d8ccbccec5257bb2c92bca973653b1e3976",
                 "reference": "67f02686c6c779ae50489728b91026bc8199720c",
                 "shasum": ""
             },
@@ -2317,12 +2317,12 @@
             "version": "v2.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
+                "url": "https://github.com/symfony/console.git",
                 "reference": "564398bc1f33faf92fc2ec86859983d30eb81806"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/564398bc1f33faf92fc2ec86859983d30eb81806",
+                "url": "https://api.github.com/repos/symfony/console/zipball/564398bc1f33faf92fc2ec86859983d30eb81806",
                 "reference": "564398bc1f33faf92fc2ec86859983d30eb81806",
                 "shasum": ""
             },
@@ -2566,6 +2566,108 @@
     ],
     "packages-dev": [
         {
+            "name": "nette/code-checker",
+            "version": "dev-devel",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rohlikcz/nette-code-checker.git",
+                "reference": "a1f1e5c28589fbc35ddbb005911d5d99eb739f31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rohlikcz/nette-code-checker/zipball/a1f1e5c28589fbc35ddbb005911d5d99eb739f31",
+                "reference": "a1f1e5c28589fbc35ddbb005911d5d99eb739f31",
+                "shasum": ""
+            },
+            "require": {
+                "latte/latte": "~2.3",
+                "nette/command-line": "~1.0",
+                "nette/finder": "~2.3",
+                "nette/neon": "~2.3",
+                "nette/utils": "~2.3",
+                "php": ">= 5.3.1"
+            },
+            "require-dev": {
+                "nette/tester": "1.4.0"
+            },
+            "bin": [
+                "src/code-checker.php"
+            ],
+            "type": "project",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "autoload-dev": {
+                "classmap": [
+                    "tests/"
+                ]
+            },
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "A simple tool to check source code against a set of coding standards.",
+            "support": {
+                "source": "https://github.com/rohlikcz/nette-code-checker/tree/devel"
+            },
+            "time": "2015-09-24 16:18:15"
+        },
+        {
+            "name": "nette/command-line",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/command-line.git",
+                "reference": "c0de1c40d2e74175edcae472b9ce957c2aa8454d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/command-line/zipball/c0de1c40d2e74175edcae472b9ce957c2aa8454d",
+                "reference": "c0de1c40d2e74175edcae472b9ce957c2aa8454d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1"
+            },
+            "require-dev": {
+                "nette/tester": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "http://nette.org/contributors"
+                }
+            ],
+            "description": "Nette Command Line Tools",
+            "homepage": "http://nette.org",
+            "time": "2014-08-13 11:47:39"
+        },
+        {
             "name": "nette/tester",
             "version": "v1.3.2",
             "source": {
@@ -2627,7 +2729,8 @@
     "stability-flags": {
         "doctrine/migrations": 20,
         "ipub/visual-paginator": 20,
-        "teddy/publisher": 20
+        "teddy/publisher": 20,
+        "nette/code-checker": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
