@@ -5,7 +5,7 @@ namespace Test;
 use Nette,
 	Tester,
 	Tester\Assert;
-use App\Model\User;
+use Teddy\Entities\User\User;
 
 $container = require __DIR__ . '/bootstrap.php';
 
