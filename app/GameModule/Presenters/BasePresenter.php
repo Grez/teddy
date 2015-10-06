@@ -7,25 +7,27 @@ use Teddy\Entities\User\User;
 use Nette;
 
 
+
 abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 {
 
-    /** @var User */
-    protected $user;
+	/** @var User */
+	protected $user;
 
 
-    protected function startup()
-    {
-        parent::startup();
 
-        $user = $this->getUser();
-        if(!$user->isLoggedIn()) {
-            $this->flashMessage(_('You are not logged in'), 'error');
-            $this->redirect(':Index:Homepage:default');
-        }
+	protected function startup()
+	{
+		parent::startup();
 
-        $this->user = $this->users->find($user->id);
-        $this->template->user = $this->user;
-    }
+		$user = $this->getUser();
+		if (!$user->isLoggedIn()) {
+			$this->flashMessage(_('You are not logged in'), 'error');
+			$this->redirect(':Index:Homepage:default');
+		}
+
+		$this->user = $this->users->find($user->id);
+		$this->template->user = $this->user;
+	}
 
 }

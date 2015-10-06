@@ -3,30 +3,30 @@
 <head>
 	<meta charset="utf-8">
 	<title>{ifset #title}{include title|striptags} | {/ifset}Teddy framework</title>
-    {control css}
+	{control css}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	{block head}{/block}
 </head>
 
 <body>
-	<script> document.documentElement.className+=' js' </script>
-	<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+<script> document.documentElement.className += ' js' </script>
+<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
 
-    <h1>{$user->nick}</h1>
-    <ul>
-        <li><a n:href="Messages:default">Messages</a></li>
-        <li><a n:href="Forum:default">Forum</a></li>
-        <li>
-            <a n:href="User:default">Users</a>
-            <ul>
-                <li><a n:href="User:detail">Your profile</a></li>
-            </ul>
-        </li>
-        <li><a n:href="Logout:">Logout</a></li>
-    </ul>
+<h1>{$user->nick}</h1>
+<ul>
+	<li><a n:href="Messages:default">Messages</a></li>
+	<li><a n:href="Forum:default">Forum</a></li>
+	<li>
+		<a n:href="User:default">Users</a>
+		<ul>
+			<li><a n:href="User:detail">Your profile</a></li>
+		</ul>
+	</li>
+	<li><a n:href="Logout:">Logout</a></li>
+</ul>
 
-	{include content}
+{include content}
 
-    {control js}
+{control js}
 </body>
 </html>

@@ -1,25 +1,23 @@
 {block content}
-    <h1>Logs</h1>
-
-    <h2>Filter</h2>
-    {control filterForm}
-
-    <h2>Logs</h2>
-    <table class="table" n:if="count($logs) > 0">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Nick</th>
-                <th>Log</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr n:foreach="$logs as $log">
-                <td>{$log->getDate()|date:'Y-m-d H:i:s'}</td>
-                <td><a n:href="this userId => $log->getUser()->getId()">{$log->getUser()->getNick()}</a></td>
-                <td>{$log->getMessage()}</td>
-            </tr>
-        </tbody>
-    </table>
-    {control visualPaginator}
+	<h1>Logs</h1>
+	<h2>Filter</h2>
+	{control filterForm}
+	<h2>Logs</h2>
+	<table class="table" n:if="count($logs) > 0">
+		<thead>
+		<tr>
+			<th>Date</th>
+			<th>Nick</th>
+			<th>Log</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr n:foreach="$logs as $log">
+			<td>{$log->getDate()|date:'Y-m-d H:i:s'}</td>
+			<td><a n:href="this userId => $log->getUser()->getId()">{$log->getUser()->getNick()}</a></td>
+			<td>{$log->getMessage()}</td>
+		</tr>
+		</tbody>
+	</table>
+	{control visualPaginator}
 {/block}

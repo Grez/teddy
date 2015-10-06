@@ -1,11 +1,10 @@
 {block content}
-    <h2>Add new admin</h2>
-    {control createAdminForm}
-
-    <h2>Admins</h2>
-    {foreach $admins as $admin}
-        <h3>{$admin->getNick()}</h3>
-        {control "adminForm-".$admin->getId()}
-        <hr n:if="!$iterator->isLast()">
-    {/foreach}
+	<h2>Add new admin</h2>
+	{control createAdminForm}
+	<h2>Admins</h2>
+	{foreach $admins as $admin}
+		<h3>{$admin->getNick()}</h3>
+		{control "adminForm-".$admin->getId()}
+		<hr n:if="!$iterator->isLast()">
+	{/foreach}
 {/block}

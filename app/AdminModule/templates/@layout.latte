@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>{ifset #title}{include title|striptags} | {/ifset}Teddy Admin</title>
-    {control css}
-    {control cssAdmin}
-    <link rel="shortcut icon" href="{$basePath}/favicon.ico">
-    {block head}{/block}
+	<meta charset="utf-8">
+	<title>{ifset #title}{include title|striptags} | {/ifset}Teddy Admin</title>
+	{control css}
+	{control cssAdmin}
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	{block head}{/block}
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    {foreach $sections as $section => $name}
-                        {var $presenter = 'Admin:' . $section}
-                        <li n:if="$user->isAllowed($presenter)" n:class="(($this->params['presenter']->getName() == $presenter) ? active)"><a n:href=":Admin:$section:">{$name}</a></li>
-                    {/foreach}
-                    <li><a n:href=":Game:Logout:">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				{foreach $sections as $section => $name}
+					{var $presenter = 'Admin:' . $section}
+					<li n:if="$user->isAllowed($presenter)" n:class="(($this->params['presenter']->getName() == $presenter) ? active)"><a n:href=":Admin:$section:">{$name}</a></li>
+				{/foreach}
+				<li><a n:href=":Game:Logout:">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
 
-    <div class="container">
-        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
-        {include content}
-    </div>
+<div class="container">
+	<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+	{include content}
+</div>
 
-    {control js}
-    {control jsAdmin}
+{control js}
+{control jsAdmin}
 </body>
 </html>

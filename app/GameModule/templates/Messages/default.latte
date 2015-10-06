@@ -1,27 +1,27 @@
 {block content}
-    <h2>Messages</h2>
-    <h3><a n:href="new">New message</a></h3>
-    {if count($msgs)}
-        <table>
-            <tr>
-                <th>From</th>
-                <th>To</th>
-                <th>Subject</th>
-                <th>Date</th>
-                <th>Action</th>
-            </tr>
-            <tr n:foreach="$msgs as $msg" n:class="msg, ($msg->unread ? unread)">
-                <td>{$msg->getSenderNick()}</td>
-                <td>{$msg->getTo()->getNick()}</td>
-                <td>{$msg->subject}</td>
-                <td>{$msg->date->format('Y-m-d H:i:s')}</td>
-                <td>
-                    <a n:href="detail, id => $msg->id">Detail</a>
-                    <a n:href="delete, id => $msg->id">Smazat</a>
-                </td>
-            </tr>
-        </table>
-    {else}
-        <p>You have no messages</p>
-    {/if}
+	<h2>Messages</h2>
+	<h3><a n:href="new">New message</a></h3>
+	{if count($msgs)}
+		<table>
+			<tr>
+				<th>From</th>
+				<th>To</th>
+				<th>Subject</th>
+				<th>Date</th>
+				<th>Action</th>
+			</tr>
+			<tr n:foreach="$msgs as $msg" n:class="msg, ($msg->unread ? unread)">
+				<td>{$msg->getSenderNick()}</td>
+				<td>{$msg->getTo()->getNick()}</td>
+				<td>{$msg->subject}</td>
+				<td>{$msg->date->format('Y-m-d H:i:s')}</td>
+				<td>
+					<a n:href="detail, id => $msg->id">Detail</a>
+					<a n:href="delete, id => $msg->id">Smazat</a>
+				</td>
+			</tr>
+		</table>
+	{else}
+		<p>You have no messages</p>
+	{/if}
 {/block}
