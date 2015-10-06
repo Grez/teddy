@@ -34,9 +34,9 @@ class UserLogs extends Entities\Manager
 
 	public function getLogs($type)
 	{
-		$criteria = array(
+		$criteria = [
 			'type' => $type,
-		);
+		];
 		return $this->findBy($criteria);
 	}
 

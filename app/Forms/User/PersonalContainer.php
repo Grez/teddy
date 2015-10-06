@@ -19,11 +19,11 @@ class PersonalContainer extends Nette\Forms\Container
 			->addCondition(Form::FILLED)
 			->addRule(Form::NUMERIC);
 		$this->addText('location', 'Location');
-		$this->addRadioList('gender', 'Gender', array(
+		$this->addRadioList('gender', 'Gender', [
 			0 => 'Do not show',
 			1 => 'Male',
 			2 => 'Female',
-		));
+		]);
 		$this->addUpload('avatar', 'Avatar')
 			->addCondition(Form::FILLED)
 			->addRule(Form::IMAGE);

@@ -27,10 +27,10 @@ class StatDailyManager extends Entities\Manager
 	public function create(\DateTime $date)
 	{
 		$query = $this->em->createQuery('
-            SELECT MAX(u.playersTotal) AS playersTotal, MAX(u.playersActive) AS playersActive, MAX(u.playersOnline) AS playersOnline
-            FROM Teddy\Model\StatDetailed u
-            WHERE u.date = ?1
-        ');
+			SELECT MAX(u.playersTotal) AS playersTotal, MAX(u.playersActive) AS playersActive, MAX(u.playersOnline) AS playersOnline
+			FROM Teddy\Model\StatDetailed u
+			WHERE u.date = ?1
+		');
 		$query->setParameter(1, $date);
 		$stats = $query->getResult();
 

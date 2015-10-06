@@ -66,7 +66,7 @@ class Messages extends Entities\Manager
 	{
 		$qb = $this->repository->createQueryBuilder('m');
 
-		$allowed = array(Message::NOT_DELETED);
+		$allowed = [Message::NOT_DELETED];
 		if ($type == 'all') {
 			$qb->where('m.to = ?1 AND m.deleted IN (?2)');
 			$qb->orWhere('m.from = ?1 AND m.deleted IN (?3)');
@@ -80,8 +80,8 @@ class Messages extends Entities\Manager
 			}
 		}
 		$qb->setParameter(1, $user);
-		$qb->setParameter(2, array_merge($allowed, array(Message::DELETED_SENDER)));
-		$qb->setParameter(3, array_merge($allowed, array(Message::DELETED_RECIPIENT)));
+		$qb->setParameter(2, array_merge($allowed, [Message::DELETED_SENDER]));
+		$qb->setParameter(3, array_merge($allowed, [Message::DELETED_RECIPIENT]));
 
 		if ($unreadOnly) {
 			$qb->where('m.unread = ?4');

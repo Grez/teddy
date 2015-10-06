@@ -66,10 +66,10 @@ class Configurator extends Nette\Configurator
 		}
 
 		if (!isset($parameters['container'])) {
-			$parameters['container'] = array(
+			$parameters['container'] = [
 				'class' => 'SystemContainer',
 				'parent' => 'Nette\DI\Container',
-			);
+			];
 		}
 
 		if (!isset($parameters['consoleMode'])) {

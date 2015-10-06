@@ -79,7 +79,7 @@ class UserPresenter extends BasePresenter
 	{
 		$form = new Form();
 		$form->addPassword('password', 'Current password')
-			->addRule(array($this->users, 'validatePassword'), 'You\'ve entered wrong password.', $this->user->getId())
+			->addRule([$this->users, 'validatePassword'], 'You\'ve entered wrong password.', $this->user->getId())
 			->setRequired();
 		$form->addPassword('password_new', 'New password')
 			->setRequired();
@@ -113,7 +113,7 @@ class UserPresenter extends BasePresenter
 	{
 		$form = new Form();
 		$form->addPassword('password', 'Current password')
-			->addRule(array($this->users, 'validatePassword'), 'You\'ve entered wrong password.', $this->user->getId())
+			->addRule([$this->users, 'validatePassword'], 'You\'ve entered wrong password.', $this->user->getId())
 			->setRequired();
 		$form->addText('email', 'New e-mail')
 			->addRule(Form::EMAIL, 'Please enter valid e-mail.')

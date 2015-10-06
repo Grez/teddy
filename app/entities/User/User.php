@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class User extends \Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -240,7 +240,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		if (!$array) {
 			return $this->adminPermissions;
 		} else {
-			$adminPermissions = array();
+			$adminPermissions = [];
 			foreach ($this->adminPermissions as $adminPermission) {
 				$adminPermissions[] = $adminPermission->getPresenter();
 			}

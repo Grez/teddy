@@ -111,11 +111,11 @@ class ForumPresenter extends BasePresenter
 
 		$this->template->msg = $msg;
 
-		$defaults = array(
+		$defaults = [
 			'to' => $msg->getSenderNick(),
 			'subject' => $msg->getSubject(),
 			'conversation' => $msg->getConversationId(),
-		);
+		];
 
 		$this['newMsgForm']['to']->setAttribute('readonly', 'readonly');
 		$this['newMsgForm']['subject']->setAttribute('readonly', 'readonly');

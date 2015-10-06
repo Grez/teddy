@@ -20,7 +20,7 @@ class HomepagePresenter extends BasePresenter
 			$form->addError('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason());
 		} else {
 			$form->addText('nick', 'Nick')
-				->addRule(array($this->users, 'validateNick'), 'This username is already taken.')
+				->addRule([$this->users, 'validateNick'], 'This username is already taken.')
 				->setRequired();
 			$form->addText('email', 'E-mail')
 				->addRule(Form::EMAIL, 'Please enter valid e-mail.')

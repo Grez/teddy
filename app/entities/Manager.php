@@ -77,7 +77,7 @@ abstract class Manager extends Nette\Object
 	 * @throws QueryException
 	 * @return array
 	 */
-	public function findPairs($criteria, $value = NULL, $orderBy = array(), $key = NULL)
+	public function findPairs($criteria, $value = NULL, $orderBy = [], $key = NULL)
 	{
 		return $this->repository->findPairs($criteria, $value, $orderBy, $key);
 	}

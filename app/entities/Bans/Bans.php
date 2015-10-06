@@ -57,21 +57,21 @@ class Bans extends Entities\Manager
 	public function checkIp($ip)
 	{
 		$long = ip2long($ip);
-		$criteria = array(
+		$criteria = [
 			'start =' => $long,
 			'until >=' => new \DateTime(),
-		);
+		];
 		$data = $this->repository->findBy($criteria);
 
 		if (count($data)) {
 			return $data;
 		}
 
-		$criteria = array(
+		$criteria = [
 			'start <=' => $long,
 			'end >=' => $long,
 			'until >=' => new \DateTime(),
-		);
+		];
 		$data = $this->repository->findBy($criteria);
 
 		if (count($data)) {
@@ -115,7 +115,7 @@ class Bans extends Entities\Manager
 		$bans = $this->checkIp($ip);
 		if (is_array($bans)) {
 			foreach ($bans as $ban) {
-				if (in_array($ban->getType(), array(Ban::TOTAL, Ban::GAME))) {
+				if (in_array($ban->getType(), [Ban::TOTAL, Ban::GAME])) {
 					return $ban;
 				}
 			}
@@ -136,7 +136,7 @@ class Bans extends Entities\Manager
 		$bans = $this->checkIp($ip);
 		if (is_array($bans)) {
 			foreach ($bans as $ban) {
-				if (in_array($ban->getType(), array(Ban::TOTAL, Ban::REGISTRATION, Ban::GAME))) {
+				if (in_array($ban->getType(), [Ban::TOTAL, Ban::REGISTRATION, Ban::GAME])) {
 					return $ban;
 				}
 			}
@@ -148,7 +148,7 @@ class Bans extends Entities\Manager
 
 	public function getBans()
 	{
-		return $this->findBy(array());
+		return $this->findBy([]);
 	}
 
 }

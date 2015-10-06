@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -86,7 +86,7 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function getMessage()
 	{
-		$data = (is_array($this->getData())) ? $this->getData() : array($this->getData());
+		$data = (is_array($this->getData())) ? $this->getData() : [$this->getData()];
 		return vsprintf($this->getTemplate(), $data);
 	}
 
@@ -98,8 +98,8 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	protected function getTemplate()
 	{
-		$templates = array(
-			self::ADMIN => array(
+		$templates = [
+			self::ADMIN => [
 				self::ADMIN_DAEMON => 'Daemon %s',
 				self::ADMIN_EDIT_USER => 'Edited user %s',
 				self::ADMIN_DELETE_USER => 'Deleted user %s',
@@ -109,13 +109,13 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 				self::ADMIN_DELETE_ADMIN => 'Deleted admin %s',
 				self::ADMIN_BAN_IP => 'Banned ip %s, for %s days, reason: %s',
 				self::ADMIN_UNBAN_IP => 'Unbanned ip %s (reason of ban: %s)',
-			),
-			self::USER => array(
+			],
+			self::USER => [
 				self::USER_CHANGE_PASSWORD => 'Changed password',
 				self::USER_DELETE_USER => 'Deleted profile',
-			),
-			self::GAME => array(),
-		);
+			],
+			self::GAME => [],
+		];
 
 		if (isset($templates[$this->type][$this->action])) {
 			return $templates[$this->type][$this->action];

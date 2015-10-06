@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 {

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  * @TODO: IPv6
  */
 class Ban extends \Kdyby\Doctrine\Entities\BaseEntity

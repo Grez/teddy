@@ -12,7 +12,7 @@ class AdminsPresenter extends BasePresenter
 {
 
 	/** @var array */
-	protected $admins = array();
+	protected $admins = [];
 
 
 
@@ -89,7 +89,7 @@ class AdminsPresenter extends BasePresenter
 				->getSeparatorPrototype()->setName('inline');
 			$form->addSubmit('send', 'Edit');
 			$form->addSubmit('delete', 'Delete')
-				->onClick[] = array($this, 'adminFormDelete');
+				->onClick[] = [$this, 'adminFormDelete'];
 			$form->onSuccess[] = $this->adminFormSuccess;
 			return $form;
 		});
@@ -134,4 +134,3 @@ class AdminsPresenter extends BasePresenter
 	}
 
 }
-

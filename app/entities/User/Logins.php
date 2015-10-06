@@ -60,11 +60,11 @@ class Logins extends Entities\Manager
 	{
 		$date = new \DateTime();
 		$date->setTimestamp(time() - 3600);
-		$criteria = array(
+		$criteria = [
 			'ip' => $ip,
 			'date >=' => $date,
 			'error' => Login::WRONG_PASSWORD,
-		);
+		];
 		$result = $this->findBy($criteria);
 		return (count($result) >= self::ATTEMPTS);
 	}

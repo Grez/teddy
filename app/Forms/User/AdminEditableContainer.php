@@ -15,7 +15,7 @@ class AdminEditableContainer extends Nette\Forms\Container
 		parent::__construct();
 
 		$this->addText('nick', 'Nick')
-			->addRule(array($this->users, 'validateNick'), 'This username is already taken.')
+			->addRule([$this->users, 'validateNick'], 'This username is already taken.')
 			->setRequired();
 		$this->addText('email', 'E-mail')
 			->addRule(Form::EMAIL, 'Please enter valid e-mail.')

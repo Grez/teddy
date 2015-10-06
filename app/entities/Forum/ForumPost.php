@@ -10,7 +10,7 @@ use Teddy\Entities\User\User;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 {

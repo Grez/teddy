@@ -19,7 +19,7 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 	public $userLogs;
 
 	/** @var array */
-	protected $sections = array(
+	protected $sections = [
 		'Main' => 'Main',
 		'Stats' => 'Stats',
 		'Users' => 'Users',
@@ -27,7 +27,7 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 		'Bans' => 'Bans',
 		'Game' => 'Gane',
 		'Antimulti' => 'Antimulti',
-	);
+	];
 
 
 

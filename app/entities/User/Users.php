@@ -44,7 +44,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function getByNick($nick)
 	{
-		$data = $this->repository->findBy(array('nick' => $nick));
+		$data = $this->repository->findBy(['nick' => $nick]);
 		return (count($data)) ? $data[0] : FALSE;
 	}
 
@@ -56,7 +56,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function getByEmail($email)
 	{
-		$data = $this->repository->findBy(array('email' => $email));
+		$data = $this->repository->findBy(['email' => $email]);
 		return (count($data)) ? $data[0] : FALSE;
 	}
 
@@ -68,7 +68,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function getByToken($token)
 	{
-		$data = $this->repository->findBy(array('token' => $token, 'tokenExpiration >=' => new \DateTime()));
+		$data = $this->repository->findBy(['token' => $token, 'tokenExpiration >=' => new \DateTime()]);
 		return (count($data)) ? $data[0] : FALSE;
 	}
 
@@ -97,7 +97,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function changePassword(User $user, $password)
 	{
-		$options = ($this->salt != '') ? array('salt' => $this->salt) : array();
+		$options = ($this->salt != '') ? ['salt' => $this->salt] : [];
 		$hashed = Passwords::hash($password, $options);
 		$user->setPassword($hashed);
 		$this->save($user);

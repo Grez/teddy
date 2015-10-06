@@ -29,7 +29,7 @@ class BansPresenter extends BasePresenter
 	{
 		$ban = $this->bans->find($id);
 		$this->bans->delete($ban);
-		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_UNBAN_IP, array($ban->getIp(), $ban->getReason()));
+		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_UNBAN_IP, [$ban->getIp(), $ban->getReason()]);
 		$this->flashMessage('Ban has been deleted', 'success');
 		$this->redirect('default');
 	}
@@ -41,11 +41,11 @@ class BansPresenter extends BasePresenter
 		$form = new Form();
 		$form->addText('reason', 'Reason')
 			->setRequired();
-		$form->addSelect('type', 'Type', array(
+		$form->addSelect('type', 'Type', [
 			Ban::REGISTRATION => 'Registration (user may play from this IP but can\'t register new profiles)',
 			Ban::GAME => 'Game (default)',
 			Ban::TOTAL => 'Total (DoS attacks etc., return 403 error for request)',
-		))->setDefaultValue(Ban::GAME);
+		])->setDefaultValue(Ban::GAME);
 		$form->addText('days', 'Days')
 			->addCondition(Form::NUMERIC);
 		$form->addText('ip', 'IP')
@@ -62,7 +62,7 @@ class BansPresenter extends BasePresenter
 	{
 		$days = (($values['days'] > 0) ? $values['days'] : '∞');
 		$this->bans->ban($values['ip'], $values['reason'], $values['days'], $values['type']);
-		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_BAN_IP, array($values['ip'], $days, $values['reason']));
+		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_BAN_IP, [$values['ip'], $days, $values['reason']]);
 		$this->flashMessage('Ban has been created', 'success');
 		$this->redirect('this');
 	}

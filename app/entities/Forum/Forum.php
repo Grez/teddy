@@ -10,7 +10,7 @@ use Teddy\Entities\User\User;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -27,7 +27,7 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	protected $posts;
 
-	protected $forums = array(
+	protected $forums = [
 		Forums::ADMIN_ANNOUNCEMENTS => 'Admin announcements',
 		Forums::WORLD_CHAT => 'World chat',
 		Forums::ADMINS => 'Admins',
@@ -35,7 +35,7 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 		Forums::ALTERNATIV => 'Alternativ',
 		Forums::ANTIMULTI => 'Antimulti',
 		Forums::BUGS => 'Bugs & Features',
-	);
+	];
 
 
 

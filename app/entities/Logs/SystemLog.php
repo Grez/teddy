@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class SystemLog extends \Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -42,18 +42,18 @@ class SystemLog extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	protected $date;
 
-	public static $scripts = array(
+	public static $scripts = [
 		1 => 'cron_minute',
 		2 => 'cron_hour',
 		3 => 'cron_midnight',
 		4 => 'cron_night',
 		5 => 'migration',
 		6 => 'restart',
-	);
+	];
 
-	public static $actions = array(
+	public static $actions = [
 		1 => 'finished',
-	);
+	];
 
 
 
