@@ -5,94 +5,94 @@
 # http://nette.org/security-warning
 #
 parameters:
-    salt: "" # set in config.local.neon, used for comparing password; leave empty for better security; generate with "Nette\Utils\Random::generate(22, '0-9A-Za-z./')"
+	salt: "" # set in config.local.neon, used for comparing password; leave empty for better security; generate with "Nette\Utils\Random::generate(22, '0-9A-Za-z./')"
 
 php:
-    date.timezone: Europe/Prague
+	date.timezone: Europe/Prague
 
 
 nette:
-    application:
-        errorPresenter: Error
-        mapping:
-            *: Teddy\*Module\Presenters\*Presenter
+	application:
+		errorPresenter: Error
+		mapping:
+			*: Teddy\*Module\Presenters\*Presenter
 
-    session:
-        expiration: 14 days
+	session:
+		expiration: 14 days
 
 
 services:
-    - Teddy\Entities\Logs\SystemLogs()
-    - Teddy\Entities\Logs\UserLogs()
-    - Teddy\Entities\Stats\StatDetailedManager()
-    - Teddy\Entities\Stats\StatDailyManager()
-    - Teddy\Entities\User\Users(%salt%)
-    - Teddy\Entities\User\Logins()
-    - Teddy\Entities\Bans\Bans()
-    - Teddy\Entities\PM\Messages()
-    - Teddy\Entities\Forum\Forums()
-    - Teddy\Entities\Forum\ForumPosts()
+	- Teddy\Entities\Logs\SystemLogs()
+	- Teddy\Entities\Logs\UserLogs()
+	- Teddy\Entities\Stats\StatDetailedManager()
+	- Teddy\Entities\Stats\StatDailyManager()
+	- Teddy\Entities\User\Users(%salt%)
+	- Teddy\Entities\User\Logins()
+	- Teddy\Entities\Bans\Bans()
+	- Teddy\Entities\PM\Messages()
+	- Teddy\Entities\Forum\Forums()
+	- Teddy\Entities\Forum\ForumPosts()
 
-    - Teddy\Forms\IUserLogsFilterFormFactory
-    router: Teddy\Router\RouterFactory::create
-    user: Teddy\Security\User
-    wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
-    lessFilter: WebLoader\Filter\LessFilter
+	- Teddy\Forms\IUserLogsFilterFormFactory
+	router: Teddy\Router\RouterFactory::create
+	user: Teddy\Security\User
+	wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
+	lessFilter: WebLoader\Filter\LessFilter
 
-    login:
-        class: Teddy\Entities\User\LoginListener
-        tags: [kdyby.subscriber]
+	login:
+		class: Teddy\Entities\User\LoginListener
+		tags: [kdyby.subscriber]
 
 extensions:
-    console: Kdyby\Console\DI\ConsoleExtension
-    events: Kdyby\Events\DI\EventsExtension
-    annotations: Kdyby\Annotations\DI\AnnotationsExtension
-    doctrine: Kdyby\Doctrine\DI\OrmExtension
-    migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
-    visualPaginator: IPub\VisualPaginator\DI\VisualPaginatorExtension
-    publisher: Teddy\Publisher\Extension
-    webloader: WebLoader\Nette\Extension
+	console: Kdyby\Console\DI\ConsoleExtension
+	events: Kdyby\Events\DI\EventsExtension
+	annotations: Kdyby\Annotations\DI\AnnotationsExtension
+	doctrine: Kdyby\Doctrine\DI\OrmExtension
+	migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+	visualPaginator: IPub\VisualPaginator\DI\VisualPaginatorExtension
+	publisher: Teddy\Publisher\Extension
+	webloader: WebLoader\Nette\Extension
 
 migrations:
-    table: doctrine_migrations # database table for applied migrations
-    dirs: # list of dirs to load migrations from
-        - %appDir%/migrations # first dir is used for generating migrations
-    namespace: Teddy\Migrations # namespace of migration classes
-    codingStandard: spaces # "tabs" or "spaces", cs for generated classes
+	table: doctrine_migrations # database table for applied migrations
+	dirs: # list of dirs to load migrations from
+		- %appDir%/migrations # first dir is used for generating migrations
+	namespace: Teddy\Migrations # namespace of migration classes
+	codingStandard: spaces # "tabs" or "spaces", cs for generated classes
 
 doctrine:
-    defaultRepositoryClassName: Kdyby\Doctrine\EntityRepository
-    user: ***
-    password: ***
-    dbname: ***
-    metadata:
-        Teddy: %appDir%
+	defaultRepositoryClassName: Kdyby\Doctrine\EntityRepository
+	user: ***
+	password: ***
+	dbname: ***
+	metadata:
+		Teddy: %appDir%
 
 webloader:
-    css:
-        default:
-            files:
-                - teddy/bootstrap.css
-                - teddy/bootstrap-theme.css
-                - teddy/style.less
-                - teddy/bootstrap-datepicker/bootstrap-datepicker.css
-            fileFilters:
-                - @lessFilter
-                - @wlCssFilter
-        admin:
-            files:
-                - teddy/admin.less
-    js:
-        default:
-            files:
+	css:
+		default:
+			files:
+				- teddy/bootstrap.css
+				- teddy/bootstrap-theme.css
+				- teddy/style.less
+				- teddy/bootstrap-datepicker/bootstrap-datepicker.css
+			fileFilters:
+				- @lessFilter
+				- @wlCssFilter
+		admin:
+			files:
+				- teddy/admin.less
+	js:
+		default:
+			files:
 #                - teddy/fingerprint2/fingerprint2.js # asynchro loading & execution?
-                - teddy/jquery.js
-                - teddy/bootstrap.js
-                - teddy/main.js
-                - teddy/netteForms.js
-                - teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
-                - teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
-        admin:
-            files:
-                - teddy/charts/Chart.Core.js
-                - {files: ['*.js'], from: 'teddy/charts'}
+				- teddy/jquery.js
+				- teddy/bootstrap.js
+				- teddy/main.js
+				- teddy/netteForms.js
+				- teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
+				- teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
+		admin:
+			files:
+				- teddy/charts/Chart.Core.js
+				- {files: ['*.js'], from: 'teddy/charts'}

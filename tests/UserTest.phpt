@@ -1,13 +1,15 @@
 <?php
 
-namespace Test;
+/**
+ * @testCase Teddy\Tests\UserTest
+ */
 
-use Nette,
-	Tester,
-	Tester\Assert;
+namespace Teddy\Tests;
+
+use Nette;
+use Tester;
+use Tester\Assert;
 use Teddy\Entities\User\User;
-
-
 
 $container = require __DIR__ . '/bootstrap.php';
 
@@ -33,8 +35,6 @@ class UserTest extends Tester\TestCase
 	}
 
 }
-
-
 
 $test = new UserTest($container);
 $test->run();
