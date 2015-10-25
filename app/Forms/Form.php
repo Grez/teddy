@@ -74,12 +74,12 @@ class Form extends \Nette\Application\UI\Form
 
 	/**
 	 * Sets Bootstrap 3 rendering
-	 *
-	 * @TODO: maybe separate this into another file?
-	 * @return Nette\Forms\IFormRenderer
+	 * @warning needs to be called after elements are created (otherwise classes for inputs aren't added)
+	 * @return self
 	 */
-	public function getRenderer()
+	public function setBootstrapRenderer()
 	{
+		/** @var Nette\Forms\Rendering\DefaultFormRenderer $renderer */
 		$renderer = parent::getRenderer();
 		$renderer->wrappers['controls']['container'] = NULL;
 		$renderer->wrappers['pair']['container'] = 'div class=form-group';
@@ -107,7 +107,18 @@ class Form extends \Nette\Application\UI\Form
 			}
 		}
 
-		return $renderer;
+		return $this;
+	}
+
+
+
+	/**
+	 * @todo: delete this method and add $this->setBootstrapRenderer() to all presenters
+	 */
+	public function render()
+	{
+		$this->setBootstrapRenderer();
+		parent::render();
 	}
 
 }
