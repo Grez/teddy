@@ -1,0 +1,39 @@
+{block content}
+	<h1>Antimulti</h1>
+	<h2>Search logins</h2>
+
+	<form n:name="loginForm" n:class="form-inline">
+		<div class="form-group">
+			<select n:name="type" />
+			<select n:name="success" />
+			<input n:name="text">
+			<input n:name="submit">
+		</div>
+	</form>
+
+	{if count($logins)}
+		<h2>List</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>User</th>
+					<th>IP</th>
+					<th>Cookie</th>
+					<th>Fingerprint</th>
+					<th>User-agent</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr n:foreach="$logins as $login">
+					<td>{$login->date|date:'Y-m-d H:i:s'}</td>
+					<td><a n:href="this, type => 'user', text => $login->user->nick">{$login->user->nick}</a></td>
+					<td><a n:href="this, type => 'ip', text => $login->ip">{$login->ip}</a></td>
+					<td><a n:href="this, type => 'cookie', text => $login->cookie">{$login->cookie}</a></td>
+					<td><a n:href="this, type => 'fingerprint', text => $login->fingerprint">{$login->fingerprint}</a></td>
+					<td><a n:href="this, type => 'userAgent', text => $login->userAgent->userAgent">{$login->userAgent->userAgent}</a></td>
+				</tr>
+			</tbody>
+		</table>
+	{/if}
+{/block}
