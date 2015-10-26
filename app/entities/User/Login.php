@@ -33,10 +33,10 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $login = '';
 
 	/**
-	 * @ORM\Column(type="string")
-	 * Set in __construct()
+	 * @ORM\ManyToOne(targetEntity="UserAgent", nullable="false", cascade="persist")
+	 * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id")
 	 */
-	protected $userAgent = '';
+	protected $userAgent;
 
 	/**
 	 * @ORM\Column(type="string")
@@ -51,6 +51,11 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $cookie = 0;
 
 	/**
+	 * @ORM\Column(type="string")
+	 */
+	protected $fingerprint = '';
+
+	/**
 	 * @ORM\Column(type="datetime")
 	 * Set in __construct()
 	 */
@@ -61,15 +66,17 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	protected $error = 0;
 
-	const WRONG_LOGIN = 1;
-	const WRONG_PASSWORD = 2;
+	const ERROR_WRONG_LOGIN = 1;
+	const ERROR_WRONG_PASSWORD = 2;
+	const ERROR_USER_BANNED = 3;
+	const ERROR_IP_BANNED = 4;
 
 
 
-	public function __construct()
+	public function __construct(UserAgent $userAgent)
 	{
 		$this->date = new \DateTime();
-		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
+		$this->userAgent = $userAgent;
 		$this->ip = $_SERVER['REMOTE_ADDR'];
 		$this->setCookie();
 	}

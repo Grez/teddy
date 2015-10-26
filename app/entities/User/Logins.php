@@ -32,7 +32,11 @@ class Logins extends Entities\Manager
 	 */
 	public function log(User $user = NULL, $login = '', $error = 0)
 	{
-		$log = new Login();
+		$userAgent = $this->em->getRepository(UserAgent::class)->findOneBy(['userAgent' => $_SERVER['HTTP_USER_AGENT']]);
+		if (!$userAgent) {
+			$userAgent = new UserAgent($_SERVER['HTTP_USER_AGENT']);
+		}
+		$log = new Login($userAgent);
 		$log->setError($error);
 
 		if ($user) {
@@ -63,7 +67,7 @@ class Logins extends Entities\Manager
 		$criteria = [
 			'ip' => $ip,
 			'date >=' => $date,
-			'error' => Login::WRONG_PASSWORD,
+			'error' => Login::ERROR_WRONG_PASSWORD,
 		];
 		$result = $this->findBy($criteria);
 		return (count($result) >= self::ATTEMPTS);
