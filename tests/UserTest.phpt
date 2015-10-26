@@ -11,7 +11,7 @@ use Tester;
 use Tester\Assert;
 use Teddy\Entities\User\User;
 
-$container = require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/bootstrap.php';
 
 
 
@@ -36,5 +36,5 @@ class UserTest extends Tester\TestCase
 
 }
 
-$test = new UserTest($container);
+$test = new UserTest();
 $test->run();
