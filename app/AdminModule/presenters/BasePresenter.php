@@ -25,7 +25,7 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 		'Users' => 'Users',
 		'Admins' => 'Admins',
 		'Bans' => 'Bans',
-		'Game' => 'Gane',
+		'Game' => 'Game',
 		'Antimulti' => 'Antimulti',
 	];
 
