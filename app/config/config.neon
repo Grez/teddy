@@ -85,7 +85,7 @@ webloader:
 	js:
 		default:
 			files:
-#                - teddy/fingerprint2/fingerprint2.js # asynchro loading & execution?
+				- teddy/fingerprint2/fingerprint2.js
 				- teddy/js.cookie/js.cookie.js
 				- teddy/jquery.js
 				- teddy/bootstrap.js

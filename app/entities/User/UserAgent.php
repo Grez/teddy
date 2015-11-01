@@ -26,11 +26,6 @@ class UserAgent extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	protected $userAgent = '';
 
-	/**
-	 * @ORM\Column(type="integer")
-	 */
-	protected $users = 0;
-
 
 
 	public function __construct($userAgent)

@@ -33,27 +33,28 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $login = '';
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="UserAgent", nullable="false", cascade="persist")
-	 * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id")
+	 * @ORM\ManyToOne(targetEntity="UserAgent", cascade="persist")
+	 * @ORM\JoinColumn(name="user_agent_id", nullable=false, referencedColumnName="id")
 	 */
 	protected $userAgent;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 * Set in __construct()
 	 */
-	protected $ip = '';
+	protected $ip;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 * Set in __construct()
 	 */
-	protected $cookie = 0;
+	protected $cookie;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
+	 * Set in __construct()
 	 */
-	protected $fingerprint = '';
+	protected $fingerprint;
 
 	/**
 	 * @ORM\Column(type="datetime")
@@ -73,23 +74,57 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 
-	public function __construct(UserAgent $userAgent)
+	public function __construct(Nette\Http\Request $request, UserAgent $userAgent, $login = '', User $user = NULL, $error = 0)
 	{
 		$this->date = new \DateTime();
 		$this->userAgent = $userAgent;
-		$this->ip = $_SERVER['REMOTE_ADDR'];
-		$this->setCookie();
+		$this->ip = $request->getRemoteAddress();
+		$this->cookie = $request->getCookie('login') ?: mt_rand(1000000, 9999999);
+		$this->fingerprint = $request->getCookie('fingerprint') ?: NULL;
+		$this->user = $user;
+		$this->login = $login;
 	}
 
 
 
 	/**
-	 * Sets tracking cookie (uses current if available)
+	 * @param mixed $error
+	 * @return Login
 	 */
-	public function setCookie()
+	public function setError(mixed $error)
 	{
-		$this->cookie = isset($_COOKIE['login']) ? $_COOKIE['login'] : mt_rand(1000000, 9999999);
-		setcookie('login', $this->cookie, time() + 86400 * 365);
+		$this->error = $error;
+		return $this;
+	}
+
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getError()
+	{
+		return $this->error;
+	}
+
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getUser()
+	{
+		return $this->user;
+	}
+
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getLogin()
+	{
+		return $this->login;
 	}
 
 }

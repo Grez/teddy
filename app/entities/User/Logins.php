@@ -14,12 +14,24 @@ class Logins extends Entities\Manager
 	/** Max number of attempts in one hour before auto-ban */
 	const ATTEMPTS = 15;
 
+	/**
+	 * @var Nette\Application\Request
+	 */
+	private $request;
+
+	/**
+	 * @var Nette\Http\Response
+	 */
+	private $response;
 
 
-	public function __construct(EntityManager $em)
+
+	public function __construct(EntityManager $em, Nette\Http\Request $request, Nette\Http\Response $response)
 	{
 		parent::__construct($em);
 		$this->repository = $this->em->getRepository(Login::class);
+		$this->request = $request;
+		$this->response = $response;
 	}
 
 
@@ -32,21 +44,9 @@ class Logins extends Entities\Manager
 	 */
 	public function log(User $user = NULL, $login = '', $error = 0)
 	{
-		$userAgent = $this->em->getRepository(UserAgent::class)->findOneBy(['userAgent' => $_SERVER['HTTP_USER_AGENT']]);
-		if (!$userAgent) {
-			$userAgent = new UserAgent($_SERVER['HTTP_USER_AGENT']);
-		}
-		$log = new Login($userAgent);
-		$log->setError($error);
-
-		if ($user) {
-			$log->setUser($user);
-		}
-
-		if ($login) {
-			$log->setLogin($login);
-		}
-
+		$ua = $this->request->getHeader('User-Agent');
+		$userAgent = $this->em->getRepository(UserAgent::class)->findOneBy(['userAgent' => $ua]) ?: new UserAgent($ua);
+		$log = new Login($this->request, $userAgent, $login, $user, $error);
 		$this->em->persist($log);
 		$this->em->flush();
 	}

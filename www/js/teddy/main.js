@@ -58,7 +58,7 @@ var TeddyEvents = $class({
                 case 3: document.title = '(' + that.getTotalEvents() + ') ' + that.title; break;
                 default: worker.terminate();
             }
-        }
+        };
         worker.postMessage(250);
     }
 
@@ -76,11 +76,16 @@ $(function() {
     });
 });
 
-//var options = {swfPath: '/js/teddy/fingerprint2/flash/compiled/FontList.swf', excludeUserAgent: false};
-//var d1 = new Date();
-//var fp = new Fingerprint2(options);
-//fp.get(function(result) {
-//    var d2 = new Date();
-//    console.log("Time took to calculate the fingerprint: " + (d2 - d1) + "ms");
-//    console.log(result);
-//});
+// Fingerprint
+// Maybe make in iframe and allow fonts?
+if (Cookies.get('fingerprint') === undefined) {
+    var options = {
+        excludeJsFonts: true,
+        excludeFlashFonts: true,
+    };
+    var fp = new Fingerprint2(options);
+    fp.get(function (result) {
+        var d2 = new Date();
+        Cookies.set('fingerprint', result, {expires: 1});
+    });
+}

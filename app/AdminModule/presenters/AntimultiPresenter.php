@@ -68,6 +68,9 @@ class AntimultiPresenter extends BasePresenter
 				case 'cookie':
 					$query->byCookie((int) $text);
 					break;
+				case 'fingerprint':
+					$query->byFingerprint($text);
+					break;
 			}
 		}
 
