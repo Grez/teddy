@@ -1,0 +1,30 @@
+{block content}
+	<h2>Ban IP</h2>
+	{control ipBanForm}
+
+	<h2>List</h2>
+	{if count($bans)}
+		<table class="table">
+			<thead>
+			<tr>
+				<th>Date</th>
+				<th>Until</th>
+				<th>IP</th>
+				<th>Reason</th>
+				<th>Action</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr n:foreach="$bans as $ban">
+				<td>{$ban->getCreated()|date:'Y-m-d H:i:s'}</td>
+				<td>{$ban->getUntil()|date:'Y-m-d H:i:s'}</td>
+				<td>{$ban->getIp()}</td>
+				<td>{$ban->getReason()}</td>
+				<td><a n:href="deleteBan!, id => $ban->getId()">Delete</a></td>
+			</tr>
+			</tbody>
+		</table>
+	{else}
+		<p>There are no bans</p>
+	{/if}
+{/block}

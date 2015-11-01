@@ -3,6 +3,7 @@
 namespace Teddy\AdminModule\Presenters;
 
 use Nette;
+use Teddy\Entities\User\UserListQuery;
 use Teddy\Forms\Form;
 use Teddy\Entities\Logs\UserLog;
 
@@ -19,7 +20,7 @@ class AdminsPresenter extends BasePresenter
 	public function startup()
 	{
 		parent::startup();
-		$query = (new \Teddy\Entities\User\UserListQuery())->onlyAdmins();
+		$query = (new UserListQuery())->onlyAdmins();
 		$this->admins = $this->users->fetch($query);
 		$this->template->admins = $this->admins;
 	}
@@ -84,7 +85,7 @@ class AdminsPresenter extends BasePresenter
 			$form->addText('lastActivity', 'Last activity')
 				->setDisabled()
 				->setDefaultValue($admin->getLastActivity()->format('Y-m-d H:i:s'));
-			$form->addCheckboxList('adminPermissions', 'Permissions', $this->sections)
+			$form->addCheckboxList('adminPermissions', 'Permissions', $this->getPresenters())
 				->setDefaultValue($admin->getAdminPermissions(TRUE))
 				->getSeparatorPrototype()->setName('inline');
 			$form->addSubmit('send', 'Edit');

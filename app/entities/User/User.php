@@ -69,12 +69,12 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $gender = 0;
 
 	/**
-	 * @ORM\Column(type="datetime", nullable=true))
+	 * @ORM\Column(type="datetime", nullable=false))
 	 */
 	protected $lastLogin;
 
 	/**
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", nullable=false)
 	 */
 	protected $lastActivity;
 
@@ -216,12 +216,8 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function isAllowed($presenter)
 	{
-		if ($presenter == 'Admin:Main') {
-			return TRUE;
-		}
-
 		foreach ($this->adminPermissions as $permission) {
-			if ('Admin:' . $permission->getPresenter() == $presenter) {
+			if ($permission->getPresenter() == $presenter) {
 				return TRUE;
 			}
 		}

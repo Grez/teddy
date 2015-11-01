@@ -3,6 +3,7 @@
 namespace Teddy\Entities\User;
 
 use Doctrine\ORM\QueryBuilder;
+use Kdyby\Persistence\Query;
 use Kdyby\Persistence\Queryable;
 use Nette\Utils\DateTime;
 
@@ -85,10 +86,24 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 	 * @param enum ASC|DESC $order
 	 * @return $this
 	 */
-	public function sortByNick($order = 'ASC')
+	public function orderByNick($order = 'ASC')
 	{
 		$this->select[] = function (QueryBuilder $qb) use ($order) {
 			$qb->addOrderBy('u.nick', $order);
+		};
+		return $this;
+	}
+
+
+
+	/**
+	 * @param string $order
+	 * @return $this
+	 */
+	public function orderByRegistration($order = 'DESC')
+	{
+		$this->select[] = function (QueryBuilder $qb) use ($order) {
+			$qb->addOrderBy('u.registered', $order);
 		};
 		return $this;
 	}

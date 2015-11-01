@@ -1,0 +1,23 @@
+{block content}
+	<h1>New users</h1>
+
+	{if count($users)}
+		<table class="table">
+			<thead>
+			<tr>
+				<th>Date</th>
+				<th>User</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr n:foreach="$users as $user">
+				<td>{$user->registered|date:'Y-m-d H:i:s'}</td>
+				<td>{$user->nick}</td>
+			</tr>
+			</tbody>
+		</table>
+		{control visualPaginator}
+	{else}
+		<p>We haven't found any matches</p>
+	{/if}
+{/block}

@@ -19,14 +19,20 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 	public $userLogs;
 
 	/** @var array */
-	protected $sections = [
-		'Main' => 'Main',
-		'Stats' => 'Stats',
-		'Users' => 'Users',
-		'Admins' => 'Admins',
-		'Bans' => 'Bans',
-		'Game' => 'Game',
-		'Antimulti' => 'Antimulti',
+	protected $presenters = [
+		'Admin:Main' => 'Main',
+		'Admin:Stats' => 'Stats',
+		'Admin:Users' => 'Users',
+		'Admin:Admins' => 'Admins',
+		'Admin:Game' => 'Game',
+		'Admin:Antimulti' => [
+			'name' => 'Antimulti',
+			'views' => [
+				'default' => 'Inspector',
+				'newUsers' => 'New users',
+				'bans' => 'Bans',
+			],
+		],
 	];
 
 
@@ -56,7 +62,10 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 		}
 
 		$this->template->user = $this->user;
-		$this->template->sections = $this->sections;
+		$this->template->presenters = $this->presenters;
+
+		$activePresenter = $this->presenters[$this->getPresenter()->getName()];
+		$this->template->presenterName = is_array($activePresenter) ? $activePresenter['name'] : $activePresenter;
 	}
 
 
@@ -77,6 +86,16 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 	protected function createComponentJsAdmin()
 	{
 		return $this->webLoader->createJavaScriptLoader('admin');
+	}
+
+
+	protected function getPresenters()
+	{
+		$presenters = [];
+		foreach ($this->presenters as $presenter => $value) {
+			$presenters[$presenter] = is_array($value) ? $value['name'] : $value;
+		}
+		return $presenters;
 	}
 
 }

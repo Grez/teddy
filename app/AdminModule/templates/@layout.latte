@@ -10,7 +10,9 @@
 </head>
 
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+
+<!-- Static navbar -->
+<nav class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -19,16 +21,34 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
+			{*<a class="navbar-brand" href="#">Project name</a>*}
 		</div>
-		<div id="navbar" class="collapse navbar-collapse">
+		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				{foreach $sections as $section => $name}
-					{var $presenter = 'Admin:' . $section}
-					<li n:if="$user->isAllowed($presenter)" n:class="(($this->params['presenter']->getName() == $presenter) ? active)"><a n:href=":Admin:$section:">{$name}</a></li>
+				{foreach $presenters as $presenter => $value}
+					{if !is_array($value)}
+						<li n:if="$user->isAllowed($presenter)" n:class="(($this->params['presenter']->getName() == $presenter) ? active), isset($dropdown) ? 'dropdown' : NULL">
+							<a n:href=":$presenter:">{$value}</a>
+						</li>
+					{else}
+						<li n:if="$user->isAllowed($presenter)" n:class="(($this->params['presenter']->getName() == $presenter) ? active), dropdown">
+							<a n:href=":$presenter:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								{$value['name']} <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								{foreach $value['views'] as $view => $name}
+									<li><a n:href=":$presenter:$view">{$name}</a></li>
+								{/foreach}
+							</ul>
+						</li>
+					{/if}
 				{/foreach}
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
 				<li><a n:href=":Game:Logout:">Logout</a></li>
 			</ul>
 		</div>
+		<!--/.nav-collapse -->
 	</div>
 </nav>
 
