@@ -1,18 +1,19 @@
 <?php
 
-namespace Teddy\AdminModule\Presenters;
+namespace Teddy\AdminModule\Components;
 
+use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
 use Teddy;
+use Teddy\Entities\Stats\StatDailyManager;
 use Teddy\Forms\Form;
+use Kdyby\Doctrine\EntityManager;
+use Nette\Application\UI\Control;
 
 
 
-class StatsPresenter extends BasePresenter
+class StatsControl extends Control
 {
-
-	/** @var Teddy\Entities\Stats\StatDailyManager @inject */
-	public $statsDailyManager;
 
 	/** @var \DateTime|null */
 	protected $from = NULL;
@@ -30,23 +31,39 @@ class StatsPresenter extends BasePresenter
 		'players_online' => 'Players online',
 	];
 
+	/**
+	 * @var EntityManager
+	 */
+	private $em;
+
+	/**
+	 * @var StatDailyManager
+	 */
+	private $statDailyManager;
 
 
-	public function startup()
+
+	public function __construct(EntityManager $em, StatDailyManager $statDailyManager)
 	{
-		parent::startup();
+		$this->em = $em;
+
 		$this->from = DateTime::from(strtotime('now -1 month'));
 		$this->to = new DateTime();
 		$this->metrics = array_keys($this->availableMetrics);
+		$this->statDailyManager = $statDailyManager;
 	}
 
 
 
-	public function renderDefault()
+	public function render()
 	{
-		$this->template->stats = $this->statsDailyManager->getStats($this->from, $this->to);
-		$this->template->metrics = $this->metrics;
+		$template = parent::createTemplate();
+		$template->stats = $this->statDailyManager->getStats($this->from, $this->to);
+		$template->metrics = $this->metrics;
 		$this['statsFilterForm']['metrics']->setValue($this->metrics);
+
+		$template->setFile(__DIR__ . '/stats.latte');
+		$template->render();
 	}
 
 
@@ -69,27 +86,26 @@ class StatsPresenter extends BasePresenter
 		$form->addCheckboxList('metrics', 'Metrics', $this->availableMetrics)
 			->setDefaultValue(array_keys($this->availableMetrics));
 		$form->addSubmit('submit');
-		$form->onSuccess[] = $this->statsFormSuccess;
+		$form->onSuccess[] = function (Form $form, ArrayHash $values) {
+			if ($values['from'] instanceof \DateTimeImmutable) {
+				$this->from = \Nette\Utils\DateTime::from($values['from']->getTimestamp());
+			}
+
+			if ($values['to'] instanceof \DateTimeImmutable) {
+				$this->to = \Nette\Utils\DateTime::from($values['to']->getTimestamp());
+			}
+
+			$this->metrics = ($values['metrics']) ?: array_keys($this->availableMetrics);
+		};
 		return $form;
 	}
+}
 
 
 
-	/**
-	 * @param Form $form
-	 * @param \Nette\Utils\ArrayHash $values
-	 */
-	public function statsFormSuccess($form, $values)
-	{
-		if ($values['from'] instanceof \DateTimeImmutable) {
-			$this->from = \Nette\Utils\DateTime::from($values['from']->getTimestamp());
-		}
+interface IStatsControlFactory
+{
 
-		if ($values['to'] instanceof \DateTimeImmutable) {
-			$this->to = \Nette\Utils\DateTime::from($values['to']->getTimestamp());
-		}
-
-		$this->metrics = ($values['metrics']) ?: array_keys($this->availableMetrics);
-	}
-
+	/** @return StatsControl */
+	function create();
 }

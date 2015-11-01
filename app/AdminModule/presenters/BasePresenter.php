@@ -21,10 +21,15 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 	/** @var array */
 	protected $presenters = [
 		'Admin:Main' => 'Main',
-		'Admin:Stats' => 'Stats',
 		'Admin:Users' => 'Users',
 		'Admin:Admins' => 'Admins',
-		'Admin:Game' => 'Game',
+		'Admin:Game' => [
+			'name' => 'Game',
+			'views' => [
+				'default' => 'Overview',
+				'stats' => 'Stats',
+			]
+		],
 		'Admin:Antimulti' => [
 			'name' => 'Antimulti',
 			'views' => [
