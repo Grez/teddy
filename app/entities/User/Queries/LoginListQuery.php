@@ -155,7 +155,7 @@ class LoginListQuery extends \Kdyby\Doctrine\QueryObject
 		$qb = $repository->createQueryBuilder()
 			->select('l')
 			->from(Login::class, 'l')
-			->innerJoin(User::class, 'u')
+			->innerJoin('l.user', 'u')
 			->setMaxResults(500)
 			->addOrderBy('l.date', 'DESC');
 

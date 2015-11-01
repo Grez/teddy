@@ -12,7 +12,6 @@
 	</form>
 
 	{if count($logins)}
-		<h2>List</h2>
 		<table class="table">
 			<thead>
 				<tr>
@@ -35,5 +34,9 @@
 				</tr>
 			</tbody>
 		</table>
+
+		{control visualPaginator}
+	{else}
+		<p>We haven't found any matches</p>
 	{/if}
 {/block}

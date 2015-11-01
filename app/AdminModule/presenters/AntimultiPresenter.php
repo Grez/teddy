@@ -26,6 +26,11 @@ class AntimultiPresenter extends BasePresenter
 
 
 
+	/**
+	 * @param string $type
+	 * @param string $success
+	 * @param string $text
+	 */
 	public function renderDefault($type, $success, $text)
 	{
 		$query = (new LoginListQuery());
@@ -36,7 +41,7 @@ class AntimultiPresenter extends BasePresenter
 				$query->onlySuccessful();
 			}
 
-			if ($success === 'success') {
+			if ($success === 'failed') {
 				$query->onlyUnsuccessful();
 			}
 		}
@@ -67,7 +72,8 @@ class AntimultiPresenter extends BasePresenter
 		}
 
 		$this->template->logins = $this->em->getRepository(Login::class)
-			->fetch($query);
+			->fetch($query)
+			->applyPaginator($this['visualPaginator']->getPaginator());
 	}
 
 
@@ -93,16 +99,6 @@ class AntimultiPresenter extends BasePresenter
 			$this->redirect('this', ['type' => $values->type, 'success' => $values->success, 'text' => $values->text]);
 		};
 		return $form->setBootstrapRenderer();
-	}
-
-
-
-	/**
-	 * @return \VisualPaginator
-	 */
-	protected function createComponentVp()
-	{
-		return new \VisualPaginator();
 	}
 
 }
