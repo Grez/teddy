@@ -55,6 +55,7 @@ extensions:
 	publisher: Teddy\Publisher\Extension
 	webloader: WebLoader\Nette\Extension
 	dispatcher: Symnedi\EventDispatcher\DI\EventDispatcherExtension
+	dateTimeProvider: Kdyby\Clock\DI\ClockExtension
 
 migrations:
 	table: doctrine_migrations # database table for applied migrations

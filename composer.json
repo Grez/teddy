@@ -32,7 +32,8 @@
         "ipub/visual-paginator": "@dev",
         "teddy/publisher": "@dev",
         "janmarek/webloader": "^2.4",
-        "nella/forms-datetime": "^2.3"
+        "nella/forms-datetime": "^2.3",
+        "kdyby/clock": "@dev"
     },
     "require-dev": {
         "nette/tester": "~1.3.0",
