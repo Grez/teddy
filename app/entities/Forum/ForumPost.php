@@ -11,6 +11,9 @@ use Teddy\Entities\User\User;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(indexes={
+ *   @ORM\Index(columns={"deleted"})
+ * })
  */
 class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 {

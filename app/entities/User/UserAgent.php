@@ -22,9 +22,9 @@ class UserAgent extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $id;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=TRUE, unique=TRUE)
 	 */
-	protected $userAgent = '';
+	protected $userAgent;
 
 
 

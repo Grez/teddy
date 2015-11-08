@@ -9,7 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(readOnly=TRUE)
+ * @ORM\Table(indexes={
+ *   @ORM\Index(columns={"ip"}),
+ *   @ORM\Index(columns={"cookie"}),
+ *   @ORM\Index(columns={"fingerprint"})
+ * })
  */
 class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 {

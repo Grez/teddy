@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(indexes={
+ *   @ORM\Index(columns={"start"}),
+ *   @ORM\Index(columns={"end"}),
+ *   @ORM\Index(columns={"until"})
+ * })
  * @TODO: IPv6
  */
 class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
@@ -112,9 +117,8 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 					}
 				}
 			}
-		} else {
-			return long2ip($this->start);
 		}
+		return long2ip($this->start);
 	}
 
 }
