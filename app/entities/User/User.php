@@ -70,6 +70,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @ORM\Column(type="datetime", nullable=false))
+	 * @var \DateTime
 	 */
 	protected $lastLogin;
 
@@ -253,5 +254,17 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	public function canEdit(User $user)
 	{
 		return ($user === $this || $user->isAdmin());
+	}
+
+
+
+	/**
+	 * @param \DateTime $lastLogin
+	 * @return User
+	 */
+	public function setLastLogin(\DateTime $lastLogin)
+	{
+		$this->lastLogin = $lastLogin;
+		return $this;
 	}
 }

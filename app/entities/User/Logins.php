@@ -2,6 +2,7 @@
 
 namespace Teddy\Entities\User;
 
+use Kdyby\Clock\IDateTimeProvider;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
@@ -24,14 +25,20 @@ class Logins extends Entities\Manager
 	 */
 	private $response;
 
+	/**
+	 * @var IDateTimeProvider
+	 */
+	private $dateTimeProvider;
 
 
-	public function __construct(EntityManager $em, Nette\Http\Request $request, Nette\Http\Response $response)
+
+	public function __construct(EntityManager $em, Nette\Http\Request $request, Nette\Http\Response $response, IDateTimeProvider $dateTimeProvider)
 	{
 		parent::__construct($em);
 		$this->repository = $this->em->getRepository(Login::class);
 		$this->request = $request;
 		$this->response = $response;
+		$this->dateTimeProvider = $dateTimeProvider;
 	}
 
 
@@ -44,6 +51,10 @@ class Logins extends Entities\Manager
 	 */
 	public function log(User $user = NULL, $login = '', $error = 0)
 	{
+		if ($user instanceof User) {
+			$user->setLastLogin($this->dateTimeProvider->getDateTime());
+		}
+
 		$ua = $this->request->getHeader('User-Agent');
 		$userAgent = $this->em->getRepository(UserAgent::class)->findOneBy(['userAgent' => $ua]) ?: new UserAgent($ua);
 		$log = new Login($this->request, $userAgent, $login, $user, $error);
