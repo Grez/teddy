@@ -54,6 +54,7 @@ extensions:
 	visualPaginator: IPub\VisualPaginator\DI\VisualPaginatorExtension
 	publisher: Teddy\Publisher\Extension
 	webloader: WebLoader\Nette\Extension
+	dispatcher: Symnedi\EventDispatcher\DI\EventDispatcherExtension
 
 migrations:
 	table: doctrine_migrations # database table for applied migrations

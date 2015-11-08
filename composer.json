@@ -25,7 +25,7 @@
         "nette/utils": "~2.3.0",
         "latte/latte": "~2.3.0",
         "tracy/tracy": "~2.3.0",
-        "kdyby/doctrine": "~2.3",
+        "kdyby/doctrine": "~3.0",
         "oyejorge/less.php": "~1.7",
         "doctrine/migrations": "@dev",
         "zenify/doctrine-migrations": "~2.0",
