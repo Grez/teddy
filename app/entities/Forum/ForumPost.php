@@ -2,6 +2,7 @@
 
 namespace Teddy\Entities\Forum;
 
+use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,12 +19,7 @@ use Teddy\Entities\User\User;
 class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue
-	 */
-	protected $id;
+	use Identifier;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Forum", inversedBy="forum")

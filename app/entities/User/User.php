@@ -2,6 +2,7 @@
 
 namespace Teddy\Entities\User;
 
+use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,12 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue
-	 */
-	protected $id;
+	use Identifier;
 
 	/**
 	 * @ORM\Column(type="string", unique=true)

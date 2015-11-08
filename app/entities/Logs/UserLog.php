@@ -2,6 +2,7 @@
 
 namespace Teddy\Entities\Logs;
 
+use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,12 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue
-	 */
-	protected $id;
+	use Identifier;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
