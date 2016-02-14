@@ -1,3 +1,5 @@
+sudo: false
+
 language: php
 
 php:
@@ -8,10 +10,13 @@ branches:
 
 services:
 
+addons:
+  hosts:
+    - teddy.l
+
 before_install:
-  - echo 'Europe/Prague' | sudo tee /etc/timezone
+  - export TZ=Europe/Prague
   - mysql -e "SHOW VARIABLES LIKE '%version%';"
-  - sudo sh -c "echo '127.0.0.1 teddy.l www.teddy.l' >> /etc/hosts"
 
 install:
   - travis_retry composer install --no-interaction --prefer-source
