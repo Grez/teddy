@@ -67,4 +67,45 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $control;
 	}
 
+
+
+	/**
+	 * @param string $message
+	 */
+	protected function infoFlashMessage($message)
+	{
+		$this->flashMessage($message, 'info');
+	}
+
+
+
+	/**
+	 * @param string $message
+	 * @deprecated use $this->warningFlashMessage instead
+	 */
+	protected function errorFlashMessage($message)
+	{
+		$this->warningFlashMessage($message);
+	}
+
+
+
+	/**
+	 * @param string $message
+	 */
+	protected function warningFlashMessage($message)
+	{
+		$this->flashMessage($message, 'warning');
+	}
+
+
+
+	/**
+	 * @param string $message
+	 */
+	protected function successFlashMessage($message)
+	{
+		$this->flashMessage($message, 'success');
+	}
+
 }
