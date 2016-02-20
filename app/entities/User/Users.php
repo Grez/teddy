@@ -19,7 +19,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	const ONLINE = 15;
 
 	/** @var array of function(string $login); Occurs when user uses wrong login */
-	public $onWrongLogin;
+	public $onWrongEmail;
 
 	/** @var array of function(string $login); Occurs when user uses wrong password */
 	public $onWrongPassword;
@@ -162,30 +162,19 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function authenticate(array $credentials)
 	{
-		list($login, $password) = $credentials;
-		$user = $this->getByNick($login);
+		list($email, $password) = $credentials;
+		$user = $this->getByEmail($email);
 
-		$byNick = $this->getByNick($login);
-		$byEmail = $this->getByEmail($login);
-
-		if (!$byNick && !$byEmail) {
-			$this->onWrongLogin($login);
+		if ($user) {
+			$this->onWrongEmail($email);
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
 		}
 
-		if ($byNick) {
-			if (Passwords::verify($password, $byNick->getPassword())) {
-				return new Nette\Security\Identity($user->getId());
-			}
+		if (Passwords::verify($password, $user->getPassword())) {
+			return new Nette\Security\Identity($user->getId());
 		}
 
-		if ($byEmail) {
-			if (Passwords::verify($password, $user->getPassword())) {
-				return new Nette\Security\Identity($user->getId());
-			}
-		}
-
-		$this->onWrongPassword($login);
+		$this->onWrongPassword($email);
 		throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
 	}
 

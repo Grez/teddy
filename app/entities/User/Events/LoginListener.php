@@ -49,9 +49,9 @@ class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
 
 
 
-	public function onWrongLogin($login)
+	public function onWrongEmail($email)
 	{
-		$this->logins->log(NULL, $login, Login::ERROR_WRONG_LOGIN);
+		$this->logins->log(NULL, $email, Login::ERROR_WRONG_EMAIL);
 	}
 
 
@@ -60,7 +60,7 @@ class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
 	{
 		return [
 			'\Teddy\Security\User::onLoggedIn',
-			'\Teddy\Entities\User\Users::onWrongLogin',
+			'\Teddy\Entities\User\Users::onWrongEmail',
 			'\Teddy\Entities\User\Users::onWrongPassword',
 		];
 	}

@@ -68,7 +68,7 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	protected $error = 0;
 
-	const ERROR_WRONG_LOGIN = 1;
+	const ERROR_WRONG_EMAIL = 1;
 	const ERROR_WRONG_PASSWORD = 2;
 	const ERROR_USER_BANNED = 3;
 	const ERROR_IP_BANNED = 4;
