@@ -25,13 +25,15 @@ class UserLogsListQuery extends QueryObject
 
 
 	/**
-	 * @param User $user
+	 * @param int|User $user
 	 * @return $this
 	 */
-	public function byUser(User $user)
+	public function byUser($user)
 	{
-		$this->filter[] = function (QueryBuilder $qb) use ($user) {
-			$qb->andWhere('u.id = :user')->setParameter('user', $user->getId());
+		$userId = $user instanceof User ? $user->getId() : $user;
+
+		$this->filter[] = function (QueryBuilder $qb) use ($userId) {
+			$qb->andWhere('u.id = :user')->setParameter('user', $userId);
 		};
 		return $this;
 	}
