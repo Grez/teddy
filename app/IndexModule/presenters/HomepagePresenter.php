@@ -62,7 +62,7 @@ class HomepagePresenter extends BasePresenter
 		if ($ban) {
 			$form->addError('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 'Error');
 		} else {
-			$form->addText('login', 'Nick or email')
+			$form->addText('email', 'Email')
 				->setRequired();
 			$form->addPassword('password', 'Password')
 				->setRequired();
@@ -81,7 +81,7 @@ class HomepagePresenter extends BasePresenter
 	public function loginFormSuccess(Form $form, $values)
 	{
 		try {
-			$this->getUser()->login($values->login, $values->password);
+			$this->getUser()->login($values->email, $values->password);
 			$this->flashMessage('You were successfully logged in.');
 			$this->redirect(':Game:Main:');
 		} catch (\Nette\Security\AuthenticationException $e) {

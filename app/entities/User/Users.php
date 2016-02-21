@@ -165,7 +165,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 		list($email, $password) = $credentials;
 		$user = $this->getByEmail($email);
 
-		if ($user) {
+		if (!$user) {
 			$this->onWrongEmail($email);
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
 		}

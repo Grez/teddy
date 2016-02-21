@@ -1,8 +1,10 @@
 <?php
 
+namespace Teddy;
 
 
-class TeddyException extends Exception
+
+class TeddyException extends \Exception
 {
 
 }
