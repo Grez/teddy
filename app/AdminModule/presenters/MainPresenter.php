@@ -21,8 +21,9 @@ class MainPresenter extends BasePresenter
 			->byType(Teddy\Entities\Logs\UserLog::ADMIN)
 			->sortByDate();
 
-		if ($this['filterForm']->userId > 0) {
-			$query->byUser($this->users->find($this['filterForm']->userId));
+		$userId = $this['filterForm']->userId;
+		if ($userId > 0) {
+			$query->byUser($userId);
 		}
 
 		$result = $this->userLogs->fetch($query);
