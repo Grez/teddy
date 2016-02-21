@@ -6,6 +6,7 @@ use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
+use Teddy\TeddyException;
 
 
 
@@ -95,7 +96,7 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @return string
-	 * @throws \TeddyException
+	 * @throws TeddyException
 	 */
 	protected function getTemplate()
 	{
@@ -122,7 +123,7 @@ class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 			return $templates[$this->type][$this->action];
 		}
 
-		throw new \TeddyException('Unknown action ' . $this->type . ':' . $this->action);
+		throw new TeddyException('Unknown action ' . $this->type . ':' . $this->action);
 	}
 
 }
