@@ -65,18 +65,22 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $gender = 0;
 
 	/**
-	 * @ORM\Column(type="datetime", nullable=false))
+	 * @ORM\Column(type="datetime")
 	 * @var \DateTime
+	 * Generated in __construct()
 	 */
 	protected $lastLogin;
 
 	/**
-	 * @ORM\Column(type="datetime", nullable=false)
+	 * @ORM\Column(type="datetime")
+	 * @var \DateTime
+	 * Generated in __construct()
 	 */
 	protected $lastActivity;
 
 	/**
 	 * @ORM\Column(type="datetime")
+	 * @var \DateTime
 	 * Generated in __construct()
 	 */
 	protected $registered;
@@ -143,6 +147,8 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->verificationCode = mt_rand(1000000, 9999999);
 		$this->affiliate = mt_rand(1000000, 9999999);
 		$this->registered = new \DateTime();
+		$this->lastLogin = new \DateTime("@0");
+		$this->lastActivity = new \DateTime("@0");
 		$this->adminPermissions = new ArrayCollection;
 	}
 
