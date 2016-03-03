@@ -4,5 +4,21 @@ namespace Teddy\Entities\Credits;
 
 
 
-class CreditsAlreadyExpired extends \Exception {}
+class AlreadyExpired extends \Exception
+{
 
+}
+
+
+
+class NotEnoughRemaining extends \Exception
+{
+
+}
+
+
+
+class NotEnoughTotal extends \Exception
+{
+
+}

@@ -2,92 +2,59 @@
 
 namespace Teddy\Entities\Credits;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Kdyby\Doctrine\EntityManager;
 use Teddy\Entities\User\User;
+use Teddy\Entities\User\Users;
 
 
 
-/**
- * @ORM\Entity()
- */
-class Credits extends \Kdyby\Doctrine\Entities\BaseEntity
+class Credits extends Entities\Manager
 {
 
-	use Identifier;
-
-	/**
-	 * @ORM\Column(type="integer", nullable=FALSE)
-	 * @var integer
-	 */
-	protected $amount = 0;
-
-	/**
-	 * @ORM\Column(type="integer", nullable=FALSE)
-	 * @var integer
-	 */
-	protected $remaining = 0;
-
-	/**
-	 * @ORM\Column(type="datetime")
-	 * @var \DateTime
-	 * Generated in __construct()
-	 */
-	protected $added;
-
-	/**
-	 * @ORM\Column(type="datetime")
-	 * @var \DateTime
-	 */
-	protected $expires;
-
-	/**
-	 * @ORM\Column(type="string")
-	 * @var string
-	 */
-	protected $description;
-
-	/**
-	 * @ORM\ManyToOne(targetEntity="\Teddy\Entities\User\User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * @var User
-	 */
-	protected $user;
-
-
-
-	/**
-	 * @param integer $amount
-	 * @param User $user
-	 * @param \DateTime|NULL $expires
-	 */
-	public function __construct($amount, User $user, \DateTime $expires = NULL)
+	public function __construct(EntityManager $em)
 	{
-		$this->amount = $amount;
-		$this->remaining = $amount;
-		$this->added = new \DateTime();
-		$this->expires = $expires ?: NULL;
+		parent::__construct($em);
+		$this->repository = $this->em->getRepository(Credit::class);
 	}
 
 
 
 	/**
-	 * @param integer $amount
+	 * @param int $amount
+	 * @param User $user
+	 * @param \DateTime|NULL $expires
+	 * @throws \Exception
 	 */
-	public function useAmount($amount)
+	public function addCredit($amount, User $user, \DateTime $expires = NULL)
 	{
-		if ($amount > $this->remaining) {
-			throw new \InvalidArgumentException('You\'re trying to use too much credits');
+		$credit = new Credit($amount, $user, $expires);
+		$this->em->persist($credit);
+		$this->em->flush();
+	}
+
+
+
+	public function useCredits($amount, User $user)
+	{
+
+	}
+
+
+
+	public function getCredits(User $user, $onlyUsable = FALSE)
+	{
+		$criteria = ['user' => $user];
+
+		if ($onlyUsable) {
+			$criteria['expires >'] = new \DateTime();
+			$criteria['remaining >'] = 0;
 		}
 
-		if ($this->expires < new \DateTime()) {
-			throw new CreditsAlreadyExpired($this->expires);
-		}
-
-		$this->remaining = $this->remaining - $amount;
+		$this->repository->findBy([
+			'user' => $user,
+		]);
 	}
 
 }
