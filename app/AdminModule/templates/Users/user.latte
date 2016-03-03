@@ -1,0 +1,6 @@
+{block content}
+	<h1>User - {$editedUser->getNick()}</h1>
+	{control editUserForm}
+
+	<a n:href="loginAsUser!, userId => $editedUser->id">Přihlásit se</a>
+{/block}

@@ -35,14 +35,9 @@ class User extends Nette\Security\User
 	 */
 	public function passwordLessLogin($userId)
 	{
-		/** @var \Teddy\Entities\User\User $user */
-		$user = $this->users->find($userId);
-		if (!$user) {
-			throw new UserDoesNotExistException();
-		}
 
 		$this->logout(TRUE);
-		$id = new Nette\Security\Identity($user->getId());
+		$id = new Nette\Security\Identity($userId);
 		$this->storage->setIdentity($id);
 		$this->storage->setAuthenticated(TRUE);
 	}
