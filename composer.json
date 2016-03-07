@@ -38,7 +38,8 @@
     },
     "require-dev": {
         "nette/tester": "~1.3.0",
-        "nette/code-checker": "dev-devel"
+        "nette/code-checker": "dev-devel",
+        "kdyby/tester-extras": "@dev"
     },
     "autoload": {
         "psr-4": {

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "068ef1607ab04756f86245607515067b",
-    "content-hash": "b0f52cfb99ad35f59f74ce7901d2827b",
+    "hash": "6e7f994f60071f25e7dd83aab096ff01",
+    "content-hash": "cdd5f670ed92fe61225d78e067bc5d49",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -588,7 +588,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/0074c9416fd8782273b8d390895c6d603b59ae15",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/20e25bd5037512a270bc8dee36e02fbd17a5e222",
                 "reference": "0074c9416fd8782273b8d390895c6d603b59ae15",
                 "shasum": ""
             },
@@ -3520,6 +3520,55 @@
     ],
     "packages-dev": [
         {
+            "name": "kdyby/tester-extras",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/TesterExtras.git",
+                "reference": "65ffcbc64e36be3f16c5831f64c5dfc590674753"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/TesterExtras/zipball/65ffcbc64e36be3f16c5831f64c5dfc590674753",
+                "reference": "65ffcbc64e36be3f16c5831f64c5dfc590674753",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "nette/tester": "~1.3@dev",
+                "symfony/process": "~2.6"
+            },
+            "bin": [
+                "bin/composer-nette"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kdyby\\TesterExtras\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "email": "filip@prochazka.su",
+                    "homepage": "http://filip-prochazka.com"
+                }
+            ],
+            "description": "Useful classes for testing Nette applications and libraries with Nette Tester",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "nette",
+                "tester"
+            ],
+            "time": "2016-01-17 19:56:17"
+        },
+        {
             "name": "nette/code-checker",
             "version": "dev-devel",
             "source": {
@@ -3676,6 +3725,55 @@
                 "unit"
             ],
             "time": "2015-02-08 04:13:28"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "7dedd5b60550f33dca16dd7e94ef8aca8b67bbfe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/7dedd5b60550f33dca16dd7e94ef8aca8b67bbfe",
+                "reference": "7dedd5b60550f33dca16dd7e94ef8aca8b67bbfe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-02-02 13:33:15"
         }
     ],
     "aliases": [],
@@ -3685,7 +3783,8 @@
         "ipub/visual-paginator": 20,
         "teddy/publisher": 20,
         "kdyby/clock": 20,
-        "nette/code-checker": 20
+        "nette/code-checker": 20,
+        "kdyby/tester-extras": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
