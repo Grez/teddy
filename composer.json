@@ -33,7 +33,7 @@
         "teddy/publisher": "@dev",
         "janmarek/webloader": "^2.4",
         "nella/forms-datetime": "^2.3",
-        "kdyby/clock": "@dev",
+        "kdyby/clock": "^0.3.0",
         "cboden/ratchet": "^0.3.3"
     },
     "require-dev": {

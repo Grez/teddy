@@ -32,6 +32,7 @@ services:
 	- Teddy\Entities\PM\Messages()
 	- Teddy\Entities\Forum\Forums()
 	- Teddy\Entities\Forum\ForumPosts()
+	- Teddy\Entities\Coins\CoinSacks()
 
 	- Teddy\Forms\IUserLogsFilterFormFactory
 

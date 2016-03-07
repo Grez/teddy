@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6e7f994f60071f25e7dd83aab096ff01",
-    "content-hash": "cdd5f670ed92fe61225d78e067bc5d49",
+    "hash": "fdfa3856ed0c3009ad084216575de8d9",
+    "content-hash": "d092447ba6559a86983a2ec448194882",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -1215,16 +1215,16 @@
         },
         {
             "name": "kdyby/clock",
-            "version": "dev-master",
+            "version": "v0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Clock.git",
-                "reference": "4e101a0725f6d226f9435fc0de09c4b23badcb33"
+                "reference": "3304c12939c550d5691de93bd5c9501b225ae639"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Clock/zipball/4e101a0725f6d226f9435fc0de09c4b23badcb33",
-                "reference": "4e101a0725f6d226f9435fc0de09c4b23badcb33",
+                "url": "https://api.github.com/repos/Kdyby/Clock/zipball/3304c12939c550d5691de93bd5c9501b225ae639",
+                "reference": "3304c12939c550d5691de93bd5c9501b225ae639",
                 "shasum": ""
             },
             "require": {
@@ -1291,7 +1291,7 @@
                 "nette",
                 "time"
             ],
-            "time": "2016-01-09 23:47:58"
+            "time": "2016-01-09 18:10:46"
         },
         {
             "name": "kdyby/console",
@@ -3782,7 +3782,6 @@
         "doctrine/migrations": 20,
         "ipub/visual-paginator": 20,
         "teddy/publisher": 20,
-        "kdyby/clock": 20,
         "nette/code-checker": 20,
         "kdyby/tester-extras": 20
     },
