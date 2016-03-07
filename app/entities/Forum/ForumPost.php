@@ -22,7 +22,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	use Identifier;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Forum", inversedBy="forum")
+	 * @ORM\ManyToOne(targetEntity="Forum", inversedBy="posts")
 	 * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
 	 */
 	protected $forum;

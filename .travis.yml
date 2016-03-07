@@ -31,6 +31,7 @@ before_script:
 script:
   - php vendor/bin/code-checker.php -l -d app --short-arrays
   - php vendor/bin/code-checker.php -l -d tests --ignore '*.xml' --ignore '*.html' --ignore '*.json' --short-arrays
+  - php www/index.php orm:validate-schema --skip-sync
   - vendor/bin/tester -s ./tests -p php
 
 after_failure:

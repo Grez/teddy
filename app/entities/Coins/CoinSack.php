@@ -51,7 +51,7 @@ class CoinSack extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $description;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Teddy\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Teddy\Entities\User\User", inversedBy="coinSacks")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 * @var User
 	 */

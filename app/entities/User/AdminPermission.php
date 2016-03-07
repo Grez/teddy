@@ -18,7 +18,7 @@ class AdminPermission extends \Kdyby\Doctrine\Entities\BaseEntity
 	use Identifier;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="User")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="adminPermissions")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;
