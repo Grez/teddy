@@ -2,7 +2,7 @@ log/*
 temp/*
 vendor/*
 !vendor/others
-tests/tmp
+tests/tmp/*
 !tests/tmp/.keep
 www/webtemp/*
 !www/webtemp/.keep
