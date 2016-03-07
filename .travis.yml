@@ -31,7 +31,7 @@ before_script:
 script:
   - php vendor/bin/code-checker.php -l -d app --short-arrays
   - php vendor/bin/code-checker.php -l -d tests --ignore '*.xml' --ignore '*.html' --ignore '*.json' --short-arrays
-  - vendor/bin/tester -s ./tests
+  - vendor/bin/tester -s ./tests -p php
 
 after_failure:
   - 'for i in $(find ./tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done'
