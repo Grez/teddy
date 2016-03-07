@@ -11,14 +11,15 @@ use Tester;
 use Tester\Assert;
 use Teddy\Entities\User\User;
 
-require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
+require __DIR__ . '/../TestCase.php';
 
 
 
-class UserTest extends Tester\TestCase
+class UserTest extends TestCase
 {
 
-	function testMailHiding()
+	public function testMailHiding()
 	{
 		$user = new User();
 		$user->setEmail('john.doe@gmail.com');
