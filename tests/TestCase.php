@@ -63,7 +63,8 @@ abstract class TestCase extends \Tester\TestCase
 			'tempDir' => __DIR__ . '/tmp',
 			'testMode' => TRUE
 		];
-		$configurator = (new Teddy\Configurator($params));
+		$configurator = (new Teddy\Configurator($params))
+			->setDebugMode(true);
 		$configurator->createRobotLoader()
 			->addDirectory(__DIR__ . '/../app')
 			->register();
