@@ -64,13 +64,13 @@ abstract class TestCase extends \Tester\TestCase
 			'testMode' => TRUE
 		];
 		$configurator = (new Teddy\Configurator($params))
-			->setDebugMode(true);
+			->addConfig(__DIR__ . '/config.neon')
+			->setDebugMode(TRUE);
 		$configurator->createRobotLoader()
 			->addDirectory(__DIR__ . '/../app')
 			->register();
 
-		$container = $configurator->createContainer();
-		return $container;
+		return $configurator->createContainer();
 	}
 
 
