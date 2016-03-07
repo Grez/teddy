@@ -7,7 +7,7 @@ use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Teddy\Entities\Coins\CoinSack;
 
 
 /**
@@ -136,6 +136,13 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	protected $adminPermissions;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="\Teddy\Entities\Coins\CoinSack", mappedBy="user", cascade={"persist", "remove"})
+	 * @ORM\OrderBy({"expiresAt" = "ASC"})
+	 * @var CoinSack[]|ArrayCollection
+	 */
+	protected $coinSacks;
+
 	/** Token for changing password, expiration in hours */
 	const TOKEN_EXPIRATION = 1;
 
@@ -150,6 +157,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->lastLogin = new \DateTime("@0");
 		$this->lastActivity = new \DateTime("@0");
 		$this->adminPermissions = new ArrayCollection;
+		$this->coinSacks = new ArrayCollection();
 	}
 
 
@@ -269,4 +277,56 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->lastLogin = $lastLogin;
 		return $this;
 	}
+
+
+
+	/**
+	 * @return int
+	 */
+	public function getTotalUsableCoins()
+	{
+		$total = 0;
+		foreach ($this->coinSacks as $coinSack) {
+			if (!$coinSack->isExpired()) {
+				$total += $coinSack->getRemaining();
+			}
+		}
+		return $total;
+	}
+
+
+	/**
+	 * @param CoinSack $coinSack
+	 */
+	public function addCoinSack(CoinSack $coinSack)
+	{
+		if (!$this->coinSacks->contains($coinSack)) {
+			$this->coinSacks->add($coinSack);
+		}
+		$this->orderCoinSacks();
+	}
+
+
+	/**
+	 * @return ArrayCollection|Entities\Coins\CoinSack[]
+	 */
+	public function getCoinSacks()
+	{
+		return new \Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper($this->coinSacks);
+	}
+
+
+	/**
+	 * Orders CoinSacks by expiratesAt
+	 * CoinSacks do not have to be sorted when added
+	 */
+	public function orderCoinSacks()
+	{
+		$iterator = $this->coinSacks->getIterator();
+		$iterator->uasort(function (CoinSack $a, CoinSack $b) {
+			return $a->getExpiresAt() < $b->getExpiresAt() ? -1 : 1;
+		});
+		$this->coinSacks = new ArrayCollection(iterator_to_array($iterator));
+	}
+
 }
