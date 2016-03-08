@@ -51,34 +51,20 @@ class Bans extends Entities\Manager
 
 
 	/**
+	 * Returns all bans for IP
+	 *
 	 * @param string $ip
-	 * @return array|bool
+	 * @return array
 	 */
 	public function checkIp($ip)
 	{
 		$long = ip2long($ip);
-		$criteria = [
-			'start =' => $long,
-			'until >=' => new \DateTime(),
-		];
-		$data = $this->repository->findBy($criteria);
-
-		if (count($data)) {
-			return $data;
-		}
-
-		$criteria = [
-			'start <=' => $long,
-			'end >=' => $long,
-			'until >=' => new \DateTime(),
-		];
-		$data = $this->repository->findBy($criteria);
-
-		if (count($data)) {
-			return $data;
-		}
-
-		return FALSE;
+		$query = $this->repository->createQueryBuilder('b')
+			->where('b.start = :start', $long)
+			->andWhere('b.end >= :end', $long)
+			->andWhere('b.until IS NULL OR b.until >= :utill', new \DateTime())
+			->getQuery();
+		return $query->getResult();
 	}
 
 
