@@ -67,6 +67,7 @@ migrations:
 
 doctrine:
 	defaultRepositoryClassName: Kdyby\Doctrine\EntityRepository
+	queryBuilderClassName: Kdyby\Doctrine\Dql\InlineParamsBuilder
 	user: ***
 	password: ***
 	dbname: ***
