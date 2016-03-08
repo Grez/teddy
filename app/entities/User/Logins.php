@@ -52,7 +52,7 @@ class Logins extends Entities\Manager
 	public function log(User $user = NULL, $login = '', $error = 0)
 	{
 		if ($user instanceof User) {
-			$user->setLastLogin($this->dateTimeProvider->getDateTime());
+			$user->setLastLoginAt($this->dateTimeProvider->getDateTime());
 		}
 
 		$ua = $this->request->getHeader('User-Agent');

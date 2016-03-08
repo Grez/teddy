@@ -4,6 +4,7 @@ namespace Teddy\Tests;
 
 
 
+use Nette\DI\Container;
 use Teddy;
 
 

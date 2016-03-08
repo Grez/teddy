@@ -69,21 +69,21 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	 * @var \DateTime
 	 * Generated in __construct()
 	 */
-	protected $lastLogin;
+	protected $lastLoginAt;
 
 	/**
 	 * @ORM\Column(type="datetime")
 	 * @var \DateTime
 	 * Generated in __construct()
 	 */
-	protected $lastActivity;
+	protected $lastActivityAt;
 
 	/**
 	 * @ORM\Column(type="datetime")
 	 * @var \DateTime
 	 * Generated in __construct()
 	 */
-	protected $registered;
+	protected $registeredAt;
 
 	/**
 	 * @ORM\Column(type="string")
@@ -119,7 +119,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
-	protected $tokenExpiration;
+	protected $tokenExpiresAt;
 
 	/**
 	 * @ORM\Column(type="boolean")
@@ -153,9 +153,9 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		parent::__construct();
 		$this->verificationCode = mt_rand(1000000, 9999999);
 		$this->affiliate = mt_rand(1000000, 9999999);
-		$this->registered = new \DateTime();
-		$this->lastLogin = new \DateTime("@0");
-		$this->lastActivity = new \DateTime("@0");
+		$this->registeredAt = new \DateTime();
+		$this->lastLoginAt = new \DateTime("@0");
+		$this->lastActivityAt = new \DateTime("@0");
 		$this->adminPermissions = new ArrayCollection;
 		$this->coinSacks = new ArrayCollection();
 	}
@@ -172,7 +172,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		$expiration = new \DateTime();
 		$expiration->setTimestamp(time() + self::TOKEN_EXPIRATION * 3600);
 		$this->token = mt_rand(100000000, 999999999);
-		$this->tokenExpiration = $expiration;
+		$this->tokenExpiresAt = $expiration;
 		return $this->token;
 	}
 
@@ -183,7 +183,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function invalidateToken()
 	{
-		$this->tokenExpiration = new \DateTime();
+		$this->tokenExpiresAt = new \DateTime();
 	}
 
 
@@ -269,12 +269,12 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param \DateTime $lastLogin
+	 * @param \DateTime $lastLoginAt
 	 * @return User
 	 */
-	public function setLastLogin(\DateTime $lastLogin)
+	public function setLastLoginAt(\DateTime $lastLoginAt)
 	{
-		$this->lastLogin = $lastLogin;
+		$this->lastLoginAt = $lastLoginAt;
 		return $this;
 	}
 

@@ -13,7 +13,7 @@ use Teddy\Entities\User\User;
 /**
  * @ORM\Entity()
  * @ORM\Table(indexes={
- *   @ORM\Index(columns={"deleted"})
+ *   @ORM\Index(columns={"deleted_at"})
  * })
  */
 class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
@@ -52,7 +52,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
-	protected $deleted;
+	protected $deletedAt;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
@@ -63,7 +63,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * @ORM\Column(type="datetime")
 	 */
-	protected $date;
+	protected $createdAt;
 
 	/**
 	 * @ORM\Column(type="smallint")
@@ -78,26 +78,28 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	public function __construct()
 	{
-		$this->date = new \DateTime();
+		$this->createdAt = new \DateTime();
 	}
 
 
 
 	/**
 	 * @param User $user
-	 * @return null
+	 * @return NULL
 	 */
 	public function delete(User $user)
 	{
-		$this->deleted = new \DateTime();
+		$this->deletedAt = new \DateTime();
 		$this->deletedBy = $user;
 	}
 
 
-
+	/**
+	 * @return bool
+	 */
 	public function isDeleted()
 	{
-		return ($this->deleted !== NULL && $this->deleted <= new Nette\Utils\DateTime());
+		return $this->deletedAt !== NULL && $this->deletedAt <= new Nette\Utils\DateTime();
 	}
 
 
@@ -109,7 +111,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function getConversationId()
 	{
-		return ($this->conversation != NULL) ? $this->conversation->id : $this->id;
+		return $this->conversation ? $this->conversation->id : $this->id;
 	}
 
 }
