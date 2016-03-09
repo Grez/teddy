@@ -12,11 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(indexes={
- *   @ORM\Index(columns={"start"}),
- *   @ORM\Index(columns={"end"}),
- *   @ORM\Index(columns={"until"})
+ *   @ORM\Index(columns={"range_start"}),
+ *   @ORM\Index(columns={"range_end"}),
+ *   @ORM\Index(columns={"ends_at"})
  * })
- * @TODO: IPv6
+ * @TODO: IPv6, unsigned is only for some engines
  */
 class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -24,33 +24,39 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 	use Identifier;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", options={"unsigned"=TRUE})
+	 * @var int
 	 */
-	protected $start;
+	protected $rangeStart;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", options={"unsigned"=TRUE})
+	 * @var int
 	 */
-	protected $end = 0;
+	protected $rangeEnd;
+
+	/**
+	 * Generated in __construct()
+	 * @ORM\Column(type="datetime")
+	 * @var \DateTime
+	 */
+	protected $createdAt;
 
 	/**
 	 * @ORM\Column(type="datetime")
-	 * Generated in __construct()
+	 * @var \DateTime
 	 */
-	protected $created;
-
-	/**
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $until;
+	protected $endsAt;
 
 	/**
 	 * @ORM\Column(type="string")
+	 * @var string
 	 */
 	protected $reason;
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $type;
 
@@ -64,10 +70,21 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 	const TOTAL = 3;
 
 
-
-	public function __construct()
+	/**
+	 * @param string $ip
+	 * @param string $reason
+	 * @param \DateTime $endsAt
+	 * @param int $type
+	 */
+	public function __construct($ip, $reason = '', \DateTime $endsAt = NULL, $type = self::GAME)
 	{
-		$this->created = new \DateTime();
+		$maxBan = new \DateTime('2100-01-01');
+		$this->endsAt =  $endsAt !== NULL && $endsAt < $maxBan ? $endsAt : $maxBan;
+
+		$this->createdAt = new \DateTime();
+		$this->type = $type;
+		$this->reason = $reason;
+		$this->setIp($ip);
 	}
 
 
@@ -77,15 +94,17 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 	 *
 	 * @param string $ip
 	 */
-	public function setIp($ip)
+	protected function setIp($ip)
 	{
 		if (strpos($ip, '*') !== FALSE) {
 			$start = str_replace('*', '0', $ip);
 			$end = str_replace('*', '255', $ip);
-			$this->start = ip2long($start);
-			$this->end = ip2long($end);
+			$this->rangeStart = ip2long($start);
+			$this->rangeEnd = ip2long($end);
+
 		} else {
-			$this->start = ip2long($ip);
+			$this->rangeStart = ip2long($ip);
+			$this->rangeEnd = ip2long($ip);
 		}
 	}
 
@@ -99,9 +118,9 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function getIp()
 	{
-		if ($this->end > 0) {
-			$range = $this->end - $this->start;
-			$ip = long2ip($this->start);
+		if ($this->rangeEnd > 0) {
+			$range = $this->rangeEnd - $this->rangeStart;
+			$ip = long2ip($this->rangeStart);
 			if ($range == 256 - 1) {
 				return substr($ip, 0, -1) . '*';
 			} else {
@@ -114,7 +133,37 @@ class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 				}
 			}
 		}
-		return long2ip($this->start);
+		return long2ip($this->rangeStart);
+	}
+
+
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
+
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getEndsAt()
+	{
+		return $this->endsAt;
+	}
+
+
+
+	/**
+	 * @return string
+	 */
+	public function getReason()
+	{
+		return $this->reason;
 	}
 
 }

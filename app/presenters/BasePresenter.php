@@ -50,7 +50,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		parent::startup();
 		$ban = $this->bans->hasTotalBan($_SERVER['REMOTE_ADDR']);
 		if ($ban) {
-			$this->error('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 403);
+			$this->error('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 403);
 		}
 	}
 

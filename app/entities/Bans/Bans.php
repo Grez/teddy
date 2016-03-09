@@ -23,26 +23,13 @@ class Bans extends Entities\Manager
 	 * @param string $ip
 	 * @param string $reason
 	 * @param int $days
-	 * @param string $type
+	 * @param int $type
 	 * @return NULL
 	 */
 	public function ban($ip, $reason = '', $days = 0, $type = Ban::GAME)
 	{
-		// Max && default ban = 10 years
-		if ($days == 0 || $days >= 3650) {
-			$days = 3650;
-		}
-
-		$ban = new Ban();
-		$ban->setIp($ip);
-		$ban->setReason($reason);
-		$ban->setType($type);
-
-		if ($days) {
-			$until = new \Nette\Utils\DateTime();
-			$until->setTimestamp(time() + $days * 86400);
-			$ban->setUntil($until);
-		}
+		$endsAt = $days > 0 ? (new \DateTime())->modify('+ ' . $days . ' days') : NULL;
+		$ban = new Ban($ip, $reason, $endsAt, $type);
 
 		$this->em->persist($ban);
 		$this->em->flush();
@@ -51,90 +38,57 @@ class Bans extends Entities\Manager
 
 
 	/**
-	 * Returns all bans for IP
-	 *
-	 * @param string $ip
-	 * @return array
-	 */
-	public function checkIp($ip)
-	{
-		$long = ip2long($ip);
-		$query = $this->repository->createQueryBuilder('b')
-			->where('b.start = :start', $long)
-			->andWhere('b.end >= :end', $long)
-			->andWhere('b.until IS NULL OR b.until >= :utill', new \DateTime())
-			->getQuery();
-		return $query->getResult();
-	}
-
-
-
-	/**
 	 * Checks whether IP is totally banned from website (403 error code)
 	 *
 	 * @param $ip
-	 * @return Ban|bool
+	 * @return Ban|NULL
 	 */
 	public function hasTotalBan($ip)
 	{
-		$bans = $this->checkIp($ip);
-		if (is_array($bans)) {
-			foreach ($bans as $ban) {
-				if ($ban->getType() == Ban::TOTAL) {
-					return $ban;
-				}
-			}
-		}
-		return FALSE;
+		$query = (new Entities\Logs\BansQuery())
+			->byIp($ip)
+			->activeOnly()
+			->onlyTotal()
+			->maxOneResult();
+
+		return $this->em->fetchOne($query);
 	}
 
 
 
 	/**
-	 * Checks whether IP can login
+	 * Checks whether IP is banned from playing
 	 *
-	 * @param string $ip
-	 * @return Ban|bool
+	 * @param $ip
+	 * @return Ban|NULL
 	 */
-	public function hasLoginBan($ip)
+	public function hasGameBan($ip)
 	{
-		$bans = $this->checkIp($ip);
-		if (is_array($bans)) {
-			foreach ($bans as $ban) {
-				if (in_array($ban->getType(), [Ban::TOTAL, Ban::GAME])) {
-					return $ban;
-				}
-			}
-		}
-		return FALSE;
+		$query = (new Entities\Logs\BansQuery())
+			->byIp($ip)
+			->activeOnly()
+			->onlyGame()
+			->maxOneResult();
+
+		return $this->em->fetchOne($query);
 	}
 
 
 
 	/**
-	 * Checks whether IP can register
+	 * Checks whether IP is banned from registration
 	 *
-	 * @param string $ip
-	 * @return Ban|bool
+	 * @param $ip
+	 * @return Ban|NULL
 	 */
 	public function hasRegistrationBan($ip)
 	{
-		$bans = $this->checkIp($ip);
-		if (is_array($bans)) {
-			foreach ($bans as $ban) {
-				if (in_array($ban->getType(), [Ban::TOTAL, Ban::REGISTRATION, Ban::GAME])) {
-					return $ban;
-				}
-			}
-		}
-		return FALSE;
-	}
+		$query = (new Entities\Logs\BansQuery())
+			->byIp($ip)
+			->onlyRegistration()
+			->maxOneResult();
 
-
-
-	public function getBans()
-	{
-		return $this->findBy([]);
+		return $this->em->fetchOne($query);
 	}
 
 }

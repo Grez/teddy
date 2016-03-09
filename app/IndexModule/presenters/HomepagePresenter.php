@@ -2,6 +2,7 @@
 
 namespace Teddy\IndexModule\Presenters;
 
+use Teddy\Entities\Bans\Ban;
 use Teddy\Forms\Form;
 
 
@@ -17,7 +18,7 @@ class HomepagePresenter extends BasePresenter
 		$form = new Form();
 		$ban = $this->bans->hasRegistrationBan($_SERVER['REMOTE_ADDR']);
 		if ($ban) {
-			$form->addError('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason());
+			$form->addError('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason());
 		} else {
 			$form->addText('nick', 'Nick')
 				->addRule([$this->users, 'validateNick'], 'This username is already taken.')
@@ -58,9 +59,10 @@ class HomepagePresenter extends BasePresenter
 	public function createComponentLoginForm()
 	{
 		$form = new Form();
-		$ban = $this->bans->hasLoginBan($_SERVER['REMOTE_ADDR']);
+		$ban = $this->bans->hasGameBan($_SERVER['REMOTE_ADDR']);
+
 		if ($ban) {
-			$form->addError('Your IP is banned until ' . $ban->getUntil()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 'Error');
+			$form->addError('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 'Error');
 		} else {
 			$form->addText('email', 'Email')
 				->setRequired();

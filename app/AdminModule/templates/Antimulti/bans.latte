@@ -16,14 +16,16 @@
 			</thead>
 			<tbody>
 			<tr n:foreach="$bans as $ban">
-				<td>{$ban->getCreated()|date:'Y-m-d H:i:s'}</td>
-				<td>{$ban->getUntil()|date:'Y-m-d H:i:s'}</td>
+				<td>{$ban->getCreatedAt()|date:'Y-m-d H:i:s'}</td>
+				<td>{$ban->getEndsAt()|date:'Y-m-d H:i:s'}</td>
 				<td>{$ban->getIp()}</td>
 				<td>{$ban->getReason()}</td>
 				<td><a n:href="deleteBan!, id => $ban->getId()">Delete</a></td>
 			</tr>
 			</tbody>
 		</table>
+
+		{control visualPaginator}
 	{else}
 		<p>There are no bans</p>
 	{/if}

@@ -5,6 +5,7 @@ namespace Teddy\AdminModule\Presenters;
 use Nette\Utils\ArrayHash;
 use Teddy\Entities\Bans\Ban;
 use Teddy\Entities\Bans\Bans;
+use Teddy\Entities\Logs\BansQuery;
 use Teddy\Entities\Logs\UserLog;
 use Teddy\Entities\User\Login;
 use Teddy\Entities\User\LoginListQuery;
@@ -37,7 +38,10 @@ class AntimultiPresenter extends BasePresenter
 
 	public function renderBans()
 	{
-		$this->template->bans = $this->bans->getBans();
+		$query = (new BansQuery());
+		$bans = $this->bans->fetch($query);
+		$bans->applyPaginator($this['visualPaginator']->getPaginator(), 20);
+		$this->template->bans = $bans;
 	}
 
 
