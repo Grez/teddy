@@ -2,5 +2,9 @@ doctrine:
 	metadataCache: default
 	queryCache: default
 	resultCache: default
+	host: 127.0.0.1
+	user: travis
+	dbname: teddy_tests
+	password: ""
 	debug: true
 	wrapperClass: Kdyby\TesterExtras\DbConnectionMock

@@ -4,8 +4,12 @@ namespace Teddy\Tests;
 
 
 
+use Kdyby\Doctrine\Connection;
+use Kdyby\Doctrine\EntityManager;
+use Kdyby\TesterExtras\DbConnectionMock;
 use Nette\DI\Container;
 use Teddy;
+use Tester\Assert;
 
 
 abstract class TestCase extends \Tester\TestCase
@@ -36,6 +40,10 @@ abstract class TestCase extends \Tester\TestCase
 	 */
 	protected $configOverride = [];
 
+	/**
+	 * @var string
+	 */
+	private $databaseName;
 
 
 	/**
@@ -70,8 +78,59 @@ abstract class TestCase extends \Tester\TestCase
 		$configurator->createRobotLoader()
 			->addDirectory(__DIR__ . '/../app')
 			->register();
+		$container = $configurator->createContainer();
 
-		return $configurator->createContainer();
+		/** @var DbConnectionMock $db */
+		$db = $container->getByType(Connection::class); // we want Connection service, but we slip DbConnectionMock
+		$db->onConnect[] = function (Connection $db) use ($container) {
+			if ($this->databaseName !== NULL) {
+				return;
+			}
+
+			try {
+				$this->doSetupDatabase($db);
+
+			} catch (\Exception $e) {
+				\Tracy\Debugger::log($e, \Tracy\Debugger::ERROR);
+				Assert::fail($e->getMessage());
+			}
+		};
+
+		return $container;
+	}
+
+
+	/**
+	 * Lazy creating of database
+	 *
+	 * @param Connection $db
+	 */
+	private function doSetupDatabase(Connection $db)
+	{
+		$this->databaseName = 'teddy_tests_' . getmypid();
+
+		$db->exec('DROP DATABASE IF EXISTS `' . $this->databaseName . '`');
+		$db->exec('CREATE DATABASE ' . $this->databaseName . ' COLLATE "utf8_czech_ci"');
+
+		$db->exec('USE `' . $this->databaseName . '`');
+		$db->transactional(function (Connection $db) {
+			$db->exec('SET foreign_key_checks = 0;');
+			$db->exec('SET @disable_triggers = 1;');
+
+			\Kdyby\Doctrine\Helpers::loadFromFile($db, __DIR__ . '/schema.sql');
+		});
+
+		$db->exec('SET foreign_key_checks = 1;');
+		$db->exec('SET @disable_triggers = NULL;');
+
+		register_shutdown_function(function () use ($db) {
+			try {
+				$db->exec('DROP DATABASE IF EXISTS `' . $this->databaseName . '`');
+
+			} catch (\Exception $e) {
+				// stfu
+			}
+		});
 	}
 
 
