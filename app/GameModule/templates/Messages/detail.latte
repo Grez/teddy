@@ -1,12 +1,12 @@
 {block content}
 	<h2>Message</h2>
 	<div class="msg-detail">
-		{$msg->getSenderNick()}
-		{$msg->subject}
-		{$msg->date->format('Y-m-d H:i:s')}
-		<a n:href="delete, id => $msg->id">Smazat</a>
+		{$msg->getFrom()->getNick()}
+		{$msg->getSubject()}
+		{$msg->getSentAt()->format('Y-m-d H:i:s')}
+		<a n:href="delete!, id => $msg->getId()">Delete</a>
 		<br>
-		{$msg->text}
+		{$msg->getText()}
 	</div>
 	{control newMsgForm}
 {/block}

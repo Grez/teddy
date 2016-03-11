@@ -10,17 +10,18 @@
 				<th>Date</th>
 				<th>Action</th>
 			</tr>
-			<tr n:foreach="$msgs as $msg" n:class="msg, ($msg->unread ? unread)">
-				<td>{$msg->getSenderNick()}</td>
+			<tr n:foreach="$msgs as $msg" n:class="msg, $msg->unread ? unread">
+				<td>{$msg->getFrom()->getNick()}</td>
 				<td>{$msg->getTo()->getNick()}</td>
-				<td>{$msg->subject}</td>
-				<td>{$msg->date->format('Y-m-d H:i:s')}</td>
+				<td>{$msg->getSubject()}</td>
+				<td>{$msg->getSentAt()->format('Y-m-d H:i:s')}</td>
 				<td>
-					<a n:href="detail, id => $msg->id">Detail</a>
-					<a n:href="delete, id => $msg->id">Smazat</a>
+					<a n:href="detail, id => $msg->getId()">Detail</a>
+					<a n:href="delete!, id => $msg->getId()">Delete</a>
 				</td>
 			</tr>
 		</table>
+		{control visualPaginator}
 	{else}
 		<p>You have no messages</p>
 	{/if}

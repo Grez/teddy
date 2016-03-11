@@ -13,7 +13,8 @@ use Teddy\Entities\User\User;
 /**
  * @ORM\Entity()
  * @ORM\Table(indexes={
- *   @ORM\Index(columns={"deleted"})
+ *   @ORM\Index(columns={"deleted_by_sender"}),
+ *   @ORM\Index(columns={"deleted_by_recipient"})
  * })
  */
 class Message extends \Kdyby\Doctrine\Entities\BaseEntity
@@ -24,62 +25,66 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
 	 * @ORM\JoinColumn(name="to_user_id", referencedColumnName="id")
+	 * @var User
 	 */
 	protected $to;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
 	 * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id")
+	 * @var User
 	 */
 	protected $from;
 
 	/**
-	 * @ORM\Column(type="string")
-	 */
-	protected $senderName = '';
-
-	/**
 	 * @ORM\ManyToOne(targetEntity="Message")
 	 * @ORM\JoinColumn(name="conversation_id", referencedColumnName="id")
+	 * @var Message
 	 */
 	protected $conversation;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=FALSE)
+	 * @var string
 	 */
-	protected $subject = '';
+	protected $subject;
 
 	/**
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=FALSE)
+	 * @var string
 	 */
-	protected $text = "";
+	protected $text;
 
 	/**
 	 * @ORM\Column(type="smallint")
+	 * @var int
 	 */
 	protected $type = 0;
 
 	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", nullable=FALSE)
+	 * @var bool
 	 */
 	protected $unread = TRUE;
 
 	/**
-	 * @ORM\Column(type="smallint")
+	 * @ORM\Column(type="boolean", nullable=FALSE)
+	 * @var bool
 	 */
-	protected $deleted = 0;
+	protected $deletedBySender = FALSE;
+
+	/**
+	 * @ORM\Column(type="boolean", nullable=FALSE)
+	 * @var bool
+	 */
+	protected $deletedByRecipient = FALSE;
 
 	/**
 	 * @ORM\Column(type="datetime")
+	 * @var \DateTime
+	 * Generated in __construct()
 	 */
-	protected $date;
-
-	/** Possible message deletions statuses */
-	const NOT_DELETED = 0;
-	const DELETED_SENDER = 1;
-	const DELETED_RECIPIENT = 2;
-	const DELETED_BOTH = 3;
-	const DELETED_BEFORE_READING = 4; // maybe better to totally delete from db?
+	protected $sentAt;
 
 	/** Message types, 0-100 reserved for Teddy */
 	const UNKNOWN_MSG = 0;
@@ -87,37 +92,27 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 	const SYSTEM_MSG = 2;
 
 
-
-	public function __construct()
+	public function __construct(User $to, User $from, $subject = '', $text = '', $type = self::NORMAL_MSG)
 	{
-		$this->date = new \DateTime();
+		$this->sentAt = new \DateTime();
+		$this->to = $to;
+		$this->from = $from;
+		$this->setSubject($subject);
+		$this->text = $text;
+		$this->type = $type;
 	}
-
-
-
-	/**
-	 * Returns sender nick
-	 *
-	 * @return string
-	 */
-	public function getSenderNick()
-	{
-		return ($this->from instanceof User) ? $this->from->nick : $this->senderName;
-	}
-
 
 
 	/**
 	 * Deletes 'Re: ' from beginning
 	 *
 	 * @param string $subject
-	 * @return null
+	 * @return NULL
 	 */
 	public function setSubject($subject)
 	{
-		$this->subject = (substr($subject, 0, 4) == 'Re: ') ? substr($subject, 4) : $subject;
+		$this->subject = substr($subject, 0, 4) === 'Re: ' ? substr($subject, 4) : $subject;
 	}
-
 
 
 	/**
@@ -127,32 +122,23 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function getSubject()
 	{
-		return ($this->conversation != NULL) ? 'Re: ' . $this->subject : $this->subject;
+		return $this->conversation ? 'Re: ' . $this->subject : $this->subject;
 	}
-
 
 
 	/**
 	 * @param User $user
-	 * @return null
 	 */
 	public function deleteBy(User $user)
 	{
-		if ($user == $this->from && $user == $this->to) {
-			$this->deleted = self::DELETED_BOTH; // let's allow sending messages to yourself, because why not?
-		} else {
-			if ($user == $this->from) {
-				if ($this->unread) {
-					$this->deleted = self::DELETED_BEFORE_READING;
-				} else {
-					$this->deleted = ($this->deleted == 0) ? self::DELETED_SENDER : self::DELETED_BOTH;
-				}
-			} else {
-				$this->deleted = ($this->deleted == 0) ? self::DELETED_RECIPIENT : self::DELETED_BOTH;
-			}
+		if ($user->getId() === $this->from->getId()) {
+			$this->deletedBySender = TRUE;
+		}
+
+		if ($user->getId() === $this->to->getId()) {
+			$this->deletedByRecipient = TRUE;
 		}
 	}
-
 
 
 	/**
@@ -162,7 +148,48 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function getConversationId()
 	{
-		return ($this->conversation != NULL) ? $this->conversation->id : $this->id;
+		return $this->conversation ? $this->conversation->id : $this->id;
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @return bool
+	 */
+	public function isReadableByUser(User $user)
+	{
+		if ($user->getId() !== $this->to->getId() && $user->getId() !== $this->from->getId() ) {
+			return FALSE;
+		}
+
+		if ($user->getId() === $this->to->getId() && $this->deletedByRecipient) {
+			return FALSE;
+		}
+
+		if ($user->getId() === $this->from->getId() && $this->deletedBySender) {
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+
+
+	/**
+	 * @return User
+	 */
+	public function getTo()
+	{
+		return $this->to;
+	}
+
+
+	/**
+	 * @return User
+	 */
+	public function getFrom()
+	{
+		return $this->from;
 	}
 
 }

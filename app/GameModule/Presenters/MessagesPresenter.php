@@ -2,6 +2,9 @@
 
 namespace Teddy\GameModule\Presenters;
 
+use Nette\Utils\ArrayHash;
+use Teddy\Entities\PM\Message;
+use Teddy\Entities\User\MessagesQuery;
 use Teddy\Forms\Form;
 use Teddy\Entities\PM\Messages;
 
@@ -13,27 +16,38 @@ use Teddy\Entities\PM\Messages;
 class MessagesPresenter extends BasePresenter
 {
 
-	/** @var Messages @inject */
+	/**
+	 * @var Messages
+	 * @inject
+	 */
 	public $msgsRepository;
 
-	/** @var array */
+	/**
+	 * @var Message[]
+	 */
 	protected $msgs = [];
 
 
 
-	protected function beforeRender()
+	public function renderDefault()
 	{
-		parent::beforeRender();
-		$this->template->msgs = $this->msgsRepository->getMessagesForUser($this->user);
+		$query = (new MessagesQuery())
+			->onlyNotDeletedByRecipient()
+			->onlyReadableBy($this->user);
+		$msgs = $this->msgsRepository->fetch($query);
+		$msgs->applyPaginator($this['visualPaginator']->getPaginator(), 20);
+		$this->template->msgs = $msgs;
 	}
 
 
 
-	public function renderNew()
+	/**
+	 * @param string|NULL $id nick
+	 */
+	public function actionNew($id = NULL)
 	{
-		$params = $this->getRequest()->getParameters();
-		if (isset($params['to'])) {
-			$this['newMsgForm']['to']->setValue($params['to'])->setAttribute('readonly', 'readonly');
+		if ($id) {
+			$this['newMsgForm']['to']->setValue($id)->setAttribute('readonly', 'readonly');
 		}
 	}
 
@@ -44,19 +58,18 @@ class MessagesPresenter extends BasePresenter
 	 */
 	public function renderDetail($id)
 	{
+		/** @var Message $msg */
 		$msg = $this->msgsRepository->find($id);
-		if (!$msg || ($this->user != $msg->getTo() && $this->user != $msg->getFrom())) {
-			$this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'danger');
+		if (!$msg || !$msg->isReadableByUser($this->user)) {
+			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
 			$this->redirect('default');
 		}
 
 		$msg->setUnread(FALSE);
 		$this->em->flush();
 
-		$this->template->msg = $msg;
-
 		$defaults = [
-			'to' => $msg->getSenderNick(),
+			'to' => $msg->getFrom()->getNick(),
 			'subject' => $msg->getSubject(),
 			'conversation' => $msg->getConversationId(),
 		];
@@ -64,6 +77,7 @@ class MessagesPresenter extends BasePresenter
 		$this['newMsgForm']['to']->setAttribute('readonly', 'readonly');
 		$this['newMsgForm']['subject']->setAttribute('readonly', 'readonly');
 		$this['newMsgForm']->setDefaults($defaults);
+		$this->template->msg = $msg;
 	}
 
 
@@ -71,18 +85,19 @@ class MessagesPresenter extends BasePresenter
 	/**
 	 * @param int $id
 	 */
-	public function actionDelete($id)
+	public function handleDelete($id)
 	{
+		/** @var Message $msg */
 		$msg = $this->msgsRepository->find($id);
-		if (!$msg || ($this->user != $msg->getTo() && $this->user != $msg->getFrom())) {
-			$this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'danger');
+		if (!$msg || !$msg->isReadableByUser($this->user)) {
+			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
 			$this->redirect('default');
 		}
 
 		$msg->deleteBy($this->user);
 		$this->em->flush();
 
-		$this->flashMessage('Message has been deleted');
+		$this->successFlashMessage('Message has been deleted');
 		$this->redirect('default');
 	}
 
@@ -103,25 +118,27 @@ class MessagesPresenter extends BasePresenter
 			->setRequired();
 		$form->addSubmit('send', 'Submit');
 		$form->onSuccess[] = $this->newMsgFormSuccess;
-		return $form;
+		return $form->setBootstrapRenderer();
 	}
 
 
 
 	/**
 	 * @param Form $form
-	 * @param \Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
 	 */
-	public function newMsgFormSuccess(Form $form, $values)
+	public function newMsgFormSuccess(Form $form, ArrayHash $values)
 	{
-		$recipient = $this->users->getByNick($values['to']);
+		$recipient = $this->users->getByNick($values->to);
 		if (!$recipient) {
-			$this->flashMessage('This user doesn\'t exist.', 'danger');
+			$this->warningFlashMessage('This user doesn\'t exist.');
 			$this->redirect('this');
 		}
 
-		$this->msgsRepository->createMessage($this->user, $recipient, $values['subject'], $values['text'], $values['conversation']);
-		$this->flashMessage('Message sent');
+		$this->msgsRepository->createMessage($recipient, $this->user, $values->subject, $values->text, $values->conversation);
+		$this->em->flush();
+
+		$this->successFlashMessage('Message sent');
 		$this->redirect('default');
 	}
 
