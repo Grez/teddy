@@ -99,6 +99,7 @@ webloader:
 				- teddy/netteForms.js
 				- teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
 				- teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
+				- teddy/nette.ajax.js
 		admin:
 			files:
 				- teddy/charts/Chart.Core.js

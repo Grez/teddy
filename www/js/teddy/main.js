@@ -89,3 +89,11 @@ if (Cookies.get('fingerprint') === undefined) {
         Cookies.set('fingerprint', result, {expires: 1});
     });
 }
+
+
+/**
+ * Nette.ajax.js
+ */
+$(function () {
+    $.nette.init();
+});
