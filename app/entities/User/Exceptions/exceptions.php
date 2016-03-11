@@ -10,3 +10,9 @@ class UserDoesNotExistException extends TeddyException
 {
 
 }
+
+
+class InvalidArgumentException extends TeddyException
+{
+
+}

@@ -7,7 +7,7 @@ use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use Teddy\Entities\User\User;
-
+use Teddy\User\InvalidArgumentException;
 
 
 /**
@@ -128,14 +128,19 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @param User $user
+	 * @throws InvalidArgumentException
 	 */
 	public function deleteBy(User $user)
 	{
-		if ($user->getId() === $this->from->getId()) {
+		if ($user !== $this->from && $user !== $this->to) {
+			throw new InvalidArgumentException('This user can\'t delete this message');
+		}
+
+		if ($user === $this->from) {
 			$this->deletedBySender = TRUE;
 		}
 
-		if ($user->getId() === $this->to->getId()) {
+		if ($user === $this->to) {
 			$this->deletedByRecipient = TRUE;
 		}
 	}
@@ -159,15 +164,15 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function isReadableByUser(User $user)
 	{
-		if ($user->getId() !== $this->to->getId() && $user->getId() !== $this->from->getId() ) {
+		if ($user !== $this->to && $user !== $this->from) {
 			return FALSE;
 		}
 
-		if ($user->getId() === $this->to->getId() && $this->deletedByRecipient) {
+		if ($user === $this->to && $this->deletedByRecipient) {
 			return FALSE;
 		}
 
-		if ($user->getId() === $this->from->getId() && $this->deletedBySender) {
+		if ($user === $this->from && $this->deletedBySender) {
 			return FALSE;
 		}
 
