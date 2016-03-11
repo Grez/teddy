@@ -147,10 +147,15 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	const TOKEN_EXPIRATION = 1;
 
 
-
-	public function __construct()
+	/**
+	 * @param string $email
+	 * @param string $nick
+	 */
+	public function __construct($email, $nick = '')
 	{
 		parent::__construct();
+		$this->email = $email;
+		$this->nick = $nick;
 		$this->verificationCode = mt_rand(1000000, 9999999);
 		$this->affiliate = mt_rand(1000000, 9999999);
 		$this->registeredAt = new \DateTime();

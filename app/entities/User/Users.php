@@ -3,6 +3,7 @@
 namespace Teddy\Entities\User;
 
 use Nette;
+use Nette\Utils\ArrayHash;
 use Teddy\Entities;
 use Nette\Security\Passwords;
 use Kdyby\Doctrine\EntityManager;
@@ -75,15 +76,13 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param \Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
 	 */
-	public function register($data)
+	public function register(ArrayHash $data)
 	{
 		$password = Passwords::hash($data['password']);
 
-		$user = new User();
-		$user->setNick($data->nick);
-		$user->setEmail($data->email);
+		$user = new User($data->email, $data->nick);
 		$user->setPassword($password);
 		$this->save($user);
 	}

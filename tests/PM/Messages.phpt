@@ -45,13 +45,8 @@ class MessagesTest extends TestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->from = \Mockery::mock(User::class);
-		$this->from->shouldReceive('getId')->andReturn(1);
-		$this->from->shouldReceive('getNick')->andReturn('From');
-
-		$this->to = \Mockery::mock(User::class);
-		$this->to->shouldReceive('getId')->andReturn(2);
-		$this->to->shouldReceive('getNick')->andReturn('To');
+		$this->from = new User('email@from.cz');
+		$this->to = new User('email@to.cz');
 
 		/** @var Messages messages */
 		$this->messages = $this->getService(Messages::class);
@@ -61,8 +56,7 @@ class MessagesTest extends TestCase
 
 	public function testReadability()
 	{
-		$mario = \Mockery::mock(User::class);
-		$mario->shouldReceive('getId')->andReturn(42);
+		$mario = new User('mario.luigi@quattro.formaggi.it');
 
 		Assert::true($this->msg->isReadableByUser($this->from));
 		Assert::true($this->msg->isReadableByUser($this->to));

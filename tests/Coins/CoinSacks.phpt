@@ -47,7 +47,7 @@ class CoinSacksTest extends TestCase
 	{
 		parent::setUp();
 		$timeProvider = $this->getService(IDateTimeProvider::class);
-		$this->user = new User();
+		$this->user = new User('mario.luigi@quattro.formaggi.it');
 		$this->sack100 = new CoinSack(100, $this->user, $timeProvider->getDateTime()->modify('+ 10 min'));
 		$this->user->addCoinSack($this->sack100);
 

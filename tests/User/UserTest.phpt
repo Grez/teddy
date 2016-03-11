@@ -21,7 +21,7 @@ class UserTest extends TestCase
 
 	public function testMailHiding()
 	{
-		$user = new User();
+		$user = new User('mario.luigi@quattro.formaggi.it');
 		$user->setEmail('john.doe@gmail.com');
 		Assert::equal('john.doe@gmail.com', $user->getEmail());
 		Assert::equal('j******e@gmail.com', $user->getEmail(TRUE));
