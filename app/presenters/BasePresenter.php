@@ -8,6 +8,9 @@ use IPub\VisualPaginator\Components as VisualPaginator;
 
 
 
+/**
+ * @property-read \Teddy\Security\User $user
+ */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
