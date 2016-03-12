@@ -12,8 +12,6 @@ use Teddy\Entities\User\User;
 class Messages extends Entities\Manager
 {
 
-
-
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
@@ -42,4 +40,20 @@ class Messages extends Entities\Manager
 		$this->em->persist($msg);
 		return $msg;
 	}
+
+
+
+	/**
+	 * @param User $user
+	 * @return int
+	 */
+	public function getUnreadMessagesCount(User $user)
+	{
+		$query = (new Entities\User\MessagesQuery())
+			->onlyReceivedBy($user)
+			->onlyNotDeletedByRecipient()
+			->onlyUnread();
+		return $this->repository->fetch($query)->getTotalCount();
+	}
+
 }

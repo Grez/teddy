@@ -23,6 +23,19 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
+	 * @return $this
+	 */
+	public function onlyUnread()
+	{
+		$this->filter[] = function (QueryBuilder $qb) {
+			$qb->andWhere('m.unread = TRUE');
+		};
+		return $this;
+	}
+
+
+
+	/**
 	 * @param User $user
 	 * @return $this
 	 */
@@ -105,7 +118,7 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @TODO: join frrm, to
+	 * @TODO: join from, to
 	 * @param Queryable $repository
 	 * @return \Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder
 	 */
