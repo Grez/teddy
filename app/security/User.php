@@ -3,12 +3,33 @@
 namespace Teddy\Security;
 
 use Nette;
-use Teddy\User\UserDoesNotExistException;
+use Nette\Security\IAuthorizator;
+use Nette\Security\IUserStorage;
+use Teddy\Entities\User\Users;
 
 
 
 class User extends Nette\Security\User
 {
+
+	/**
+	 * @var \Teddy\Entities\User\User
+	 */
+	private $entity;
+
+	/**
+	 * @var Users
+	 */
+	public $users;
+
+
+
+	public function __construct(IUserStorage $storage, Users $users, IAuthorizator $authorizator = NULL)
+	{
+		parent::__construct($storage, $users, $authorizator);
+		$this->users = $users;
+	}
+
 
 	/**
 	 * Conducts the authentication process.
@@ -21,9 +42,10 @@ class User extends Nette\Security\User
 	public function login($email = NULL, $password = NULL)
 	{
 		$this->logout(TRUE);
-		$id = $this->getAuthenticator()->authenticate(func_get_args());
-		$this->storage->setIdentity($id);
+		$identity = $this->getAuthenticator()->authenticate(func_get_args());
+		$this->storage->setIdentity($identity);
 		$this->storage->setAuthenticated(TRUE);
+		$this->entity = $this->users->find($identity->getId());
 		$this->onLoggedIn($this, $email);
 	}
 
@@ -35,11 +57,20 @@ class User extends Nette\Security\User
 	 */
 	public function passwordLessLogin($userId)
 	{
-
 		$this->logout(TRUE);
-		$id = new Nette\Security\Identity($userId);
-		$this->storage->setIdentity($id);
+		$identity = new Nette\Security\Identity($userId);
+		$this->storage->setIdentity($identity);
 		$this->storage->setAuthenticated(TRUE);
+		$this->entity = $this->users->find($identity->getId());
+	}
+
+
+	/**
+	 * @return \Teddy\Entities\User\User
+	 */
+	public function getEntity()
+	{
+		return $this->entity ?: $this->users->find($this->getId());
 	}
 
 }
