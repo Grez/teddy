@@ -14,6 +14,11 @@ abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 	/** @var User */
 	protected $user;
 
+	/**
+	 * @var Teddy\Entities\PM\Messages
+	 * @inject
+	 */
+	public $messages;
 
 
 	protected function startup()
@@ -28,6 +33,14 @@ abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 
 		$this->user = $this->users->find($user->id);
 		$this->template->user = $this->user;
+	}
+
+
+
+	protected function beforeRender()
+	{
+		parent::beforeRender();
+		$this->template->unreadMessages = $this->messages->getUnreadMessagesCount($this->getUser()->getEntity());
 	}
 
 }

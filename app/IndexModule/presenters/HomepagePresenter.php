@@ -10,6 +10,17 @@ use Teddy\Forms\Form;
 class HomepagePresenter extends BasePresenter
 {
 
+//	public function renderDefault()
+//	{
+//		$obj = new \stdClass();
+//		$obj->pm = 12;
+//		$obj->forums = [12 => 2, 1 => 3];
+//		echo json_encode($obj);
+//		exit;
+//	}
+
+
+
 	/**
 	 * @return Form
 	 */

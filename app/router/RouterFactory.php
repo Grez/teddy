@@ -21,6 +21,13 @@ class RouterFactory
 
 		$router[] = new Route('', 'Index:Homepage:default');
 
+		$router[] = new Route('sse/<action>/<hash>', [
+			'module' => 'SSE',
+			'presenter' => 'Notifications',
+			'action' => 'default',
+			'hash' => NULL,
+		]);
+
 		$router[] = new Route('zapomenute-heslo/nastavit-nove/<token>', [
 			'module' => 'Index',
 			'presenter' => 'ForgottenPassword',

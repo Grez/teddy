@@ -94,6 +94,8 @@ webloader:
 				- teddy/fingerprint2/fingerprint2.js
 				- teddy/js.cookie/js.cookie.js
 				- teddy/jquery.js
+#				- teddy/md5.js
+#				- teddy/sse.js
 				- teddy/bootstrap.js
 				- teddy/main.js
 				- teddy/netteForms.js
