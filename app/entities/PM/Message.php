@@ -197,4 +197,24 @@ class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 		return $this->from;
 	}
 
+
+	/**
+	 * @return $this
+	 */
+	public function markRead()
+	{
+		$this->unread = FALSE;
+		return $this;
+	}
+
+
+	/**
+	 * @return $this
+	 */
+	public function markUnread()
+	{
+		$this->unread = TRUE;
+		return $this;
+	}
+
 }

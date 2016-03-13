@@ -20,7 +20,7 @@ class MessagesPresenter extends BasePresenter
 	 * @var Messages
 	 * @inject
 	 */
-	public $msgsRepository;
+	public $msgsFacade;
 
 	/**
 	 * @var Message[]
@@ -34,7 +34,7 @@ class MessagesPresenter extends BasePresenter
 		$query = (new MessagesQuery())
 			->onlyNotDeletedByRecipient()
 			->onlyReadableBy($this->user);
-		$msgs = $this->msgsRepository->fetch($query);
+		$msgs = $this->msgsFacade->fetch($query);
 		$msgs->applyPaginator($this['visualPaginator']->getPaginator(), 20);
 		$this->template->msgs = $msgs;
 	}
@@ -59,13 +59,13 @@ class MessagesPresenter extends BasePresenter
 	public function renderDetail($id)
 	{
 		/** @var Message $msg */
-		$msg = $this->msgsRepository->find($id);
+		$msg = $this->msgsFacade->find($id);
 		if (!$msg || !$msg->isReadableByUser($this->user)) {
 			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
 			$this->redirect('default');
 		}
 
-		$msg->setUnread(FALSE);
+		$this->msgsFacade->readMessage($msg);
 		$this->em->flush();
 
 		$defaults = [
@@ -88,7 +88,7 @@ class MessagesPresenter extends BasePresenter
 	public function handleDelete($id)
 	{
 		/** @var Message $msg */
-		$msg = $this->msgsRepository->find($id);
+		$msg = $this->msgsFacade->find($id);
 		if (!$msg || !$msg->isReadableByUser($this->user)) {
 			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
 			$this->redirect('default');
@@ -135,7 +135,7 @@ class MessagesPresenter extends BasePresenter
 			$this->redirect('this');
 		}
 
-		$this->msgsRepository->createMessage($recipient, $this->user, $values->subject, $values->text, $values->conversation);
+		$this->msgsFacade->createMessage($recipient, $this->user, $values->subject, $values->text, $values->conversation);
 		$this->em->flush();
 
 		$this->successFlashMessage('Message sent');

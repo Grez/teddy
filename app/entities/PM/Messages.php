@@ -8,9 +8,25 @@ use Kdyby\Doctrine\EntityManager;
 use Teddy\Entities\User\User;
 
 
-
 class Messages extends Entities\Manager
 {
+
+	/**
+	 * @var array
+	 */
+	public $onNewMessage;
+
+	/**
+	 * @var array
+	 */
+	public $onReadMessage;
+
+	/**
+	 * @var array
+	 */
+	public $onUnreadMessage;
+
+
 
 	public function __construct(EntityManager $em)
 	{
@@ -38,7 +54,34 @@ class Messages extends Entities\Manager
 			$msg->setConversation($this->find($conversation));
 		}
 		$this->em->persist($msg);
+		$this->onNewMessage($this, $msg);
 		return $msg;
+	}
+
+
+
+	/**
+	 * Marks message as read
+	 *
+	 * @param Message $msg
+	 */
+	public function readMessage(Message $msg)
+	{
+		$msg->markRead();
+		$this->onReadMessage($this, $msg);
+	}
+
+
+
+	/**
+	 * Marks message as unread
+	 *
+	 * @param Message $msg
+	 */
+	public function unreadMessage(Message $msg)
+	{
+		$msg->markUnread();
+		$this->onUnreadMessage($this, $msg);
 	}
 
 
