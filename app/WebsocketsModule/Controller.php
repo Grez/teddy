@@ -108,8 +108,8 @@ class Controller implements MessageComponentInterface
 		$method = $msg->method;
 		$data = $msg->data;
 
-		if (!$this->isAuthorized($from) && $method !== self::METHOD_AUTHORIZE) {
-			echo 'User trying to send message w/o being authorized first. Terminating ' . $from->resourceId . '.';
+		if (!$this->isAuthorized($from) && $method !== self::METHOD_AUTHORIZE && !$this->isServer($from)) {
+			echo 'User trying to send message w/o being authorized first. Terminating ' . $from->resourceId . '.' . "\n";
 			$from->close();
 			return;
 		}
@@ -206,6 +206,16 @@ class Controller implements MessageComponentInterface
 	protected function getUserId(ConnectionInterface $conn)
 	{
 		return $this->connections[$conn->resourceId];
+	}
+
+
+	/**
+	 * @param ConnectionInterface $conn
+	 * @return bool
+	 */
+	protected function isServer(ConnectionInterface $conn)
+	{
+		return $conn->remoteAddress === '127.0.0.1';
 	}
 
 }
