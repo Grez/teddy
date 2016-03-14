@@ -94,7 +94,7 @@ class MessagesPresenter extends BasePresenter
 			$this->redirect('default');
 		}
 
-		$msg->deleteBy($this->user);
+		$this->msgsFacade->deleteBy($msg, $this->user);
 		$this->em->flush();
 
 		$this->successFlashMessage('Message has been deleted');

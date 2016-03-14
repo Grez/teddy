@@ -14,17 +14,22 @@ class Messages extends Entities\Manager
 	/**
 	 * @var array
 	 */
-	public $onNewMessage;
+	public $onNewMessage = [];
 
 	/**
 	 * @var array
 	 */
-	public $onReadMessage;
+	public $onDeleteMessage = [];
 
 	/**
 	 * @var array
 	 */
-	public $onUnreadMessage;
+	public $onReadMessage = [];
+
+	/**
+	 * @var array
+	 */
+	public $onUnreadMessage = [];
 
 
 
@@ -54,7 +59,7 @@ class Messages extends Entities\Manager
 			$msg->setConversation($this->find($conversation));
 		}
 		$this->em->persist($msg);
-		$this->onNewMessage($this, $msg);
+		$this->onNewMessage($msg);
 		return $msg;
 	}
 
@@ -68,7 +73,7 @@ class Messages extends Entities\Manager
 	public function readMessage(Message $msg)
 	{
 		$msg->markRead();
-		$this->onReadMessage($this, $msg);
+		$this->onReadMessage($msg);
 	}
 
 
@@ -81,7 +86,19 @@ class Messages extends Entities\Manager
 	public function unreadMessage(Message $msg)
 	{
 		$msg->markUnread();
-		$this->onUnreadMessage($this, $msg);
+		$this->onUnreadMessage($msg);
+	}
+
+
+	/**
+	 * @param Message $msg
+	 * @param User $user
+	 * @throws \Teddy\User\InvalidArgumentException
+	 */
+	public function deleteBy(Message $msg, User $user)
+	{
+		$msg->deleteBy($user);
+		$this->onDeleteMessage($msg, $user);
 	}
 
 
