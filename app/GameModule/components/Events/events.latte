@@ -1,0 +1,8 @@
+<h3>Events</h3>
+
+<p n:if="count($events) === 0">No new events</p>
+<p n:if="$notifications">{$notifications} new notifications</p>
+<p n:if="$unreadMessages">{$unreadMessages} unread messages</p>
+
+<div id="teddy-events-notifications" style="display: none;">{$notifications}</div>
+<div id="teddy-events-unreadMessages" style="display: none;">{$unreadMessages}</div>

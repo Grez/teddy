@@ -5,6 +5,7 @@ namespace Teddy\GameModule\Presenters;
 use Teddy;
 use Teddy\Entities\User\User;
 use Nette;
+use Teddy\GameModule\Components\IEventsControlFactory;
 
 
 
@@ -13,6 +14,12 @@ abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 
 	/** @var User */
 	protected $user;
+
+	/**
+	 * @var IEventsControlFactory
+	 * @inject
+	 */
+	public $eventsFactory;
 
 
 
@@ -28,6 +35,13 @@ abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 
 		$this->user = $this->users->find($user->id);
 		$this->template->user = $this->user;
+	}
+
+
+
+	protected function createComponentEvents()
+	{
+		return $this->eventsFactory->create();
 	}
 
 }

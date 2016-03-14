@@ -17,31 +17,41 @@ var $class = function(definition) {
 var TeddyEvents = $class({
 
     events: 0,
-    messages: 0,
-    attacks: 0,
+    notifications: 0,
+    unreadMessages: 0,
     title: '',
 
     constructor: function() {
         this.title = document.title;
+        this.notifications = $('#teddy-events-notifications').text();
+        this.unreadMessages = $('#teddy-events-unreadMessages').text();
+        this.events = this.getTotalEvents();
+        document.title = this.finalTitle();
     },
 
-    addEvent: function () {
-        this.events++;
-        this.changeTitle();
+    setNotifications: function (notifications) {
+        this.notifications = parseInt(notifications);
+        this.update();
     },
 
-    addMessage: function () {
-        this.messages++;
-        this.changeTitle()
-    },
-
-    addAttack: function () {
-        this.attacks++;
-        this.changeTitle();
+    setUnreadMessages: function (unreadMessages) {
+        this.unreadMessages = parseInt(unreadMessages);
+        this.update();
     },
 
     getTotalEvents: function() {
-        return this.events + this.messages + this.attacks;
+        return parseInt(this.notifications) + parseInt(this.unreadMessages);
+    },
+
+    update: function () {
+        if (this.events !== this.getTotalEvents()) {
+            this.events = this.getTotalEvents();
+            this.changeTitle();
+        }
+    },
+
+    finalTitle: function () {
+        return this.getTotalEvents() > 0 ? '(' + this.getTotalEvents() + ') ' + this.title : this.title;
     },
 
     changeTitle: function () {
@@ -55,7 +65,7 @@ var TeddyEvents = $class({
                 case 0: document.title = '(.) ' + this.title; break;
                 case 1: document.title = '(..) ' + this.title; break;
                 case 2: document.title = '(...) ' + this.title; break;
-                case 3: document.title = '(' + that.getTotalEvents() + ') ' + that.title; break;
+                case 3: document.title = this.finalTitle(); break;
                 default: worker.terminate();
             }
         };
