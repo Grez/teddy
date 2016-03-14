@@ -155,6 +155,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	const TOKEN_EXPIRATION = 1;
 
 
+
 	/**
 	 * @param string $email
 	 * @param string $nick
@@ -164,6 +165,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		parent::__construct();
 		$this->email = $email;
 		$this->nick = $nick;
+		$this->apiKey = Nette\Utils\Random::generate();
 		$this->verificationCode = mt_rand(1000000, 9999999);
 		$this->affiliate = mt_rand(1000000, 9999999);
 		$this->registeredAt = new \DateTime();
