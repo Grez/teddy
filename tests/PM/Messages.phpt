@@ -50,6 +50,7 @@ class MessagesTest extends TestCase
 
 		/** @var Messages messages */
 		$this->messages = $this->getService(Messages::class);
+		$this->getEm()->persist([$this->to, $this->from]);
 		$this->msg = $this->messages->createMessage($this->to, $this->from, 'Subject', 'Text');
 	}
 

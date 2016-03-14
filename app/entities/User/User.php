@@ -4,6 +4,8 @@ namespace Teddy\Entities\User;
 
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
+use Nette\Security\Passwords;
+use Nette\Utils\Random;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -159,13 +161,15 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * @param string $email
 	 * @param string $nick
+	 * @param string $password
 	 */
-	public function __construct($email, $nick = '')
+	public function __construct($email, $nick = '', $password = '')
 	{
 		parent::__construct();
 		$this->email = $email;
-		$this->nick = $nick;
-		$this->apiKey = Nette\Utils\Random::generate();
+		$this->nick = $nick ?: $email;
+		$this->password = $password ?: Passwords::hash(Random::generate());
+		$this->apiKey = Random::generate();
 		$this->verificationCode = mt_rand(1000000, 9999999);
 		$this->affiliate = mt_rand(1000000, 9999999);
 		$this->registeredAt = new \DateTime();
