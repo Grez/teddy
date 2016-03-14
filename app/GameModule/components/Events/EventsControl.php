@@ -60,6 +60,7 @@ class EventsControl extends Control
 	}
 
 
+
 	/**
 	 * @return int
 	 */

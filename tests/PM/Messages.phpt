@@ -55,6 +55,7 @@ class MessagesTest extends TestCase
 	}
 
 
+
 	public function testReadability()
 	{
 		$mario = new User('mario.luigi@quattro.formaggi.it');
