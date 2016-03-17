@@ -8,6 +8,7 @@
 
 	<div n:foreach="$posts as $post">
 		<a>{$post->getAuthor()->getNick()}</a>
+		<a n:href="delete!, postId => $post->getId()">[x]</a>
 		<span>{$post->getCreatedAt()|date:'d.m.Y H:i:s'}</span>
 
 		<p>{$post->getText()}</p>

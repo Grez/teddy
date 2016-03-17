@@ -113,6 +113,25 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
+	 * @param User $user
+	 * @return bool
+	 */
+	public function canDelete(User $user)
+	{
+		if ($user->isAdmin()) {
+			return TRUE;
+		}
+
+		if ($this->author === $user) {
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+
+
+
+	/**
 	 * @return bool
 	 */
 	public function isDeleted()

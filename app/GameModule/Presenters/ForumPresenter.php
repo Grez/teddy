@@ -66,21 +66,22 @@ class ForumPresenter extends BasePresenter
 
 
 	/**
-	 * @param int $id
+	 * @param int (actually string) $postId
 	 */
-	public function actionDelete($id)
+	public function handleDelete($postId)
 	{
-		$msg = $this->msgsRepository->find($id);
-		if (!$msg || ($this->user != $msg->getTo() && $this->user == $msg->getFrom())) {
-			$this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'error');
-			$this->redirect('default');
+		/** @var ForumPost $post */
+		$post = $this->forumPostsFacade->find($postId);
+		if (!$post || !$post->canDelete($this->user)) {
+			$this->warningFlashMessage('This post doesn\'t exist or you can\'t delete it');
+			$this->redirect('this');
 		}
 
-		$msg->deleteBy($this->user);
+		$post->delete($this->user);
 		$this->em->flush();
 
-		$this->flashMessage('Message has been deleted');
-		$this->redirect('default');
+		$this->successFlashMessage('Post has been deleted');
+		$this->redirect('this');
 	}
 
 
