@@ -22,9 +22,8 @@ class Forums extends Entities\Manager
 	const WORLD_CHAT = 2;
 	const ADMINS = 3;
 	const HELPDESK = 4;
-	const ALTERNATIV = 5;
-	const ANTIMULTI = 6;
-	const BUGS = 7;
+	const ALTERNATIVE = 5;
+	const BUGS = 6;
 
 
 
@@ -72,8 +71,9 @@ class Forums extends Entities\Manager
 	 * @param Forum $forum
 	 * @param string $subject
 	 * @param string $text
-	 * @param ForumPost $conversation
+	 * @param ForumPost|NULL $conversation
 	 * @return ForumPost
+	 * @throw AccessDenied
 	 */
 	public function addPost(User $author, Forum $forum, $subject = '', $text = '', ForumPost $conversation = NULL)
 	{

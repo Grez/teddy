@@ -25,12 +25,11 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	protected $forums = [
 		Forums::ADMIN_ANNOUNCEMENTS => 'Admin announcements',
-		Forums::WORLD_CHAT => 'World chat',
-		Forums::ADMINS => 'Admins',
-		Forums::HELPDESK => 'Helpdesk',
-		Forums::ALTERNATIV => 'Alternativ',
-		Forums::ANTIMULTI => 'Antimulti',
-		Forums::BUGS => 'Bugs & Features',
+		Forums::WORLD_CHAT          => 'World chat',
+		Forums::ADMINS              => 'Admins',
+		Forums::HELPDESK            => 'Helpdesk',
+		Forums::ALTERNATIVE         => 'Alternativ',
+		Forums::BUGS                => 'Bugs & Features',
 	];
 
 
@@ -64,8 +63,7 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 			case Forums::ADMIN_ANNOUNCEMENTS:
 			case Forums::WORLD_CHAT:
 			case Forums::HELPDESK:
-			case Forums::ALTERNATIV:
-			case Forums::ANTIMULTI:
+			case Forums::ALTERNATIVE:
 			case Forums::BUGS:
 				return TRUE;
 				break;
@@ -88,15 +86,11 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 		switch ($this->getId()) {
 			case Forums::ADMINS:
 			case Forums::ADMIN_ANNOUNCEMENTS:
-			case Forums::ALTERNATIV:
-				if ($user->isAdmin()) {
-					return TRUE;
-				}
-				break;
+			case Forums::ALTERNATIVE:
+				return $user->isAdmin();
 
 			case Forums::WORLD_CHAT:
 			case Forums::HELPDESK:
-			case Forums::ANTIMULTI:
 			case Forums::BUGS:
 				return TRUE;
 				break;

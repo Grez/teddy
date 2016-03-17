@@ -123,6 +123,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @ORM\Column(type="boolean")
+	 * @var bool
 	 */
 	protected $admin = FALSE;
 
@@ -332,6 +333,18 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 			return $a->getExpiresAt() < $b->getExpiresAt() ? -1 : 1;
 		});
 		$this->coinSacks = new ArrayCollection(iterator_to_array($iterator));
+	}
+
+
+
+	/**
+	 * @param bool $admin
+	 * @return User
+	 */
+	public function setAdmin($admin)
+	{
+		$this->admin = $admin;
+		return $this;
 	}
 
 }

@@ -11,9 +11,6 @@ use Teddy\Forms\Form;
 
 
 
-/**
- * @TODO: Get conversation
- */
 class ForumPresenter extends BasePresenter
 {
 

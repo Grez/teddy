@@ -7,6 +7,7 @@
 namespace Teddy\Tests;
 
 use Nette;
+use Teddy\Entities\Forum\AccessDenied;
 use Teddy\Entities\Forum\Forum;
 use Teddy\Entities\Forum\ForumPosts;
 use Teddy\Entities\Forum\Forums;
@@ -64,11 +65,50 @@ class ForumsTest extends TestCase
 
 
 
-//	public function testReadability()
-//	{
-		// nemůžu číst fóra, kam nemám přístup
-		// smazané příspěvky se nefetchnou
-//	}
+	public function testAccess()
+	{
+		$user = new User('mario@plumber.it');
+		$admin = new User('luigi@plumber.it');
+		$admin->setAdmin(TRUE);
+
+		$forum1 = $this->forumsRepository->find(Forums::ADMIN_ANNOUNCEMENTS);
+		$forum2 = $this->forumsRepository->find(Forums::WORLD_CHAT);
+		$forum3 = $this->forumsRepository->find(Forums::HELPDESK);
+		$forum4 = $this->forumsRepository->find(Forums::ALTERNATIVE);
+		$forum5 = $this->forumsRepository->find(Forums::BUGS);
+
+		Assert::true($forum1->canView($user));
+		Assert::true($forum2->canView($user));
+		Assert::true($forum3->canView($user));
+		Assert::true($forum4->canView($user));
+		Assert::true($forum5->canView($user));
+
+		Assert::false($forum1->canWrite($user));
+		Assert::true($forum2->canWrite($user));
+		Assert::true($forum3->canWrite($user));
+		Assert::false($forum4->canWrite($user));
+		Assert::true($forum5->canWrite($user));
+
+		Assert::true($forum1->canWrite($admin));
+		Assert::true($forum2->canWrite($admin));
+		Assert::true($forum3->canWrite($admin));
+		Assert::true($forum4->canWrite($admin));
+		Assert::true($forum5->canWrite($admin));
+
+		// On admin annoucements can write / delete only admins
+		Assert::exception(function() use ($user, $forum1) {
+			$this->forumsRepository->addPost($user, $forum1, 'Subject', 'Text');
+		}, AccessDenied::class);
+
+		$post = $this->forumsRepository->addPost($admin, $forum1, 'Subject', 'Text');
+		Assert::true($post->canDelete($admin));
+
+		// User can delete his post, admin can delete your post, but user can't delete someone elses
+		$post2 = $this->forumsRepository->addPost($user, $forum2, 'Subject', 'Text');
+		Assert::true($post2->canDelete($user));
+		Assert::true($post2->canDelete($admin));
+		Assert::false($post->canDelete($user));
+	}
 
 }
 

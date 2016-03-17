@@ -59,6 +59,15 @@ CREATE TABLE `forum` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+INSERT INTO `forum` (`id`) VALUES
+  (1),
+  (2),
+  (3),
+  (4),
+  (5),
+  (6);
+
+
 DROP TABLE IF EXISTS `forum_post`;
 CREATE TABLE `forum_post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
