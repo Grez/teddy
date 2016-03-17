@@ -68,6 +68,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$control = new VisualPaginator\Control;
 		$control->setTemplateFile('bootstrap.latte');
 		$control->getPaginator()->setItemsPerPage(20);
+		$control->disableAjax();
 		return $control;
 	}
 
