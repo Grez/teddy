@@ -2,7 +2,11 @@
 
 namespace Teddy\GameModule\Presenters;
 
-use Teddy\Entities\Forum;
+use Nette\Utils\ArrayHash;
+use Teddy\Entities\Forum\AccessDenied;
+use Teddy\Entities\Forum\Forum;
+use Teddy\Entities\Forum\ForumPost;
+use Teddy\Entities\Forum\PostsQuery;
 use Teddy\Forms\Form;
 
 
@@ -13,50 +17,50 @@ use Teddy\Forms\Form;
 class ForumPresenter extends BasePresenter
 {
 
-	/** @var \Teddy\Entities\Forum\Forums @inject */
-	public $forumRepository;
+	/**
+	 * @var \Teddy\Entities\Forum\Forums
+	 * @inject
+	 */
+	public $forumFacade;
 
-	/** @var \Teddy\Entities\Forum\ForumPosts @inject */
-	public $forumPostRepository;
+	/**
+	 * @var \Teddy\Entities\Forum\ForumPosts
+	 * @inject
+	 */
+	public $forumPostsFacade;
 
 
 
 	protected function beforeRender()
 	{
 		parent::beforeRender();
-		$this->template->forums = $this->forumRepository->getForumsForUser($this->user);
+		$this->template->forums = $this->forumFacade->getForumsForUser($this->user);
 	}
 
 
 
 	/**
-	 * @param int $id
-	 */
-	public function renderPost($id)
-	{
-		$post = $this->forumPostRepository->find($id);
-		if (!$post->getForum()->canView($this->user)) {
-			$this->flashMessage('You can\'t view this post', 'error');
-			$this->redirect('default');
-		}
-
-		$this->template->post = $post;
-	}
-
-
-
-	/**
-	 * @param int $id
+	 * @param int (actually int) $id
 	 */
 	public function renderForum($id)
 	{
-		$forum = $this->forumRepository->find($id);
+		/** @var Forum $forum */
+		$forum = $this->forumFacade->find($id);
 		if ($forum === NULL || !$forum->canView($this->user)) {
-			$this->flashMessage('You can\'t view this forum or it doesn\'t exist', 'error');
+			$this->warningFlashMessage('You can\'t view this forum or it doesn\'t exist');
 			$this->redirect('default');
 		}
+
+		$query = (new PostsQuery())
+			->onlyFromForum($forum)
+			->onlyNotDeleted()
+			->orderByCreatedAt();
+		$posts = $this->em->fetch($query)
+			->applyPaginator($this['visualPaginator']->getPaginator(), 20);
+
 		$this['newPostForm']['forum']->setDefaultValue($id);
 		$this->template->forum = $forum;
+		$this->template->posts = $posts;
 	}
 
 
@@ -82,49 +86,6 @@ class ForumPresenter extends BasePresenter
 
 
 	/**
-	 * Bans user from writing on this forum
-	 *
-	 * @param User $user
-	 * @param string $reason
-	 * @param int $time [minutes]
-	 * @TODO
-	 */
-	public function actionBanUser(User $user, $reason, $time)
-	{
-	}
-
-
-
-	/**
-	 * @param int $id
-	 */
-	public function renderDetail($id)
-	{
-		$msg = $this->msgsRepository->find($id);
-		if (!$msg || ($this->user != $msg->getTo() && $this->user == $msg->getFrom())) {
-			$this->flashMessage('This message doesn\'t exist or wasn\'t intended for you.', 'error');
-			$this->redirect('default');
-		}
-
-		$msg->setUnread(FALSE);
-		$this->em->flush();
-
-		$this->template->msg = $msg;
-
-		$defaults = [
-			'to' => $msg->getSenderNick(),
-			'subject' => $msg->getSubject(),
-			'conversation' => $msg->getConversationId(),
-		];
-
-		$this['newMsgForm']['to']->setAttribute('readonly', 'readonly');
-		$this['newMsgForm']['subject']->setAttribute('readonly', 'readonly');
-		$this['newMsgForm']->setDefaults($defaults);
-	}
-
-
-
-	/**
 	 * @return Form
 	 */
 	public function createComponentNewPostForm()
@@ -144,18 +105,30 @@ class ForumPresenter extends BasePresenter
 
 	/**
 	 * @param Form $form
-	 * @param \Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
 	 */
-	public function newPostFormSuccess(Form $form, $values)
+	public function newPostFormSuccess(Form $form, ArrayHash $values)
 	{
-		$forum = new Forum($values['forum']);
-		if (!$forum->canWrite($this->user)) {
-			$this->flashMessage('You can\'t post here', 'error');
+		/** @var Forum $forum */
+		$forum = $this->forumFacade->find($values->forum);
+		if (!$forum || !$forum->canView($this->user)) {
+			$this->warningFlashMessage('This forum doesn\'t exist');
 			$this->redirect('this');
 		}
 
-		$this->forumRepository->addPost($this->user, $forum, $values['subject'], $values['text'], $values['conversation']);
-		$this->flashMessage('Post sent');
+		/** @var ForumPost $conversation */
+		$conversation = $this->forumPostsFacade->find($values->conversation);
+
+		try {
+			$this->forumFacade->addPost($this->user, $forum, $values->subject, $values->text, $conversation);
+
+		} catch (AccessDenied $e) {
+			$this->warningFlashMessage($e->getMessage());
+			$this->redirect('this');
+		}
+
+		$this->em->flush();
+		$this->successFlashMessage('Post sent');
 		$this->redirect('this');
 	}
 

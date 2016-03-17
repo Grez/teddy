@@ -24,49 +24,58 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * @ORM\ManyToOne(targetEntity="Forum", inversedBy="posts")
 	 * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
+	 * @var Forum
 	 */
 	protected $forum;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @var User
 	 */
 	protected $author;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Forum")
+	 * @ORM\ManyToOne(targetEntity="ForumPost")
 	 * @ORM\JoinColumn(name="conversation_id", referencedColumnName="id")
+	 * @var ForumPost
 	 */
 	protected $conversation;
 
 	/**
 	 * @ORM\Column(type="string")
+	 * @var string
 	 */
 	protected $subject;
 
 	/**
 	 * @ORM\Column(type="text")
+	 * @var string
 	 */
-	protected $text = "";
+	protected $text;
 
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
+	 * @var \DateTime
 	 */
 	protected $deletedAt;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
 	 * @ORM\JoinColumn(name="deleted_by", referencedColumnName="id")
+	 * @var User
 	 */
-	protected $deleteBy;
+	protected $deletedBy;
 
 	/**
 	 * @ORM\Column(type="datetime")
+	 * @var \DateTime
 	 */
 	protected $createdAt;
 
 	/**
 	 * @ORM\Column(type="smallint")
+	 * @var int
 	 */
 	protected $type = 0;
 
@@ -76,9 +85,17 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 
-	public function __construct()
+	public function __construct(User $author, Forum $forum, $subject, $text)
 	{
+		if (!$forum->canWrite($author)) {
+			throw new AccessDenied('You can\'t write on this forum');
+		}
+
+		$this->author = $author;
+		$this->subject = $subject;
+		$this->text = $text;
 		$this->createdAt = new \DateTime();
+		$this->forum = $forum;
 	}
 
 
@@ -92,6 +109,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->deletedAt = new \DateTime();
 		$this->deletedBy = $user;
 	}
+
 
 
 	/**
@@ -112,6 +130,28 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	public function getConversationId()
 	{
 		return $this->conversation ? $this->conversation->id : $this->id;
+	}
+
+
+
+	/**
+	 * @return User
+	 */
+	public function getAuthor()
+	{
+		return $this->author;
+	}
+
+
+
+	/**
+	 * @param ForumPost $conversation
+	 * @return ForumPost
+	 */
+	public function setConversation(ForumPost $conversation = NULL)
+	{
+		$this->conversation = $conversation;
+		return $this;
 	}
 
 }

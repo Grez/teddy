@@ -12,7 +12,9 @@ use Teddy\Entities\User\User;
 class Forums extends Entities\Manager
 {
 
-	/** @var ForumPosts */
+	/**
+	 * @var ForumPosts
+	 */
 	protected $forumsPostsRepository;
 
 	/** Forums, 0-50 reserved for Teddy */
@@ -65,19 +67,21 @@ class Forums extends Entities\Manager
 
 
 
-	public function addPost(User $user, Forum $forum, $subject = '', $text = '', $conversation = 0)
+	/**
+	 * @param User $author
+	 * @param Forum $forum
+	 * @param string $subject
+	 * @param string $text
+	 * @param ForumPost $conversation
+	 * @return ForumPost
+	 */
+	public function addPost(User $author, Forum $forum, $subject = '', $text = '', ForumPost $conversation = NULL)
 	{
-		$post = new ForumPost();
-		$post->setAuthor($user);
-		$post->setForum($this->find($forum));
-		$post->setSubject($subject);
-		$post->setText($text);
-		if ($conversation > 0) {
-			$post->setConversation($this->forumsPostsRepository->find($conversation));
-		}
-
+		$post = new ForumPost($author, $forum, $subject, $text);
+		$post->setConversation($conversation);
 		$this->em->persist($post);
-		$this->em->flush();
+
+		return $post;
 	}
 
 }

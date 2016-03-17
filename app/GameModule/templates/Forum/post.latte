@@ -1,9 +1,0 @@
-{block content}
-	<h1>Post #{$post->getId()}, {$post->getForum()->getName()}</h1>
-	<div>
-		<a>{$post->getAuthor()->getNick()}</a>
-		<span>{$post->getDate()|date:'d.m.Y H:i:s'}</span>
-
-		<p>{$post->getText()}</p>
-	</div>
-{/block}

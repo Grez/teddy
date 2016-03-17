@@ -5,10 +5,12 @@
 	{else}
 		<p>You can't post here</p>
 	{/if}
-	<div n:foreach="$forum->getPosts() as $post">
+
+	<div n:foreach="$posts as $post">
 		<a>{$post->getAuthor()->getNick()}</a>
-		<span>{$post->getDate()|date:'d.m.Y H:i:s'}</span>
+		<span>{$post->getCreatedAt()|date:'d.m.Y H:i:s'}</span>
 
 		<p>{$post->getText()}</p>
 	</div>
+	{control visualPaginator}
 {/block}
