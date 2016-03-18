@@ -26,7 +26,7 @@ class ForumLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $user;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Forum")
+	 * @ORM\ManyToOne(targetEntity="Forum", inversedBy="lastVisits")
 	 * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
 	 * @var Forum
 	 */
