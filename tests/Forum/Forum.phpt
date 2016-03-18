@@ -108,6 +108,21 @@ class ForumsTest extends TestCase
 		Assert::true($post2->canDelete($user));
 		Assert::true($post2->canDelete($admin));
 		Assert::false($post->canDelete($user));
+
+		// Check all forums he can see
+		$forums = $this->forumsRepository->getForumsForUser($user);
+		Assert::notEqual(0, count($forums));
+		foreach ($forums as $forum) {
+			if ($forum->canWrite($user)) {
+				$post = $this->forumsRepository->addPost($user, $forum, 'Subject', 'Text');
+				Assert::true($post->canDelete($user));
+
+			} else {
+				Assert::exception(function() use ($user, $forum) {
+					$this->forumsRepository->addPost($user, $forum, 'Subject', 'Text');
+				}, AccessDenied::class);
+			}
+		}
 	}
 
 }
