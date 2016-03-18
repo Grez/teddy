@@ -173,4 +173,20 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 		return $this;
 	}
 
+
+
+	/**
+	 * @param User $user
+	 * @return bool
+	 */
+	public function isUnreadBy(User $user)
+	{
+		$lastVisitBy = $this->forum->getLastVisitBy($user);
+		if (!$lastVisitBy) {
+			return FALSE;
+		}
+
+		return $lastVisitBy->getLastVisitAt() <= $this->createdAt;
+	}
+
 }

@@ -37,7 +37,7 @@ class Forums extends Entities\Manager
 
 
 	/**
-	 * @return array(Forum)
+	 * @return Forum[]
 	 */
 	public function getForums()
 	{
@@ -51,7 +51,7 @@ class Forums extends Entities\Manager
 	 *
 	 * @TODO: cache?
 	 * @param User $user
-	 * @return array(id => name)
+	 * @return Forum[]
 	 */
 	public function getForumsForUser(User $user)
 	{
@@ -82,6 +82,23 @@ class Forums extends Entities\Manager
 		$this->em->persist($post);
 
 		return $post;
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @param Forum $forum
+	 */
+	public function updateLastVisit(User $user, Forum $forum)
+	{
+		$lastVisit = $this->em->getRepository(ForumLastVisit::class)->findOneBy([
+			'user' => $user,
+			'forum' => $forum,
+		]);
+		$lastVisit = $lastVisit ?: new ForumLastVisit($user, $forum);
+		$lastVisit->updateLastVisitAt();
+		$this->em->persist($lastVisit);
 	}
 
 }

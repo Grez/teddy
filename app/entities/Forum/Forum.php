@@ -2,6 +2,8 @@
 
 namespace Teddy\Entities\Forum;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
@@ -20,8 +22,15 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @ORM\OneToMany(targetEntity="ForumPost", mappedBy="forum")
+	 * @var ForumPost[]|ArrayCollection
 	 */
 	protected $posts;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="ForumLastVisit", mappedBy="forum", fetch="EXTRA_LAZY")
+	 * @var ForumLastVisit[]|ArrayCollection
+	 */
+	protected $lastVisits;
 
 	protected $forums = [
 		Forums::ADMIN_ANNOUNCEMENTS => 'Admin announcements',
@@ -103,30 +112,17 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * Returns post in the forum, w/o deleted
-	 *
-	 * @return array(ForumPost)
-	 */
-	public function getPosts()
-	{
-		$posts = $this->posts;
-		foreach ($posts as $id => $post) {
-			if ($post->isDeleted()) {
-				unset($posts[$id]);
-			}
-		}
-		return $posts;
-	}
-
-
-
-	/**
-	 * @TODO
 	 * @param User $user
-	 * @return int
+	 * @return ForumLastVisit
+	 * @TODO
 	 */
-	public function getUnreadPosts(User $user)
+	public function getLastVisitBy(User $user)
 	{
-		return 0;
+		$criteria = (new Criteria())
+			->where(Criteria::expr()->eq('user', $user))
+			->setMaxResults(1);
+
+		return $this->lastVisits->matching($criteria)->first();
 	}
+
 }

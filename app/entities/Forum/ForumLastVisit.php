@@ -13,7 +13,7 @@ use Teddy\Entities\User\User;
 /**
  * @ORM\Entity()
  */
-class UserLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
+class ForumLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
 	use Identifier;
@@ -45,6 +45,27 @@ class UserLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->user = $user;
 		$this->forum = $forum;
 		$this->lastVisitAt = new \DateTime();
+	}
+
+
+
+	/**
+	 * @return ForumLastVisit
+	 */
+	public function updateLastVisitAt()
+	{
+		$this->lastVisitAt = new \DateTime();
+		return $this;
+	}
+
+
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getLastVisitAt()
+	{
+		return $this->lastVisitAt;
 	}
 
 }
