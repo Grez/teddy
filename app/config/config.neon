@@ -35,6 +35,7 @@ services:
 	- Teddy\Entities\Coins\CoinSacks()
 
 	- Teddy\Entities\Map\MapService()
+	- Teddy\GameModule\Components\IMapControlFactory()
 
 	- Teddy\Forms\IUserLogsFilterFormFactory
 	- Teddy\GameModule\Components\IEventsControlFactory()
