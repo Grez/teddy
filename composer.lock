@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "889a8e5db11ce03db45991d1b271abcd",
-    "content-hash": "2ff071c112148e6e1ad9dce382fa6982",
+    "hash": "67a7434aa995e8ae707ec76e21344fa7",
+    "content-hash": "921bfb13faa4c23a3f2fb6e745eec093",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -133,7 +133,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/e0ef9e9833ca024d251e77e8d82a00ca92b0aa71",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/4e3b8b9464d511eccbefe07cef94c275bce7e434",
                 "reference": "e0ef9e9833ca024d251e77e8d82a00ca92b0aa71",
                 "shasum": ""
             },
@@ -587,7 +587,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/20e25bd5037512a270bc8dee36e02fbd17a5e222",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/a726ac05f83687123bc0817dafe394620ba1ca62",
                 "reference": "20e25bd5037512a270bc8dee36e02fbd17a5e222",
                 "shasum": ""
             },
@@ -1305,7 +1305,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Console/zipball/cdfa523330c1d4f12fa093e878e3e89d7cdb96a1",
+                "url": "https://api.github.com/repos/Kdyby/Console/zipball/bc58d9010f831a2c8041d85c3abe1360314b587a",
                 "reference": "cdfa523330c1d4f12fa093e878e3e89d7cdb96a1",
                 "shasum": ""
             },
@@ -1385,12 +1385,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Grez/Doctrine.git",
-                "reference": "398393b37374c4749ce910ceb607002fdd224371"
+                "url": "https://github.com/Kdyby/Doctrine.git",
+                "reference": "cc4a3e8599996b5e788614db57b8f9589294fda6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Grez/Doctrine/zipball/398393b37374c4749ce910ceb607002fdd224371",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/cc4a3e8599996b5e788614db57b8f9589294fda6",
                 "reference": "398393b37374c4749ce910ceb607002fdd224371",
                 "shasum": ""
             },
@@ -1653,7 +1653,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/76387e4a23813897b5e0d8651ffda55a664f91a8",
+                "url": "https://api.github.com/repos/nette/latte/zipball/7eb51ea6adbb8094430bce79f74181b0fdbc05d9",
                 "reference": "76387e4a23813897b5e0d8651ffda55a664f91a8",
                 "shasum": ""
             },
@@ -1697,6 +1697,47 @@
                 "twig"
             ],
             "time": "2016-03-04 00:14:09"
+        },
+        {
+            "name": "martinlindhe/php-noisegenerator",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martinlindhe/php-noisegenerator.git",
+                "reference": "d7cd2b70033f8195ed9b7f550ddb748002e926d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martinlindhe/php-noisegenerator/zipball/d7cd2b70033f8195ed9b7f550ddb748002e926d5",
+                "reference": "d7cd2b70033f8195ed9b7f550ddb748002e926d5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.6",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NoiseGenerator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Lindhe",
+                    "email": "martin@ubique.se"
+                }
+            ],
+            "description": "Perlin noise generator",
+            "homepage": "https://github.com/martinlindhe/php-noisegenerator",
+            "time": "2015-04-16 21:18:46"
         },
         {
             "name": "nella/forms-datetime",
@@ -1952,7 +1993,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/component-model/zipball/0f60b15da7330184eb6b33953d89694f76e1989b",
+                "url": "https://api.github.com/repos/nette/component-model/zipball/835788c90c646d05205445b58c7a41a4027e3064",
                 "reference": "0f60b15da7330184eb6b33953d89694f76e1989b",
                 "shasum": ""
             },
@@ -2007,7 +2048,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/di/zipball/8f6626a3c4e4054af15360704e6a712978fb1568",
+                "url": "https://api.github.com/repos/nette/di/zipball/2e361f237de2c2e0b54ad83716b605180c27f09f",
                 "reference": "8f6626a3c4e4054af15360704e6a712978fb1568",
                 "shasum": ""
             },
@@ -2273,7 +2314,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/neon/zipball/f4d31110e548e9fa420240fad49fa76ddc999219",
+                "url": "https://api.github.com/repos/nette/neon/zipball/cc3d4dd12498069240ef8c05d8ae796af1b58fd4",
                 "reference": "f4d31110e548e9fa420240fad49fa76ddc999219",
                 "shasum": ""
             },
@@ -2325,7 +2366,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/php-generator/zipball/526f7e28a5666d63310e038dbfd4191d9a0fb08d",
+                "url": "https://api.github.com/repos/nette/php-generator/zipball/7a59bbedc1266a8f026070f115d3162005cea4b1",
                 "reference": "526f7e28a5666d63310e038dbfd4191d9a0fb08d",
                 "shasum": ""
             },
@@ -2380,7 +2421,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/reflection/zipball/315af9ab9b660a6c3d72ef0a50376c9b623ba4c0",
+                "url": "https://api.github.com/repos/nette/reflection/zipball/5ac49c038955e0167fcda6895116b62c8b90dcde",
                 "reference": "315af9ab9b660a6c3d72ef0a50376c9b623ba4c0",
                 "shasum": ""
             },
@@ -2490,7 +2531,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/safe-stream/zipball/7edc9a2529afb8f72d6c2fc863526bba93500a53",
+                "url": "https://api.github.com/repos/nette/safe-stream/zipball/4b9bb3266a537e59b10a2932f05dca47333420fc",
                 "reference": "7edc9a2529afb8f72d6c2fc863526bba93500a53",
                 "shasum": ""
             },
@@ -2596,7 +2637,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/77d990893a5a8d26be6446981c728e775a700fa0",
+                "url": "https://api.github.com/repos/nette/utils/zipball/34ca4cd67bb768199aae2879eb8ad0ab016f2d8a",
                 "reference": "77d990893a5a8d26be6446981c728e775a700fa0",
                 "shasum": ""
             },
@@ -2906,7 +2947,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/7223e0768010b189d217d8304e0cca838dec4491",
+                "url": "https://api.github.com/repos/symfony/console/zipball/9a5aef5fc0d4eff86853d44202b02be8d5a20154",
                 "reference": "7223e0768010b189d217d8304e0cca838dec4491",
                 "shasum": ""
             },
@@ -2966,7 +3007,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9116263e778f720dcdecffb8e66c4d6b8b1cfc49",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/47d2d8cade9b1c3987573d2943bb9352536cdb87",
                 "reference": "9116263e778f720dcdecffb8e66c4d6b8b1cfc49",
                 "shasum": ""
             },
@@ -3026,7 +3067,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/faddb526ee1cd7bacbc9f24911c10549018db3c5",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/00ccd96db2fb3b0c5503caf6fb751c294a41c010",
                 "reference": "faddb526ee1cd7bacbc9f24911c10549018db3c5",
                 "shasum": ""
             },
@@ -3138,7 +3179,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/2a870783774b9cd5e19f03407e85813151fb3237",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/6b5ecf16fd2cd35c120e4aab7d59866f438e55cd",
                 "reference": "2a870783774b9cd5e19f03407e85813151fb3237",
                 "shasum": ""
             },
@@ -3353,7 +3394,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/0378bbc73ba54be60f90a00faa148768fb723406",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/9aae848f87548cb550d649ca10c109ba300b1683",
                 "reference": "0378bbc73ba54be60f90a00faa148768fb723406",
                 "shasum": ""
             },
@@ -3728,7 +3769,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rohlikcz/nette-code-checker/zipball/e65961fced111b2186c1a074a26c27fbc9fcaec6",
+                "url": "https://api.github.com/repos/rohlikcz/nette-code-checker/zipball/f019353d3f6869ac2fe6418ae7ff914e03aaddbf",
                 "reference": "e65961fced111b2186c1a074a26c27fbc9fcaec6",
                 "shasum": ""
             },
@@ -3886,7 +3927,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/1364c6fd0e2e8e82a279c55bd448ffcf43538600",
+                "url": "https://api.github.com/repos/symfony/process/zipball/899382810fc8fddc741cd60c3757b98cc6ef5113",
                 "reference": "1364c6fd0e2e8e82a279c55bd448ffcf43538600",
                 "shasum": ""
             },
@@ -3929,7 +3970,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "kdyby/doctrine": 20,
         "doctrine/migrations": 20,
         "ipub/visual-paginator": 20,
         "teddy/publisher": 20,
