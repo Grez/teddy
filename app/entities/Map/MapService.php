@@ -5,6 +5,7 @@ namespace Teddy\Entities\Map;
 
 
 use Kdyby\Doctrine\EntityManager;
+use NoiseGenerator\PerlinNoise;
 
 
 
@@ -29,7 +30,7 @@ class MapService
 	 * @param int $radius
 	 * @return Map
 	 */
-	public function createMap($radius = 25)
+	public function createMap($radius)
 	{
 		$map = new Map();
 		$this->em->persist($map);
@@ -66,32 +67,40 @@ class MapService
 
 
 	/**
-	 * Enlarges map by two
+	 * We add border
+	 * Generated in this order ("=" are starting positions, number represents step)
+	 *
+	 * 1112
+	 * 4==2
+	 * 4==2
+	 * 4333
 	 *
 	 * @param Map $map
 	 * @return Position[]
 	 */
 	protected function embiggenMap(Map $map)
 	{
-		if ($map->getRadius() < 1 && count($map->getPositions()) === 0) {
+		// There is nothing in map
+		if ($map->getRadius() === 0) {
+			$map->increaseMaxDistance();
 			return [$this->createPosition($map, 0, 0)];
 		}
 
 		$newPositions = [];
-		for ($x = $map->getRadius() * -1; $x <= $map->getRadius() + 1; $x++) {
-			$newPositions[] = $this->createPosition($map, $x, $map->getRadius() + 1);
+		for ($x = $map->getRadius() * -1; $x <= $map->getRadius() - 1; $x++) {
+			$newPositions[] = $this->createPosition($map, $x, $map->getRadius());
 		}
 
-		for ($y = $map->getRadius(); $y >= $map->getRadius() * -1 - 1; $y--) {
-			$newPositions[] = $this->createPosition($map, $map->getRadius() + 1, $y);
+		for ($y = $map->getRadius(); $y >= $map->getRadius() * -1 + 1; $y--) {
+			$newPositions[] = $this->createPosition($map, $map->getRadius(), $y);
 		}
 
-		for ($x = $map->getRadius(); $x >= $map->getRadius() * -1 - 1; $x--) {
-			$newPositions[] = $this->createPosition($map, $x, $map->getRadius() * -1 - 1);
+		for ($x = $map->getRadius(); $x >= $map->getRadius() * -1 + 1; $x--) {
+			$newPositions[] = $this->createPosition($map, $x, $map->getRadius() * -1);
 		}
 
-		for ($y = $map->getRadius() * -1; $y <= $map->getRadius() + 1; $y++) {
-			$newPositions[] = $this->createPosition($map, $map->getRadius() * -1 - 1, $y);
+		for ($y = $map->getRadius() * -1; $y <= $map->getRadius() - 1; $y++) {
+			$newPositions[] = $this->createPosition($map, $map->getRadius() * -1, $y);
 		}
 
 		$map->increaseMaxDistance();
@@ -117,11 +126,11 @@ class MapService
 	 * @param bool $addToMap - when the position isn't added to map we don't have to fetch already generated positions
 	 * @return Position
 	 */
-	public function createPosition(Map $map, $x, $y, $addToMap = FALSE)
+	protected function createPosition(Map $map, $x, $y, $addToMap = FALSE)
 	{
-		$perlin = new \NoiseGenerator\PerlinNoise($map->getSeed());
+		$perlin = new PerlinNoise($map->getSeed());
 		$num = $perlin->noise($x, $y, 0, $map->getOctaves());
-		$height = ($num / 2) + .5;
+		$height = ($num / 2) + 0.5;
 
 		$position = new Position($map, $x, $y, $height);
 		if ($addToMap) {

@@ -135,21 +135,30 @@ class Map
 
 
 
-	public function debugRender()
+	/**
+	 * Return javascript Graph (astar.js)
+	 *
+	 * @return string
+	 */
+	public function getJsIncidenceMatrix()
 	{
-		$html = '<table style="width: ' . $this->radius * 2 . 'px;">';
-		for ($x = $this->radius * -1; $x < $this->radius; $x++) {
-			$html .= '<tr>';
-			for ($y = $this->radius * -1; $y < $this->radius; $y++) {
+		$js = 'new Graph(';
+		$js .= '[' . "\n";
+
+		for ($x = $this->radius * -1 + 1; $x < $this->radius - 1; $x++) {
+			$js .= '[';
+			$weights = [];
+			for ($y = $this->radius * -1 + 1; $y < $this->radius - 1; $y++) {
 				$position = $this->getPosition($x, $y);
-				if (!$position) {
-					continue;
-				}
-				$html .= '<td class="type' . $position->getHeight() . '" title="' . $position->getId() . '"></td>';
+				$weights[] = $position->getWeight() + 1;
 			}
-			$html .= '</tr>';
+			$js .= implode(',', $weights);
+			$js .= '],' . "\n";
 		}
-		return $html;
+
+		$js .= ']';
+		$js .= ');';
+		return $js;
 	}
 
 }

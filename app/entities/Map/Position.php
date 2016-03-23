@@ -86,11 +86,69 @@ class Position
 
 
 	/**
+	 * @return float
+	 */
+	public function getWeight()
+	{
+		return $this->height < 0.2 ? 0 : $this->height + 1;
+	}
+
+
+
+	/**
 	 * @return Map
 	 */
 	public function getMap()
 	{
 		return $this->map;
+	}
+
+
+
+	/**
+	 * X position, same as in db; top left position is "-radius + 1;-radius + 1"
+	 *
+	 * @return int
+	 */
+	public function getRealX()
+	{
+		return $this->x;
+	}
+
+
+
+	/**
+	 * Y position, same as in db; top left position is "-radius + 1;-radius + 1"
+	 *
+	 * @return int
+	 */
+	public function getRealY()
+	{
+		return $this->y;
+	}
+
+
+
+	/**
+	 * Returns X as if map started from 0;0 instead of "-radius + 1;-radius + 1"
+	 *
+	 * @return int
+	 */
+	public function getVirtualX()
+	{
+		return $this->x + $this->map->getRadius() - 1;
+	}
+
+
+
+	/**
+	 * Returns Y as if map started from 0;0 instead of "-radius + 1;-radius + 1"
+	 *
+	 * @return int
+	 */
+	public function getVirtualY()
+	{
+		return $this->y + $this->map->getRadius() - 1;
 	}
 
 }
