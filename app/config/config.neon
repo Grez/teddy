@@ -104,6 +104,7 @@ webloader:
 				- teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
 				- teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
 				- teddy/nette.ajax.js
+				- teddy/astar.js
 		admin:
 			files:
 				- teddy/charts/Chart.Core.js
