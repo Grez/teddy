@@ -64,9 +64,4 @@ $(function() {
 		}
 
 	});
-
-
-	//setTimeout(function () {
-	//	var pathfinding = new Pathfinding(window.graph, window.startPosition);
-	//}, 100);
 });

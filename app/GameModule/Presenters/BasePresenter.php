@@ -39,9 +39,32 @@ abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 
 
 
+	/**
+	 * @return Teddy\GameModule\Components\EventsControl
+	 */
 	protected function createComponentEvents()
 	{
 		return $this->eventsFactory->create();
+	}
+
+
+
+	/**
+	 * @return \WebLoader\Nette\JavaScriptLoader
+	 */
+	protected function createComponentJsGame()
+	{
+		return $this->webLoader->createJavaScriptLoader('game');
+	}
+
+
+
+	/**
+	 * @return \WebLoader\Nette\CssLoader
+	 */
+	protected function createComponentCssGame()
+	{
+		return $this->webLoader->createCssLoader('game');
 	}
 
 }

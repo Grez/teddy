@@ -88,31 +88,48 @@ webloader:
 	css:
 		default:
 			files:
-				- teddy/bootstrap.css
-				- teddy/bootstrap-theme.css
-				- teddy/style.less
-				- teddy/bootstrap-datepicker/bootstrap-datepicker.css
+				bootstrap: teddy/bootstrap.css
+				bootstrapTheme: teddy/bootstrap-theme.css
+				style: teddy/style.less
+			fileFilters:
+				- @lessFilter
+				- @wlCssFilter
+		game:
+			files:
+				bootstrap: teddy/bootstrap.css
+				bootstrapTheme: teddy/bootstrap-theme.css
+				style: teddy/game/style.less
+				map: teddy/game/map.less
 			fileFilters:
 				- @lessFilter
 				- @wlCssFilter
 		admin:
 			files:
-				- teddy/admin.less
+				bootstrap: teddy/bootstrap.css
+				bootstrapTheme: teddy/bootstrap-theme.css
+				datepicker: teddy/bootstrap-datepicker/bootstrap-datepicker.css
+				style: teddy/admin/style.less
+			fileFilters:
+				- @lessFilter
+				- @wlCssFilter
 	js:
 		default:
 			files:
-				- teddy/fingerprint2/fingerprint2.js
-				- teddy/js.cookie/js.cookie.js
-				- teddy/jquery.js
-				- teddy/bootstrap.js
-				- teddy/main.js
-				- teddy/netteForms.js
-				- teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
-				- teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
-				- teddy/nette.ajax.js
-				- teddy/astar.js
-				- teddy/pathfinding.js
+				fingerprint: teddy/fingerprint2/fingerprint2.js
+				cookies: teddy/js.cookie/js.cookie.js
+				jquery: teddy/jquery.js
+				bootstrap: teddy/bootstrap.js
+				main: teddy/main.js
+				netteForms: teddy/netteForms.js
+				datepicker: teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
+				datepickerCs: teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
+				netteAjax: teddy/nette.ajax.js
+		game:
+			files:
+				events: teddy/game/events.js
+				astar: teddy/game/astar.js
+				pathfinding: teddy/game/pathfinding.js
 		admin:
 			files:
-				- teddy/charts/Chart.Core.js
-				- {files: ['*.js'], from: 'teddy/charts'}
+				charts: teddy/charts/Chart.Core.js
+				chartsComponents: {files: ['*.js'], from: 'teddy/charts'}

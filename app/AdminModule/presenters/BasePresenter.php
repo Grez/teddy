@@ -61,7 +61,7 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 			$this->redirect(':Index:Homepage:default');
 		}
 
-		if (!$this->user->isAllowed($this->presenter->getName())) {
+		if ($this->presenter->getName() !== 'Admin:Main' && !$this->user->isAllowed($this->presenter->getName())) {
 			$this->flashMessage(_('You are not allowed here'), 'error');
 			$this->redirect(':Admin:Main:default');
 		}
@@ -92,6 +92,7 @@ class BasePresenter extends Teddy\Presenters\BasePresenter
 	{
 		return $this->webLoader->createJavaScriptLoader('admin');
 	}
+
 
 
 	protected function getPresenters()
