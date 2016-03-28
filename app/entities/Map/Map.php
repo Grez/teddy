@@ -19,7 +19,7 @@ class Map
 	use Identifier;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Position", mappedBy="map", indexBy="id", fetch="EXTRA_LAZY")
+	 * @ORM\OneToMany(targetEntity="Position", mappedBy="map", indexBy="id", fetch="LAZY")
 	 * @var Position[]
 	 */
 	protected $positions;

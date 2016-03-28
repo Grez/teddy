@@ -1,13 +1,17 @@
-<script>
-	{foreach $map->getPositions() as $position}
-		var positions = {};
-		positions.{$position->getId()} = $position->getHeight();
-	{/foreach}
+<script type='text/javascript'>
+	$(function() {
+		{cache 'map-js', expire => '10 minutes'}
+			window.graph = {$map->getJsIncidenceMatrix()|noescape};
+		{/cache}
+
+		window.startPosition = [{$startPosition->getVirtualX()}, {$startPosition->getVirtualY()}];
+		window.pathfinding = new Pathfinding(window.graph, window.startPosition);
+	});
 </script>
 
 <style>
 	* { box-sizing: border-box; }
-	.rw { display: block;  line-height: 0; }
+	.rw { display: block; line-height: 0; }
 	.cell { width: 10px; height: 10px; border: 1px solid #333; padding: 0; display: inline-block; line-height: 0; }
 	.typeB { background: #000; }
 	.typeG { background: #666; }
@@ -26,13 +30,25 @@
 	.type9 { background: #a82; }
 	.type10 { background: #ccc; }
 	.type11 { background: #fff; }
+	.path { background: yellow; }
+	.start { background: blue; }
+	.target { background: red; }
+	.cell:hover { opacity: 0.5; }
 	table { border-collapse: collapse; }
+	.map { width: 90%; height: 500px; overflow: scroll; margin: 10px auto; }
 </style>
 
-<div style="width: {$map->getRadius() * 20}px">
-	{for $x = $map->getRadius() * -1; $x < $map->getRadius(); $x++}
-		<div class="rw">
-			{for $y = $map->getRadius() * -1; $y < $map->getRadius(); $y++}{var $position = $map->getPosition($x, $y)}{var $class = "type" . $position->getHeight()}<div n:class="cell, $class" title="{$position->getId()}"></div>{/for}
-		</div>
-	{/for}
+{cache 'map-html', expire => '10 minutes'}
+<div class="map" id="mainMap">
+	<div style="width: {$map->getRadius() * 20}px">
+		{for $x = $map->getRadius() * -1 + 1; $x < $map->getRadius() - 1; $x++}
+			<div class="rw">
+				{for $y = $map->getRadius() * -1 + 1; $y < $map->getRadius() - 1; $y++}
+				{var $position = $map->getPosition($x, $y)}
+				{var $class = "type" . $position->getHeight()}
+<div data-virtual-x="{$position->getVirtualX()}" data-virtual-y="{$position->getVirtualY()}" n:class="cell, $class" title="{$position->getId()}"></div>{/for}
+			</div>
+		{/for}
+	</div>
 </div>
+{/cache}

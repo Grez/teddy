@@ -4,8 +4,8 @@ namespace Teddy\GameModule\Components;
 
 use Teddy;
 use Teddy\Entities\Map\Map;
-use Teddy\Entities\Map\Position;
 use Nette\Application\UI\Control;
+use Teddy\Entities\Map\Position;
 use Teddy\Security\User;
 
 
@@ -15,18 +15,26 @@ class MapControl extends Control
 	/**
 	 * @var User
 	 */
-	private $user;
+	protected $user;
 
 	/**
 	 * @var Map
 	 */
-	private $map;
+	protected $map;
+
+	/**
+	 * @var Position
+	 */
+	protected $startPosition;
 
 
 
-	public function __construct(Map $map)
+	public function __construct(Map $map, Teddy\Security\User $user, Position $startPosition)
 	{
+		parent::__construct();
 		$this->map = $map;
+		$this->user = $user;
+		$this->startPosition = $startPosition;
 	}
 
 
@@ -35,6 +43,7 @@ class MapControl extends Control
 	{
 		$template = parent::createTemplate();
 		$template->map = $this->map;
+		$template->startPosition = $this->startPosition;
 		$template->setFile(__DIR__ . '/map.latte');
 		$template->render();
 	}
@@ -46,6 +55,10 @@ class MapControl extends Control
 interface IMapControlFactory
 {
 
-	/** @return MapControl */
-	function create(Map $map);
+	/**
+	 * @param Map $map
+	 * @param Position $startPosition
+	 * @return MapControl
+	 */
+	public function create(Map $map, Position $startPosition);
 }

@@ -9,13 +9,21 @@ use NoiseGenerator\PerlinNoise;
 
 
 
-class MapService
+/**
+ * @method void onEmbiggen(MapService $mapService, Map $map)
+ */
+class MapService extends \Nette\Object
 {
 
 	/**
 	 * @var EntityManager
 	 */
 	private $em;
+
+	/**
+	 * @var array
+	 */
+	public $onEmbiggen = [];
 
 
 
@@ -51,16 +59,18 @@ class MapService
 	 */
 	public function embiggenMapBy(Map $map, $embiggenBy)
 	{
-		$positions = [];
 		for ($i = 0; $i < $embiggenBy; $i++) {
-			$positions = array_merge($this->embiggenMap($map), $positions);
+			$positions = $this->addBorderToMap($map);
+			foreach ($positions as $position) {
+				$this->em->persist($position);
+			}
+
+			// We want to do this in single trasactions
+			$this->em->flush(array_merge($map, $positions));
+			$this->em->clear(Position::class);
+			$this->onEmbiggen($this, $map);
 		}
 
-		foreach ($positions as $position) {
-			$this->em->persist($position);
-		}
-
-		$this->em->flush();
 		return $map;
 	}
 
@@ -78,7 +88,7 @@ class MapService
 	 * @param Map $map
 	 * @return Position[]
 	 */
-	protected function embiggenMap(Map $map)
+	protected function addBorderToMap(Map $map)
 	{
 		// There is nothing in map
 		if ($map->getRadius() === 0) {
@@ -121,6 +131,7 @@ class MapService
 
 
 	/**
+	 * @param Map $map
 	 * @param int $x
 	 * @param int $y
 	 * @param bool $addToMap - when the position isn't added to map we don't have to fetch already generated positions
