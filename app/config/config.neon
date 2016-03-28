@@ -139,7 +139,3 @@ webloader:
 			files:
 				charts: teddy/charts/Chart.Core.js
 				chartsComponents: {files: ['*.js'], from: 'teddy/charts'}
-
-ws < services:
-	application:
-		class: \Teddy\WebsocketsModule\Application
