@@ -1,61 +1,73 @@
-var TeddyEvents = $class({
+$(function() {
 
-	events: 0,
-	notifications: 0,
-	unreadMessages: 0,
-	title: '',
+	var TeddyEvents = $class({
 
-	constructor: function() {
-		this.title = document.title;
-		this.notifications = $('#teddy-events-notifications').text();
-		this.unreadMessages = $('#teddy-events-unreadMessages').text();
-		this.events = this.getTotalEvents();
-		document.title = this.finalTitle();
-	},
+		events: 0,
+		notifications: 0,
+		unreadMessages: 0,
+		title: '',
 
-	setNotifications: function (notifications) {
-		this.notifications = parseInt(notifications);
-		this.update();
-	},
-
-	setUnreadMessages: function (unreadMessages) {
-		this.unreadMessages = parseInt(unreadMessages);
-		this.update();
-	},
-
-	getTotalEvents: function() {
-		return parseInt(this.notifications) + parseInt(this.unreadMessages);
-	},
-
-	update: function () {
-		if (this.events !== this.getTotalEvents()) {
+		constructor: function() {
+			this.title = document.title;
+			this.setNotifications($('#teddy-events-notifications').text());
+			this.setUnreadMessages($('#teddy-events-unreadMessages').text());
 			this.events = this.getTotalEvents();
-			this.changeTitle();
-		}
-	},
+			document.title = this.finalTitle();
+		},
 
-	finalTitle: function () {
-		return this.getTotalEvents() > 0 ? '(' + this.getTotalEvents() + ') ' + this.title : this.title;
-	},
+		setNotifications: function (notifications) {
+			this.notifications = parseInt(notifications);
+		},
 
-	changeTitle: function () {
-		// Chrome allows setTimeout only 1/s when tab is inactive
-		// We need to use Web Workers ^^
-		var that = this;
-		var worker = new Worker('/js/workers/teddy/setInterval.js');
+		updateNotifications: function (notifications) {
+			this.setNotifications(notifications);
+			this.update();
+		},
 
-		worker.onmessage = function(e) {
-			switch (e.data.tick) {
-				case 0: console.log(this); document.title = '(.) ' + that.title; break;
-				case 1: document.title = '(..) ' + that.title; break;
-				case 2: document.title = '(...) ' + that.title; break;
-				case 3: document.title = that.finalTitle(); break;
-				default: worker.terminate();
+		setUnreadMessages: function (unreadMessages) {
+			this.unreadMessages = parseInt(unreadMessages);
+		},
+
+		updateUnreadMessages: function (unreadMessages) {
+			this.setUnreadMessages(unreadMessages);
+			this.update();
+		},
+
+		getTotalEvents: function() {
+			return parseInt(this.notifications) + parseInt(this.unreadMessages);
+		},
+
+		update: function () {
+			if (this.events !== this.getTotalEvents()) {
+				this.events = this.getTotalEvents();
+				this.changeTitle();
 			}
-		};
-		worker.postMessage(250);
-	}
+		},
+
+		finalTitle: function () {
+			return this.getTotalEvents() > 0 ? '(' + this.getTotalEvents() + ') ' + this.title : this.title;
+		},
+
+		changeTitle: function () {
+			// Chrome allows setTimeout only 1/s when tab is inactive
+			// We need to use Web Workers ^^
+			var that = this;
+			var worker = new Worker('/js/workers/teddy/setInterval.js');
+
+			worker.onmessage = function(e) {
+				switch (e.data.tick) {
+					case 0: document.title = '(.) ' + that.title; break;
+					case 1: document.title = '(..) ' + that.title; break;
+					case 2: document.title = '(...) ' + that.title; break;
+					case 3: document.title = that.finalTitle(); break;
+					default: worker.terminate();
+				}
+			};
+			worker.postMessage(250);
+		}
+
+	});
+
+	window.events = new TeddyEvents();
 
 });
-
-window.events = new TeddyEvents();

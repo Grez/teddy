@@ -25,9 +25,8 @@
 
 			self.conn.onmessage = function(e) {
 				var msg = JSON.parse(e.data);
-				console.log(msg);
 				if (msg.component === 'pm') {
-					events.setUnreadMessages(msg.data);
+					events.updateUnreadMessages(msg.data);
 				}
 			};
 		}

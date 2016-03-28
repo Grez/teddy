@@ -2,24 +2,28 @@
 	<h2>Messages</h2>
 	<h3><a n:href="new">New message</a></h3>
 	{if count($msgs)}
-		<table>
-			<tr>
-				<th>From</th>
-				<th>To</th>
-				<th>Subject</th>
-				<th>Date</th>
-				<th>Action</th>
-			</tr>
-			<tr n:foreach="$msgs as $msg" n:class="msg, $msg->unread ? unread">
-				<td>{$msg->getFrom()->getNick()}</td>
-				<td>{$msg->getTo()->getNick()}</td>
-				<td>{$msg->getSubject()}</td>
-				<td>{$msg->getSentAt()->format('Y-m-d H:i:s')}</td>
-				<td>
-					<a n:href="detail, id => $msg->getId()">Detail</a>
-					<a n:href="delete!, id => $msg->getId()">Delete</a>
-				</td>
-			</tr>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>From</th>
+					<th>To</th>
+					<th>Subject</th>
+					<th>Date</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr n:foreach="$msgs as $msg" n:class="msg, $msg->unread ? unread">
+					<td>{$msg->getFrom()->getNick()}</td>
+					<td>{$msg->getTo()->getNick()}</td>
+					<td>{$msg->getSubject()}</td>
+					<td>{$msg->getSentAt()->format('Y-m-d H:i:s')}</td>
+					<td>
+						<a n:href="detail, id => $msg->getId()">Detail</a>
+						<a n:href="delete!, id => $msg->getId()">Delete</a>
+					</td>
+				</tr>
+			</tbody>
 		</table>
 		{control visualPaginator}
 	{else}

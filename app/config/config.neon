@@ -134,7 +134,7 @@ webloader:
 				events: teddy/game/events.js
 				astar: teddy/game/astar.js
 				pathfinding: teddy/game/pathfinding.js
-				websockets: teddy/websockets.js
+				websockets: teddy/game/websockets.js
 		admin:
 			files:
 				charts: teddy/charts/Chart.Core.js
