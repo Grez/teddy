@@ -117,7 +117,14 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $token;
 
 	/**
+	 * @ORM\Column(type="string", nullable=true)
+	 * @var string
+	 */
+	protected $apiKey;
+
+	/**
 	 * @ORM\Column(type="datetime", nullable=true)
+	 * @var \DateTime
 	 */
 	protected $tokenExpiresAt;
 
@@ -313,6 +320,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	}
 
 
+
 	/**
 	 * @return ArrayCollection|Entities\Coins\CoinSack[]
 	 */
@@ -320,6 +328,7 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	{
 		return new \Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper($this->coinSacks);
 	}
+
 
 
 	/**
@@ -345,6 +354,16 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	{
 		$this->admin = $admin;
 		return $this;
+	}
+
+
+
+	/**
+	 * @return string
+	 */
+	public function getApiKey()
+	{
+		return $this->apiKey;
 	}
 
 }

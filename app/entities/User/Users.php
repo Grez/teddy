@@ -76,6 +76,19 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
+	 * @param string $id
+	 * @param string $apikey
+	 * @return User|false
+	 */
+	public function getByIdAndApikey($id, $apikey)
+	{
+		$user = $this->find($id);
+		return $user && $user->getApikey() === $apikey ? $user : false;
+	}
+
+
+
+	/**
 	 * @param ArrayHash $values
 	 */
 	public function register(ArrayHash $data)
