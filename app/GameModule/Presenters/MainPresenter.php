@@ -19,7 +19,7 @@ class MainPresenter extends BasePresenter
 
 
 
-	protected function  createComponentMap()
+	protected function createComponentMap()
 	{
 		$map = $this->em->find(Map::class, 56);
 		$startPosition = $this->em->find(Position::class, '56;-37;-34');
