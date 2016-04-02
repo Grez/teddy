@@ -38,9 +38,12 @@ ___
 Web Workers
 
 Pokud programujeme nějakou komplexnější webovou aplikaci, tak je často potřeba vykonávat i nějaké náročnější operace. Tyto operace můžeme provádět buď na serveru, nebo na klientovi. Server bude s velkou pravděpodobností výkonnější než klient, musíme ovšem počítat s potřebným časem pro komunikaci mezi nimi. Většinou navíc každý server obsluhuje větší množství klientů. V posledních letech došlo k výraznému zrychlení interpretace javascriptu ve všech prohlížečích. Javascript je ovšem stále jednovláknový jazyk, takže pokud volání funkce trvá příliš dlouho, dochází k zamrznutí stránky (případně celého prohlížeče). Tomuto bychom se samozřejmě chtěli vyhnout. Jednou takovou možností jsou Web Workers.
-Web Workers jsou v podstatě samostatné javascriptové soubory, kterým předáme vstup, worker nad tímto vstupem provede nějaké operace a poté nám pošle výstup. Na straně uživatele tak nedochází k zamrznutí na průběh výpočtu a pouze mu zobrazíme výsledek, až jej máme k dispozici.
+Web Workers je JavaScript, který běží na pozadí, nezávisle na ostatních skriptech, aniž by ovlivňoval výkon samostatné stránky. Na straně uživatele tak nedochází k zamrznutí prohlížeče na průběh výpočtu a pouze mu zobrazíme výsledek, až nám jej worker pošle.
 Web Workers se navíc dají použít k obejití některých omezení, kdy například Google Chrome nedovoluje zavolat funkci setTimeout častěji než 1x za sekundu u neaktivních tabů. Pokud bychom pak například chtěli zobrazit novou událost pomocí jednoduché animace měnící titulek stránky, tak nám to nepůjde.
 V praktické části této práce jsem implementoval skript, který tuto jednoduchou věc umožní pomocí Web Workers.
 
+<webworkers_tabs.png>
+
 https://www.zdrojak.cz/clanky/webdesigneruv-pruvodce-po-html5-multithreading-s-webworkers/
+http://www.w3schools.com/html/html5_webworkers.asp
 https://blog.pivotal.io/labs/labs/chrome-and-firefox-throttle-settimeout-setinterval-in-inactive-tabs
