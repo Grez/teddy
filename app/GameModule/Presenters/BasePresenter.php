@@ -33,6 +33,11 @@ abstract class BasePresenter extends Teddy\Presenters\BasePresenter
 			$this->redirect(':Index:Homepage:default');
 		}
 
+		if ($this->getUser()->getEntity()) {
+			setcookie('teddy.userId', $this->getUser()->getEntity()->getId(), time() + 86400);
+			setcookie('teddy.apiKey', $this->getUser()->getEntity()->getApiKey(), time() + 86400);
+		}
+
 		$this->user = $this->users->find($user->id);
 		$this->template->user = $this->user;
 	}

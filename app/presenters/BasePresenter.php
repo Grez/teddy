@@ -56,11 +56,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		if ($ban) {
 			$this->error('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 403);
 		}
-
-		if ($this->getUser()) {
-			setcookie('teddy.userId', $this->getUser()->getEntity()->getId(), time() + 86400);
-			setcookie('teddy.apiKey', $this->getUser()->getEntity()->getApiKey(), time() + 86400);
-		}
 	}
 
 
