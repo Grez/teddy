@@ -47,6 +47,14 @@ class ClientService
 
 
 
+	/**
+	 * Notifies selected users
+	 *
+	 * @param int[] $userIds
+	 * @param string $component
+	 * @param mixed $data
+	 * @throws \WebSocket\BadOpcodeException
+	 */
 	public function notifyUsers(array $userIds, $component, $data)
 	{
 		$msg = new \stdClass();
@@ -63,6 +71,13 @@ class ClientService
 
 
 
+	/**
+	 * Sends message to all connected users
+	 *
+	 * @param string $component
+	 * @param mixed $data
+	 * @throws \WebSocket\BadOpcodeException
+	 */
 	public function broadcast($component, $data)
 	{
 		$msg = new \stdClass();

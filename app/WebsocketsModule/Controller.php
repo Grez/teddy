@@ -102,6 +102,12 @@ class Controller implements MessageComponentInterface
 
 
 
+	/**
+	 * Handles incoming message
+	 *
+	 * @param ConnectionInterface $from
+	 * @param string $msg
+	 */
 	public function onMessage(ConnectionInterface $from, $msg)
 	{
 		$msg = json_decode($msg);
@@ -136,6 +142,10 @@ class Controller implements MessageComponentInterface
 					echo 'Notifying user #' . $userId . ' from #' . $from->resourceId . "\n";
 					$this->sendMsgToUser($userId, $data);
 				}
+				break;
+
+			default:
+				echo 'Unknown method ' . $method . ' from #' . $from->resourceId . "\n";
 				break;
 		}
 	}
@@ -181,9 +191,15 @@ class Controller implements MessageComponentInterface
 
 
 
+	/**
+	 * Logs error and closes connection
+	 *
+	 * @param ConnectionInterface $conn
+	 * @param \Exception $e
+	 */
 	public function onError(ConnectionInterface $conn, \Exception $e)
 	{
-		echo "An error has occurred: {$e->getMessage()}\n";
+		echo 'An error has occurred: ' . $e->getMessage() . ', connection: ' . $conn->resourceId . "\n";
 
 		$conn->close();
 	}
