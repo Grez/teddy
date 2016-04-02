@@ -1,16 +1,16 @@
 Komunikace v reálném čase
 
-HTTP je bezstavový protokol. Funguje tedy na principu požadavek-odpověď http://tools.ietf.org/html/rfc7230. Bez nového požadavku na server tedy není možné běžně uživateli poslat notifikaci o nové události. Pro překonání tohoto omezení a zpříjemnění používání aplikace lze použít například AJAX požadavky, které v pravidelných intervalech posílají nové dotazy na server a podle toho upraví HTML na klientovi. Pro tento způsob komunikace se vžil název heartbeat https://www.zdrojak.cz/clanky/kometa-prinasi-web-v-realnem-case/.
+HTTP je bezstavový protokol. Funguje tedy na principu požadavek-odpověď http://tools.ietf.org/html/rfc7230. Bez nového požadavku na server proto není možné uživateli poslat notifikaci o nové události. Abychom překonali tohoto omezení a zpříjemnili používání aplikace lze použít AJAX, které v pravidelných intervalech posílají nové dotazy na server a podle toho upraví část HTML na klientovi. Pro tento způsob komunikace se vžil název heartbeat https://www.zdrojak.cz/clanky/kometa-prinasi-web-v-realnem-case/.
 
 <Obrázek pro heartbeat>
 
-S využitím AJAXu se o nové události klient pravděpodobně nedozví okamžitě, ale až několik sekund nebo spíše desítek sekund po jejím vzniku. Čím rychleji budeme chtít dostat informaci o nové události, tím častěji budeme muset posílat požadavky na server. Jelikož se dá očekávat, že většina požadavků navíc nevyvolá žádné změny na klientovi (většina aplikací nemá pro každého klienta změny každou sekundu), bude tak spousta požadavků zbytečných. To vede ke zbytečnému zatěžování serveru a sítě (hlavičky požadavku, cookies, zpracování požadavku, ...) Tento problém by šel vyřešit, kdybychom umožnili serveru posílat události ke klientovi. Jelikož nemůžeme jednoduše poslat HTTP požadavek ze serveru ke klientovi (musel by mít veřejnou IP adresu, povolit na firewallu příchozí spojení...), tak to nemá tak prosté řešení. V dnešní době už ale existuje několik technik, jak toho dosáhnout.
+S využitím AJAXu se o nové události klient pravděpodobně nedozví okamžitě, ale až několik sekund nebo spíše desítek sekund po jejím vzniku. Čím rychleji budeme chtít dostat informaci o nové události, tím častěji budeme muset posílat požadavky na server. Jelikož se dá očekávat, že většina požadavků navíc nevyvolá žádné změny na klientovi (většina aplikací nemá pro každého klienta změny každou sekundu), bude tak spousta požadavků zbytečných. To vede k zatěžování serveru a sítě (pro každý požadavek musíme znovu přenášet hlavičky, cookies, server zpracovat požadavek...) Tento problém by šel vyřešit, pokud bychom umožnili serveru posílat notifikace o událostech ke klientovi. Pomocí HTTP to bohužel jednoduše nejde. Klient by musel mít veřejnou IP adresu, povolit na firewallu a další v reálném světě ne úplně lehce požadovatelné kritéria. V dnešní době už ale existuje několik technik, jak toho dosáhnout.
 
 Long-polling (dlouhé dotazování)
 
 <Obrázek pro longpolling>
 
-Long-polling spočívá v tom, že server nechává spojení s klientem otevřené, až do doby, kdy má odpověd, nebo nastane nějaký timeout. Klient na to zareaguje tím, že jakmile obdrží odpověd, nebo nastane timeout, pošle nový požadavek. Díky této technice tak server odesílá notifikace o nových událostech hned, kdy je má server k dispozici. Pro implementaci long-pollingu jde například použít neviditelný <iframe> element.
+Long-polling spočívá v tom, že server nechává spojení s klientem otevřené, až do doby, než má pro klienta nějakou odpověd, nebo vyprší maximální čas spojení. Pokud klient dostane zpět nějaká data, zpracuje je. Pokud ne, nebo dojde k přerušení spojení kvůli překročení maximálního limitu, tak klient pošle nový požadavek na server. Díky tomuto tak server může odeslat notifikace o nových událostech hned, kdy je má k dispozici. Pro implementaci long-pollingu jde například použít neviditelný <iframe> element.
 
 Server-sent-events (serverem odesílané události)
 
@@ -20,7 +20,7 @@ Web Sockets
 
 <Obrázek pro Web Sockets>
 
-Pokud chceme obousměrné real-time spojení je potřeba se obrátit už na jiný protokol. Web Sockets umožnuje připojení více klientů na jeden server a okamžitou komunikaci mezi nimi. Uživatel tak jednoduše může na server poslat zprávu, kterou server může zpracovat a případně předat dalším klientům.
+Pokud chceme obousměrné real-time spojení je potřeba se obrátit už na jiný protokol. Web Sockets umožnuje připojení více klientů na jeden server a okamžitou komunikaci mezi nimi. Uživatel tak jednoduše může odeslat zprávu, kterou server může zpracovat a případně předat dalším klientům.
 
 Shrnutí:
                                 LP                   Server Sent Events                Web Sockets
@@ -47,3 +47,25 @@ V praktické části této práce jsem implementoval skript, který tuto jednodu
 https://www.zdrojak.cz/clanky/webdesigneruv-pruvodce-po-html5-multithreading-s-webworkers/
 http://www.w3schools.com/html/html5_webworkers.asp
 https://blog.pivotal.io/labs/labs/chrome-and-firefox-throttle-settimeout-setinterval-in-inactive-tabs
+
+
+___
+
+Generování mapy
+
+Perlinův šum
+
+Šumová funkce je pseudonáhodný generátor čísel.
+
+Šum je tedy funkce mapující nějakou hodnotu R^n do R. Jako vstup použijeme nějaké n-dimenziální souřadnice a dostaneme reálné číslo.
+
+Takovou funkcí je například Perlinův šum vytvořený v 80. letech Kenem Perlinem.
+
+Pseudonáhodná funkce je funkce, která vypadá náhodně, ale ve skutečnosti není. Pro daný vstup vrátí vždy stejný výstup. Pokud budeme chtít vytvořit pomocí takové funkce realisticky vypadající objekt, zjistíme, že vypadá uměle.
+
+Pokud budeme chtít vytvořit přirozeně vypadají objekt neobejdeme se bez nějaké náhodnostní funkce. Budeme
+
+http://freespace.virgin.net/hugo.elias/models/m_perlin.htm
+Šum je pseudonáhodná funkce. Vypadá sice náhodně, ale pro určitý vstup vrátí vždy daný výstup.
+
+http://www.noisemachine.com/talk1/14.html
