@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ff64265bdc377f8e0d5695b6f9034ac7",
-    "content-hash": "458a51e3da1bdddd51e8bbdb8b3174c1",
+    "hash": "cb28b589d2f63f75fa6c287e98993bfb",
+    "content-hash": "834cd480221a6ca4ae77a859c4832a11",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -198,12 +198,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "392b8dd9e04c073e832fcda99270ec5a8f5e30cd"
+                "reference": "9f89fd349fd2b537be8a0a0c41f87f2f640dfc8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/392b8dd9e04c073e832fcda99270ec5a8f5e30cd",
-                "reference": "392b8dd9e04c073e832fcda99270ec5a8f5e30cd",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/9f89fd349fd2b537be8a0a0c41f87f2f640dfc8a",
+                "reference": "9f89fd349fd2b537be8a0a0c41f87f2f640dfc8a",
                 "shasum": ""
             },
             "require": {
@@ -256,7 +256,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2016-03-27 19:22:52"
+            "time": "2016-03-31 10:10:15"
         },
         {
             "name": "doctrine/common",
@@ -475,12 +475,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
+                "reference": "416fb8ad1d095a87f1d21bc40711843cd122fd4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/416fb8ad1d095a87f1d21bc40711843cd122fd4a",
+                "reference": "416fb8ad1d095a87f1d21bc40711843cd122fd4a",
                 "shasum": ""
             },
             "require": {
@@ -521,7 +521,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2016-03-31 10:24:22"
         },
         {
             "name": "doctrine/lexer",
@@ -1383,16 +1383,16 @@
         },
         {
             "name": "kdyby/doctrine",
-            "version": "dev-master",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Doctrine.git",
-                "reference": "ae0f00d9a5e6f4a76bedd35f9d0641ce3e50b268"
+                "reference": "69c63fe943d1fade98d8879a9e3aa8fc9e7b5c4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/ae0f00d9a5e6f4a76bedd35f9d0641ce3e50b268",
-                "reference": "ae0f00d9a5e6f4a76bedd35f9d0641ce3e50b268",
+                "url": "https://api.github.com/repos/Kdyby/Doctrine/zipball/69c63fe943d1fade98d8879a9e3aa8fc9e7b5c4b",
+                "reference": "69c63fe943d1fade98d8879a9e3aa8fc9e7b5c4b",
                 "shasum": ""
             },
             "require": {
@@ -1405,8 +1405,7 @@
                 "nette/di": "~2.3@dev",
                 "nette/neon": "~2.3@dev",
                 "nette/robot-loader": "~2.3@dev",
-                "nette/utils": "~2.3@dev",
-                "php": ">=5.4"
+                "nette/utils": "~2.3@dev"
             },
             "require-dev": {
                 "dg/dibi": "~2.0",
@@ -1471,7 +1470,7 @@
                 "nette",
                 "orm"
             ],
-            "time": "2016-03-28 14:42:42"
+            "time": "2015-11-14 14:11:04"
         },
         {
             "name": "kdyby/doctrine-cache",
@@ -2139,12 +2138,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/forms.git",
-                "reference": "fd4358ed1a28ee836e4567819f538f346886c4ff"
+                "reference": "addaa4472816eee3645550458518c00a4234acd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/forms/zipball/fd4358ed1a28ee836e4567819f538f346886c4ff",
-                "reference": "fd4358ed1a28ee836e4567819f538f346886c4ff",
+                "url": "https://api.github.com/repos/nette/forms/zipball/addaa4472816eee3645550458518c00a4234acd2",
+                "reference": "addaa4472816eee3645550458518c00a4234acd2",
                 "shasum": ""
             },
             "require": {
@@ -2186,20 +2185,20 @@
             ],
             "description": "Nette Forms: greatly facilitates web forms",
             "homepage": "https://nette.org",
-            "time": "2016-02-25 22:51:03"
+            "time": "2016-03-30 08:44:53"
         },
         {
             "name": "nette/http",
-            "version": "2.3.x-dev",
+            "version": "v2.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/http.git",
-                "reference": "a117d3a857790d5cf70d5baf5c192ffda9462b83"
+                "reference": "24459307b19456706febbff8dbd033e1ff56ba04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/http/zipball/a117d3a857790d5cf70d5baf5c192ffda9462b83",
-                "reference": "a117d3a857790d5cf70d5baf5c192ffda9462b83",
+                "url": "https://api.github.com/repos/nette/http/zipball/24459307b19456706febbff8dbd033e1ff56ba04",
+                "reference": "24459307b19456706febbff8dbd033e1ff56ba04",
                 "shasum": ""
             },
             "require": {
@@ -2240,7 +2239,7 @@
             ],
             "description": "Nette HTTP Component",
             "homepage": "https://nette.org",
-            "time": "2016-02-06 22:08:58"
+            "time": "2016-04-02 17:09:25"
         },
         {
             "name": "nette/mail",
@@ -2303,12 +2302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/neon.git",
-                "reference": "cc3d4dd12498069240ef8c05d8ae796af1b58fd4"
+                "reference": "a0a5c017cbaa7e70e68802f6e6ab1142b8b9b868"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/neon/zipball/cc3d4dd12498069240ef8c05d8ae796af1b58fd4",
-                "reference": "cc3d4dd12498069240ef8c05d8ae796af1b58fd4",
+                "url": "https://api.github.com/repos/nette/neon/zipball/a0a5c017cbaa7e70e68802f6e6ab1142b8b9b868",
+                "reference": "a0a5c017cbaa7e70e68802f6e6ab1142b8b9b868",
                 "shasum": ""
             },
             "require": {
@@ -2348,7 +2347,7 @@
             ],
             "description": "Nette NEON: parser & generator for Nette Object Notation",
             "homepage": "http://ne-on.org",
-            "time": "2016-03-15 19:56:26"
+            "time": "2016-04-01 14:36:33"
         },
         {
             "name": "nette/php-generator",
@@ -2574,16 +2573,16 @@
         },
         {
             "name": "nette/security",
-            "version": "2.3.x-dev",
+            "version": "v2.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/security.git",
-                "reference": "ffc476ff770c8c41db006b763888e5709e63a02c"
+                "reference": "e9f3954df255c5f0be1a53a03962972aa8ba2021"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/security/zipball/ffc476ff770c8c41db006b763888e5709e63a02c",
-                "reference": "ffc476ff770c8c41db006b763888e5709e63a02c",
+                "url": "https://api.github.com/repos/nette/security/zipball/e9f3954df255c5f0be1a53a03962972aa8ba2021",
+                "reference": "e9f3954df255c5f0be1a53a03962972aa8ba2021",
                 "shasum": ""
             },
             "require": {
@@ -2622,7 +2621,7 @@
             ],
             "description": "Nette Security: Access Control Component",
             "homepage": "https://nette.org",
-            "time": "2016-02-06 22:08:59"
+            "time": "2016-02-23 13:13:35"
         },
         {
             "name": "nette/utils",
@@ -3060,12 +3059,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "dfd890574a4421ec1b64dc18ec4022b348cd200a"
+                "reference": "d55e325bbb40117d879c3285886d3711a4f4f623"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/dfd890574a4421ec1b64dc18ec4022b348cd200a",
-                "reference": "dfd890574a4421ec1b64dc18ec4022b348cd200a",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/d55e325bbb40117d879c3285886d3711a4f4f623",
+                "reference": "d55e325bbb40117d879c3285886d3711a4f4f623",
                 "shasum": ""
             },
             "require": {
@@ -3105,7 +3104,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-27 16:15:51"
+            "time": "2016-04-02 08:08:03"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -3172,12 +3171,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "c3e23ecf76e4c71a9ac3162c3ebc1e25d8e285de"
+                "reference": "496038466add75c605e83037d5b94d2b6491c8d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/c3e23ecf76e4c71a9ac3162c3ebc1e25d8e285de",
-                "reference": "c3e23ecf76e4c71a9ac3162c3ebc1e25d8e285de",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/496038466add75c605e83037d5b94d2b6491c8d8",
+                "reference": "496038466add75c605e83037d5b94d2b6491c8d8",
                 "shasum": ""
             },
             "require": {
@@ -3239,7 +3238,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2016-03-23 13:33:04"
+            "time": "2016-04-02 08:08:03"
         },
         {
             "name": "symfony/yaml",
@@ -3247,12 +3246,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "38aebd1045f91caaf25db0164e2703b21fb5359d"
+                "reference": "407e31ad9742ace5c3d01642f02a3b2e6062bae5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/38aebd1045f91caaf25db0164e2703b21fb5359d",
-                "reference": "38aebd1045f91caaf25db0164e2703b21fb5359d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/407e31ad9742ace5c3d01642f02a3b2e6062bae5",
+                "reference": "407e31ad9742ace5c3d01642f02a3b2e6062bae5",
                 "shasum": ""
             },
             "require": {
@@ -3288,7 +3287,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-10 14:06:18"
+            "time": "2016-03-30 14:44:34"
         },
         {
             "name": "symnedi/event-dispatcher",
@@ -3349,12 +3348,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Grez/Publisher.git",
-                "reference": "9bbacbbadfde2a71d961f7c2264bfe66245d18cf"
+                "reference": "88fc9fd8d9b020ac3f5fd251f55d7e42fc526475"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Grez/Publisher/zipball/9bbacbbadfde2a71d961f7c2264bfe66245d18cf",
-                "reference": "9bbacbbadfde2a71d961f7c2264bfe66245d18cf",
+                "url": "https://api.github.com/repos/Grez/Publisher/zipball/88fc9fd8d9b020ac3f5fd251f55d7e42fc526475",
+                "reference": "88fc9fd8d9b020ac3f5fd251f55d7e42fc526475",
                 "shasum": ""
             },
             "require": {
@@ -3379,7 +3378,7 @@
                 }
             ],
             "description": "Publisher copies files/folders from private folders to public",
-            "time": "2015-06-18 12:59:18"
+            "time": "2016-04-02 21:08:48"
         },
         {
             "name": "textalk/websocket",
@@ -3426,12 +3425,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "84d4d42af44c71251d6d4c0bf71890dbba7acb45"
+                "reference": "6b84d400ea829ce0e784ee5779642c39882a8df3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/84d4d42af44c71251d6d4c0bf71890dbba7acb45",
-                "reference": "84d4d42af44c71251d6d4c0bf71890dbba7acb45",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/6b84d400ea829ce0e784ee5779642c39882a8df3",
+                "reference": "6b84d400ea829ce0e784ee5779642c39882a8df3",
                 "shasum": ""
             },
             "require": {
@@ -3473,7 +3472,7 @@
                 "debugger",
                 "nette"
             ],
-            "time": "2016-03-23 18:39:45"
+            "time": "2016-04-02 16:26:54"
         },
         {
             "name": "zendframework/zend-code",
@@ -3959,12 +3958,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "fb467471952ef5cf8497c029980e556b47545333"
+                "reference": "82bf0bab583be0078da296ad83cdf04ede2cbc97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/fb467471952ef5cf8497c029980e556b47545333",
-                "reference": "fb467471952ef5cf8497c029980e556b47545333",
+                "url": "https://api.github.com/repos/symfony/process/zipball/82bf0bab583be0078da296ad83cdf04ede2cbc97",
+                "reference": "82bf0bab583be0078da296ad83cdf04ede2cbc97",
                 "shasum": ""
             },
             "require": {
@@ -4000,12 +3999,13 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-23 13:11:46"
+            "time": "2016-04-02 07:57:47"
         }
     ],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "kdyby/doctrine": 0,
         "doctrine/migrations": 20,
         "ipub/visual-paginator": 20,
         "teddy/publisher": 20,
