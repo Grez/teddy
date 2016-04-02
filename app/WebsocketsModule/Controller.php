@@ -2,14 +2,9 @@
 
 namespace Teddy\WebsocketsModule;
 
-use Kdyby\Console\HttpRequestFactory;
-use Kdyby\Doctrine\EntityManager;
-use Nette\Application\Application;
 use Nette\DI\Container;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-use Teddy\Entities\Bans\Bans;
-use Teddy\Entities\User\User;
 use Teddy\Entities\User\Users;
 
 
