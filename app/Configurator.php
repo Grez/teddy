@@ -99,6 +99,12 @@ class Configurator extends Nette\Configurator
 	protected function addConfigFiles()
 	{
 		$appDir = $this->parameters['appDir'];
+		$libsDir = $this->parameters['libsDir'];
+
+		// cough, cough... this is wrong on so many lvls, though needed for skleleton -_-
+		if (is_file($config = $libsDir . '/teddy/framework/app/config/config.neon')) {
+			$this->addConfig($config);
+		}
 
 		// Global config
 		if (is_file($config = "$appDir/config/config.neon")) {
