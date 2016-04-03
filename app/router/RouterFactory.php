@@ -34,13 +34,6 @@ class RouterFactory
 			'token' => NULL,
 		]);
 
-		$router[] = new Route('cron/<action>/<id>', [
-			'module' => 'Cron',
-			'presenter' => 'Cron',
-			'action' => 'default',
-			'id' => NULL,
-		]);
-
 		$router[] = new Route('admin/<presenter>/<action>/<id>', [
 			'module' => 'Admin',
 			'presenter' => 'Main',
