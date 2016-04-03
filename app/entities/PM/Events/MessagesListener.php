@@ -15,12 +15,12 @@ class MessagesListener extends Nette\Object implements Kdyby\Events\Subscriber
 	/**
 	 * @var Messages
 	 */
-	private $messageFacade;
+	protected $messageFacade;
 
 	/**
 	 * @var EntityManager
 	 */
-	private $em;
+	protected $em;
 
 
 
