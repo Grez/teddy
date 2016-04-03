@@ -6,18 +6,11 @@ use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Kdyby;
 use Teddy\Entities\User\User;
-use Teddy\WebsocketsModule\ClientService;
-use WebSocket\ConnectionException;
 
 
 
 class MessagesListener extends Nette\Object implements Kdyby\Events\Subscriber
 {
-
-	/**
-	 * @var ClientService
-	 */
-	protected $clientService;
 
 	/**
 	 * @var Messages
@@ -30,9 +23,9 @@ class MessagesListener extends Nette\Object implements Kdyby\Events\Subscriber
 	private $em;
 
 
-	public function __construct(ClientService $clientService, Messages $messageFacade, EntityManager $em)
+
+	public function __construct(Messages $messageFacade, EntityManager $em)
 	{
-		$this->clientService = $clientService;
 		$this->messageFacade = $messageFacade;
 		$this->em = $em;
 	}
@@ -70,14 +63,7 @@ class MessagesListener extends Nette\Object implements Kdyby\Events\Subscriber
 	protected function sendUnreadMessagesWS(User $user)
 	{
 		$this->em->flush(); // we need flush because getUnreadMessagesCount() is asking db
-		$this->messageFacade->getUnreadMessagesCount($user);
-
-		try {
-			$this->clientService->notifyUsers([$user->getId()], 'pm', $this->messageFacade->getUnreadMessagesCount($user));
-
-		} catch (ConnectionException $e) {
-			// log this?
-		}
+		// blabla ve skeletonu
 	}
 
 

@@ -36,8 +36,6 @@ services:
 	- Teddy\Entities\Map\MapService()
 	- Teddy\GameModule\Components\IMapControlFactory()
 
-	- Teddy\WebsocketsModule\ClientService()
-
 	- Teddy\Forms\IUserLogsFilterFormFactory
 	- Teddy\GameModule\Components\IEventsControlFactory()
 
@@ -134,7 +132,6 @@ webloader:
 				events: teddy/game/events.js
 				astar: teddy/game/astar.js
 				pathfinding: teddy/game/pathfinding.js
-				websockets: teddy/game/websockets.js
 		admin:
 			files:
 				charts: teddy/charts/Chart.Core.js
