@@ -46,7 +46,7 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 		$date = new DateTime();
 		$date->setTimestamp(time() - ($days * 24 * 60 * 60));
 		$this->filter[] = function (QueryBuilder $qb) use ($date) {
-			$qb->andWhere('u.lastActivity >= :activity')->setParameter('activity', $date);
+			$qb->andWhere('u.lastActivityAt >= :activity')->setParameter('activity', $date);
 		};
 		return $this;
 	}
@@ -62,7 +62,7 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 		$date = new DateTime();
 		$date->setTimestamp(time() - ($minutes * 60));
 		$this->filter[] = function (QueryBuilder $qb) use ($date) {
-			$qb->andWhere('u.lastActivity >= :activity')->setParameter('activity', $date);
+			$qb->andWhere('u.lastActivityAt >= :activity')->setParameter('activity', $date);
 		};
 		return $this;
 	}
@@ -83,7 +83,7 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param enum ASC|DESC $order
+	 * @param string - ASC|DESC $order
 	 * @return $this
 	 */
 	public function orderByNick($order = 'ASC')
@@ -103,7 +103,7 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 	public function orderByRegistration($order = 'DESC')
 	{
 		$this->select[] = function (QueryBuilder $qb) use ($order) {
-			$qb->addOrderBy('u.registered', $order);
+			$qb->addOrderBy('u.registeredAt', $order);
 		};
 		return $this;
 	}

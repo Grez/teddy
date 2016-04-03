@@ -11,8 +11,8 @@
 			</thead>
 			<tbody>
 			<tr n:foreach="$users as $user">
-				<td>{$user->registered|date:'Y-m-d H:i:s'}</td>
-				<td>{$user->nick}</td>
+				<td>{$user->registeredAt|date:'Y-m-d H:i:s'}</td>
+				<td><a n:href="Users:user, userId => $user->id">{$user->nick}</a></td>
 			</tr>
 			</tbody>
 		</table>

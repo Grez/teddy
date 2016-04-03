@@ -81,10 +81,10 @@ class AdminsPresenter extends BasePresenter
 				->setDefaultValue($admin->getAdminDescription());
 			$form->addText('lastLogin', 'Last login')
 				->setDisabled()
-				->setDefaultValue($admin->getLastLogin()->format('Y-m-d H:i:s'));
+				->setDefaultValue($admin->getLastLoginAt()->format('Y-m-d H:i:s'));
 			$form->addText('lastActivity', 'Last activity')
 				->setDisabled()
-				->setDefaultValue($admin->getLastActivity()->format('Y-m-d H:i:s'));
+				->setDefaultValue($admin->getLastActivityAt()->format('Y-m-d H:i:s'));
 			$form->addCheckboxList('adminPermissions', 'Permissions', $this->getPresenters())
 				->setDefaultValue($admin->getAdminPermissions(TRUE))
 				->getSeparatorPrototype()->setName('inline');

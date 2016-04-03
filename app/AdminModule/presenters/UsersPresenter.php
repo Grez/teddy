@@ -92,10 +92,10 @@ class UsersPresenter extends BasePresenter
 			->setDefaultValue($this->editedUser->getNick());
 		$form->addText('registered', 'Registered')
 			->setDisabled()
-			->setDefaultValue($this->editedUser->getRegistered()->format('Y-m-d H:i:s'));
+			->setDefaultValue($this->editedUser->getRegisteredAt()->format('Y-m-d H:i:s'));
 		$form->addText('lastActivity', 'Last activity')
 			->setDisabled()
-			->setDefaultValue($this->editedUser->getLastActivity()->format('Y-m-d H:i:s'));
+			->setDefaultValue($this->editedUser->getLastActivityAt()->format('Y-m-d H:i:s'));
 		$form->addSubmit('send', 'Save');
 		return $form->setBootstrapRenderer();
 	}

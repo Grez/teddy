@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\Map;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,7 +48,7 @@ class Position
 
 
 	/**
-	 * @parma Map $map
+	 * @param Map $map
 	 * @param int $x
 	 * @param int $y
 	 * @param float $height

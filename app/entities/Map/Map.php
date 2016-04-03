@@ -2,8 +2,6 @@
 
 namespace Teddy\Entities\Map;
 
-
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Doctrine\ORM\Mapping as ORM;
