@@ -3,6 +3,7 @@
 namespace Teddy\Entities\User;
 
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  *   @ORM\Index(columns={"fingerprint"})
  * })
  */
-class Login extends \Kdyby\Doctrine\Entities\BaseEntity
+class Login
 {
 
 	use Identifier;
@@ -80,22 +81,11 @@ class Login extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->date = new \DateTime();
 		$this->userAgent = $userAgent;
 		$this->ip = $request->getRemoteAddress();
-		$this->cookie = $request->getCookie('login') ?: mt_rand(1000000, 9999999);
+		$this->cookie = $request->getCookie('login') ?: NULL;
 		$this->fingerprint = $request->getCookie('fingerprint') ?: NULL;
-		$this->user = $user;
 		$this->login = $login;
-	}
-
-
-
-	/**
-	 * @param mixed $error
-	 * @return Login
-	 */
-	public function setError(mixed $error)
-	{
+		$this->user = $user;
 		$this->error = $error;
-		return $this;
 	}
 
 

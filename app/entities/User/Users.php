@@ -186,7 +186,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 			return new Nette\Security\Identity($user->getId());
 		}
 
-		$this->onWrongPassword($email);
+		$this->onWrongPassword($email, $user);
 		throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
 	}
 

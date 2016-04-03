@@ -65,6 +65,8 @@ class HomepagePresenter extends BasePresenter
 			$form->addError('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 'Error');
 		} else {
 			$form->addText('email', 'Email')
+				->addRule($form::EMAIL)
+				->setType('email')
 				->setRequired();
 			$form->addPassword('password', 'Password')
 				->setRequired();
