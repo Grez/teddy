@@ -14,7 +14,7 @@ Long-polling spočívá v tom, že server nechává spojení s klientem otevřen
 
 Server-sent-events (serverem odesílané události)
 
-Long-polling je do jisté míry ohýbání HTTP. Server-sent-events se snaží, aby od toho mohla být aplikace odstíněna. Implementuje tedy v zásadě to stejné přímo na úrovni prohlížeče. Aplikace tedy jednoduše zavolá požadavek na určitou URL adresu a o zbytek se již postará prohlížeč. Máme tak jednoduše vytvořené jednosměrné spojení ze serveru ke klientovi.
+Long-polling je do jisté míry ohýbání HTTP. Server-sent-events se snaží od tohoto aplikaci odstínit. Implementuje tedy tedy long-polling přímo na úrovni prohlížeče. Aplikace už jednoduše zavolá požadavek na určitou URL adresu a o udržování spojení se stará přímo sám prohlížeč. Máme tak jednoduše vytvořené jednosměrné spojení ze serveru ke klientovi.
 
 Web Sockets
 
@@ -37,10 +37,11 @@ ___
 
 Web Workers
 
-Pokud programujeme nějakou komplexnější webovou aplikaci, tak je často potřeba vykonávat i nějaké náročnější operace. Tyto operace můžeme provádět buď na serveru, nebo na klientovi. Server bude s velkou pravděpodobností výkonnější než klient, musíme ovšem počítat s potřebným časem pro komunikaci mezi nimi. Většinou navíc každý server obsluhuje větší množství klientů. V posledních letech došlo k výraznému zrychlení interpretace javascriptu ve všech prohlížečích. Javascript je ovšem stále jednovláknový jazyk, takže pokud volání funkce trvá příliš dlouho, dochází k zamrznutí stránky (případně celého prohlížeče). Tomuto bychom se samozřejmě chtěli vyhnout. Jednou takovou možností jsou Web Workers.
-Web Workers je JavaScript, který běží na pozadí, nezávisle na ostatních skriptech, aniž by ovlivňoval výkon samostatné stránky. Na straně uživatele tak nedochází k zamrznutí prohlížeče na průběh výpočtu a pouze mu zobrazíme výsledek, až nám jej worker pošle.
-Web Workers se navíc dají použít k obejití některých omezení, kdy například Google Chrome nedovoluje zavolat funkci setTimeout častěji než 1x za sekundu u neaktivních tabů. Pokud bychom pak například chtěli zobrazit novou událost pomocí jednoduché animace měnící titulek stránky, tak nám to nepůjde.
-V praktické části této práce jsem implementoval skript, který tuto jednoduchou věc umožní pomocí Web Workers.
+Pokud programujeme nějakou komplexnější webovou aplikaci, tak je často potřeba vykonávat i nějaké náročnější operace. Tyto operace můžeme provádět buď na serveru, nebo na klientovi. Server bude s velkou pravděpodobností výkonnější než klient, musíme ovšem počítat s potřebným časem pro komunikaci. Většinou navíc každý server obsluhuje větší množství klientů. Pokud bychom vykonávali operace přímo na klientovi, můžeme dosáhnout rychlejší a škálovatelnější aplikace.
+V posledních letech došlo k výraznému zrychlení interpretace javascriptu ve všech hlavních prohlížečích. Javascript je stále ovšem jednovláknový jazyk, takže pokud volání funkce trvá příliš dlouho, dojde k zamrznutí stránky (případně celého prohlížeče). Toto je samozřejmě nežádoucí jev, kterému bychom se rádi vyhnuli. Jednou takovou možností jsou Web Workers.
+Web Workers je JavaScript, který běží na pozadí, nezávisle na ostatních skriptech, aniž by ovlivňoval výkon samostatné stránky. Na straně uživatele tak nedochází k zamrznutí stránky po dobu průběhu výpočtu a pouze mu zobrazíme výsledek, až nám jej worker pošle. Díky tomu můžeme na klientovi provádět náročnější operace (např. počítání nejkratší cesty v grafu) a uživatel přesto bude mít celou dobu plně funkční aplikaci.
+Web Workers se také dají využít k obejití některých omezení prohlížečů. Ku příkladu Google Chrome nedovoluje u neaktivních tabů zavolat funkci `setTimeout` častěji než 1x za sekundu. Pokud bychom pak chtěli zobrazit novou událost například pomocí jednoduché animace měnící titulek stránky, tak nám to nepůjde.
+Oba uvedené příklady jsou vyřešené v praktické části této práce.
 
 <webworkers_tabs.png>
 
