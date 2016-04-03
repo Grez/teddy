@@ -13,6 +13,8 @@ class RouterFactory
 {
 
 	/**
+	 * @warning: annotation is needed!
+	 *
 	 * @return \Nette\Application\IRouter
 	 */
 	public static function create()
