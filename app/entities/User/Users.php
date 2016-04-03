@@ -122,7 +122,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function deleteAdminPermissions(User $user)
 	{
-		foreach ($user->adminPermissions as $permission) {
+		foreach ($user->getAdminPermissions() as $permission) {
 			$this->em->remove($permission);
 		}
 		$this->em->flush();
