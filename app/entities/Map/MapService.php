@@ -65,8 +65,8 @@ class MapService extends \Nette\Object
 				$this->em->persist($position);
 			}
 
-			// We want to do this in single trasactions
-			$this->em->flush(array_merge($map, $positions));
+			// We want to do this in single trasaction
+			$this->em->flush(array_merge([$map], $positions));
 			$this->em->clear(Position::class);
 			$this->onEmbiggen($this, $map);
 		}
