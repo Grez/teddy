@@ -33,9 +33,6 @@ services:
 	- Teddy\Entities\Forum\ForumPosts()
 	- Teddy\Entities\Coins\CoinSacks()
 
-	- Teddy\Entities\Map\MapService()
-	- Teddy\GameModule\Components\IMapControlFactory()
-
 	- Teddy\Forms\IUserLogsFilterFormFactory
 	- Teddy\GameModule\Components\IEventsControlFactory()
 
@@ -68,8 +65,6 @@ extensions:
 console:
 	url: http://www.teddy.l/
 	commands:
-		generateMap: Teddy\Entities\Map\GenerateMapCommand
-		embiggenMap: Teddy\Entities\Map\EmbiggenMapCommand
 
 migrations:
 	table: doctrine_migrations # database table for applied migrations
@@ -102,7 +97,6 @@ webloader:
 				bootstrap: teddy/bootstrap.css
 				bootstrapTheme: teddy/bootstrap-theme.css
 				style: teddy/game/style.less
-				map: teddy/game/map.less
 			fileFilters:
 				- @lessFilter
 				- @wlCssFilter
@@ -130,8 +124,6 @@ webloader:
 		game:
 			files:
 				events: teddy/game/events.js
-				astar: teddy/game/astar.js
-				pathfinding: teddy/game/pathfinding.js
 		admin:
 			files:
 				charts: teddy/charts/Chart.Core.js
