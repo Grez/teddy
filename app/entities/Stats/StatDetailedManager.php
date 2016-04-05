@@ -27,13 +27,13 @@ class StatDetailedManager extends Entities\Manager
 	 */
 	public function create()
 	{
-		$userRepository = $this->em->getRepository(Entities\User\User::class);
+		$userRepository = $this->em->getRepository(\Game\Entities\User\User::class);
 		$userListQuery = new UserListQuery();
 		$total = $userListQuery->count($userRepository);
 		$active = $userListQuery->onlyActive()->count($userRepository);
 		$online = $userListQuery->onlyOnline()->count($userRepository);
 
-		$stat = new StatDetailed();
+		$stat = new \Game\Entities\Stats\StatDetailed();
 		$stat->setDate(new \DateTime());
 		$stat->setTime(new \DateTime());
 		$stat->setPlayersTotal($total);

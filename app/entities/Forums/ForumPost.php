@@ -1,6 +1,6 @@
 <?php
 
-namespace Teddy\Entities\Forum;
+namespace Teddy\Entities\Forums;
 
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
@@ -11,32 +11,30 @@ use Teddy\Entities\User\User;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  * @ORM\Table(indexes={
  *   @ORM\Index(columns={"deleted_at"})
  * })
  */
-class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	use Identifier;
-
 	/**
-	 * @ORM\ManyToOne(targetEntity="Forum", inversedBy="posts")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\Forums\Forum", inversedBy="posts")
 	 * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
 	 * @var Forum
 	 */
 	protected $forum;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 * @var User
 	 */
 	protected $author;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="ForumPost")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\Forums\ForumPost")
 	 * @ORM\JoinColumn(name="conversation_id", referencedColumnName="id")
 	 * @var ForumPost
 	 */
@@ -61,7 +59,7 @@ class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $deletedAt;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="deleted_by", referencedColumnName="id")
 	 * @var User
 	 */

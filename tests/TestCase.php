@@ -46,6 +46,18 @@ abstract class TestCase extends \Tester\TestCase
 	private $databaseName;
 
 
+
+	/**
+	 * \Game is kinda wonky so it won't get autoloaded w/ this :/
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+		$this->getContainer();
+	}
+
+
+
 	/**
 	 * @return Container
 	 */
@@ -77,6 +89,7 @@ abstract class TestCase extends \Tester\TestCase
 			->setDebugMode(TRUE);
 		$configurator->createRobotLoader()
 			->addDirectory(__DIR__ . '/../app')
+			->addDirectory(__DIR__ . '/../game')
 			->register();
 		$container = $configurator->createContainer();
 

@@ -4,7 +4,7 @@ namespace Teddy\Entities\User;
 
 use Doctrine\ORM\QueryBuilder;
 use Kdyby\Persistence\Queryable;
-use Teddy\Entities\PM\Message;
+use Game\Entities\PM\Message;
 
 
 class MessagesQuery extends \Kdyby\Doctrine\QueryObject
@@ -153,7 +153,7 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 	private function createBasicDql(Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder()
-			->select('m')->from(Message::class, 'm');
+			->select('m')->from(\Game\Entities\PM\Message::class, 'm');
 
 		foreach ($this->filter as $modifier) {
 			$modifier($qb);

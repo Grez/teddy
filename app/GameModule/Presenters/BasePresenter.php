@@ -3,7 +3,7 @@
 namespace Teddy\GameModule\Presenters;
 
 use Teddy;
-use Teddy\Entities\User\User;
+use Game\Entities\User\User;
 use Nette;
 use Teddy\GameModule\Components\IEventsControlFactory;
 

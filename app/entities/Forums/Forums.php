@@ -1,7 +1,8 @@
 <?php
 
-namespace Teddy\Entities\Forum;
+namespace Teddy\Entities\Forums;
 
+use Game\Entities\Forums\Forum;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
@@ -31,7 +32,7 @@ class Forums extends Entities\Manager
 	{
 		parent::__construct($em);
 		$this->forumsPostsRepository = $forumPosts;
-		$this->repository = $this->em->getRepository(Forum::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Forums\Forum::class);
 	}
 
 
@@ -68,16 +69,16 @@ class Forums extends Entities\Manager
 
 	/**
 	 * @param User $author
-	 * @param Forum $forum
+	 * @param \Game\Entities\Forums\Forum $forum
 	 * @param string $subject
 	 * @param string $text
-	 * @param ForumPost|NULL $conversation
+	 * @param \Game\Entities\Forums\ForumPost|NULL $conversation
 	 * @return ForumPost
 	 * @throw AccessDenied
 	 */
-	public function addPost(User $author, Forum $forum, $subject = '', $text = '', ForumPost $conversation = NULL)
+	public function addPost(User $author, \Game\Entities\Forums\Forum $forum, $subject = '', $text = '', \Game\Entities\Forums\ForumPost $conversation = NULL)
 	{
-		$post = new ForumPost($author, $forum, $subject, $text);
+		$post = new \Game\Entities\Forums\ForumPost($author, $forum, $subject, $text);
 		$post->setConversation($conversation);
 		$this->em->persist($post);
 
@@ -92,11 +93,11 @@ class Forums extends Entities\Manager
 	 */
 	public function updateLastVisit(User $user, Forum $forum)
 	{
-		$lastVisit = $this->em->getRepository(ForumLastVisit::class)->findOneBy([
+		$lastVisit = $this->em->getRepository(\Game\Entities\Forums\ForumLastVisit::class)->findOneBy([
 			'user' => $user,
 			'forum' => $forum,
 		]);
-		$lastVisit = $lastVisit ?: new ForumLastVisit($user, $forum);
+		$lastVisit = $lastVisit ?: new \Game\Entities\Forums\ForumLastVisit($user, $forum);
 		$lastVisit->updateLastVisitAt();
 		$this->em->persist($lastVisit);
 	}

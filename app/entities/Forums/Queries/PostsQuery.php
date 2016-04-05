@@ -1,6 +1,6 @@
 <?php
 
-namespace Teddy\Entities\Forum;
+namespace Teddy\Entities\Forums;
 
 use Doctrine\ORM\QueryBuilder;
 use Kdyby\Persistence\Queryable;
@@ -99,7 +99,7 @@ class PostsQuery extends \Kdyby\Doctrine\QueryObject
 	private function createBasicDql(Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder()
-			->select('p')->from(ForumPost::class, 'p')
+			->select('p')->from(\Game\Entities\Forums\ForumPost::class, 'p')
 			->innerJoin('p.forum', 'f');
 
 		foreach ($this->filter as $modifier) {

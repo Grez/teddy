@@ -3,10 +3,10 @@
 namespace Teddy\GameModule\Presenters;
 
 use Nette\Utils\ArrayHash;
-use Teddy\Entities\Forum\AccessDenied;
-use Teddy\Entities\Forum\Forum;
-use Teddy\Entities\Forum\ForumPost;
-use Teddy\Entities\Forum\PostsQuery;
+use Teddy\Entities\Forums\AccessDenied;
+use Game\Entities\Forums\Forum;
+use Game\Entities\Forums\ForumPost;
+use Teddy\Entities\Forums\PostsQuery;
 use Teddy\Forms\Form;
 
 
@@ -15,13 +15,13 @@ class ForumPresenter extends BasePresenter
 {
 
 	/**
-	 * @var \Teddy\Entities\Forum\Forums
+	 * @var \Teddy\Entities\Forums\Forums
 	 * @inject
 	 */
 	public $forumFacade;
 
 	/**
-	 * @var \Teddy\Entities\Forum\ForumPosts
+	 * @var \Teddy\Entities\Forums\ForumPosts
 	 * @inject
 	 */
 	public $forumPostsFacade;
@@ -114,7 +114,7 @@ class ForumPresenter extends BasePresenter
 			$this->redirect('this');
 		}
 
-		/** @var ForumPost $conversation */
+		/** @var ForumPost|NULL $conversation */
 		$conversation = $this->forumPostsFacade->find($values->conversation);
 
 		try {

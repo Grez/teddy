@@ -145,7 +145,7 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 	private function createBasicDql(Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder()
-			->select('u')->from(User::class, 'u');
+			->select('u')->from(\Game\Entities\User\User::class, 'u');
 
 		foreach ($this->filter as $modifier) {
 			$modifier($qb);

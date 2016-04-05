@@ -15,7 +15,7 @@ class CoinSacks extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(CoinSack::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Coins\CoinSack::class);
 	}
 
 
@@ -27,7 +27,7 @@ class CoinSacks extends Entities\Manager
 	 */
 	public function addCoinSack($amount, User $user, \DateTime $expires = NULL)
 	{
-		$coinSack = new CoinSack($amount, $user, $expires);
+		$coinSack = new \Game\Entities\Coins\CoinSack($amount, $user, $expires);
 		$user->addCoinSack($coinSack);
 		$this->em->flush();
 	}

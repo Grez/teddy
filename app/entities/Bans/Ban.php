@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  * @ORM\Table(indexes={
  *   @ORM\Index(columns={"range_start"}),
  *   @ORM\Index(columns={"range_end"}),
@@ -18,10 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @TODO: IPv6, unsigned is only for some engines
  */
-class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 {
-
-	use Identifier;
 
 	/**
 	 * @ORM\Column(type="integer", options={"unsigned"=TRUE})

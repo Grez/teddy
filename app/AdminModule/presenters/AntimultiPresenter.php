@@ -3,14 +3,14 @@
 namespace Teddy\AdminModule\Presenters;
 
 use Nette\Utils\ArrayHash;
-use Teddy\Entities\Bans\Ban;
+use Game\Entities\Bans\Ban;
 use Teddy\Entities\Bans\Bans;
 use Teddy\Entities\Logs\BansQuery;
-use Teddy\Entities\Logs\UserLog;
-use Teddy\Entities\User\Login;
+use Game\Entities\Logs\UserLog;
+use Game\Entities\User\Login;
 use Teddy\Entities\User\LoginListQuery;
-use Teddy\Entities\User\User;
-use Teddy\Entities\User\UserAgent;
+use Game\Entities\User\User;
+use Game\Entities\User\UserAgent;
 use Teddy\Entities\User\UserListQuery;
 use Teddy\Forms\Form;
 
@@ -94,7 +94,7 @@ class AntimultiPresenter extends BasePresenter
 			}
 		}
 
-		$this->template->logins = $this->em->getRepository(Login::class)
+		$this->template->logins = $this->em->getRepository(\Game\Entities\User\Login::class)
 			->fetch($query)
 			->applyPaginator($this['visualPaginator']->getPaginator());
 	}

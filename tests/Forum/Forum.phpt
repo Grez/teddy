@@ -7,11 +7,11 @@
 namespace Teddy\Tests;
 
 use Nette;
-use Teddy\Entities\Forum\AccessDenied;
-use Teddy\Entities\Forum\Forum;
-use Teddy\Entities\Forum\ForumPosts;
-use Teddy\Entities\Forum\Forums;
-use Teddy\Entities\User\User;
+use Teddy\Entities\Forums\AccessDenied;
+use Game\Entities\Forums\Forum;
+use Teddy\Entities\Forums\ForumPosts;
+use Teddy\Entities\Forums\Forums;
+use Game\Entities\User\User;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
@@ -57,7 +57,7 @@ class ForumsTest extends TestCase
 
 		Assert::exception(function () use ($author, $writableForum) {
 			$this->forumsRepository->addPost($author, $writableForum, 'Subject', 'Text');
-		}, 'Teddy\Entities\Forum\AccessDenied');
+		}, 'Teddy\Entities\Forums\AccessDenied');
 
 		$post = $this->forumsRepository->addPost($author, $nonWritableForum, 'Subject', 'Text');
 		Assert::equal($post->getAuthor(), $author);

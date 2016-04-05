@@ -14,7 +14,7 @@ class StatDailyManager extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(StatDaily::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Stats\StatDaily::class);
 	}
 
 
@@ -35,7 +35,7 @@ class StatDailyManager extends Entities\Manager
 		$stats = $query->getResult();
 
 		$result = $this->findBy(['date' => $date]);
-		$statDaily = (is_array($result) && count($result)) ? $result[0] : new StatDaily();
+		$statDaily = (is_array($result) && count($result)) ? $result[0] : new \Game\Entities\Stats\StatDaily();
 		$statDaily->setDate($date);
 		$statDaily->setPlayersTotal($stats[0]['playersTotal']);
 		$statDaily->setPlayersActive($stats[0]['playersActive']);

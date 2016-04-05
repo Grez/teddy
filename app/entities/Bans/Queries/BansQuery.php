@@ -129,7 +129,7 @@ class BansQuery extends QueryObject
 	{
 		$qb = $repository->createQueryBuilder()
 			->select('b')
-			->from(Ban::class, 'b');
+			->from(\Game\Entities\Bans\Ban::class, 'b');
 
 		foreach ($this->filter as $modifier) {
 			$modifier($qb);

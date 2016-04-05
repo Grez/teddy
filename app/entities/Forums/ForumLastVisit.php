@@ -1,6 +1,6 @@
 <?php
 
-namespace Teddy\Entities\Forum;
+namespace Teddy\Entities\Forums;
 
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
@@ -11,22 +11,20 @@ use Teddy\Entities\User\User;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  */
-class ForumLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class ForumLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	use Identifier;
-
 	/**
-	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 * @var User
 	 */
 	protected $user;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Forum", inversedBy="lastVisits")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\Forums\Forum", inversedBy="lastVisits")
 	 * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
 	 * @var Forum
 	 */

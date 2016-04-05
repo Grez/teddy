@@ -1,6 +1,6 @@
 <?php
 
-namespace Teddy\Entities\Forum;
+namespace Teddy\Entities\Forums;
 
 use Nette;
 use Teddy\Entities;
@@ -14,7 +14,7 @@ class ForumPosts extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(ForumPost::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Forums\ForumPost::class);
 	}
 
 }

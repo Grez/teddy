@@ -1,6 +1,6 @@
 <?php
 
-namespace Teddy\Entities\Forum;
+namespace Teddy\Entities\Forums;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
@@ -13,21 +13,19 @@ use Teddy\Entities\User\User;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  */
-class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	use Identifier;
-
 	/**
-	 * @ORM\OneToMany(targetEntity="ForumPost", mappedBy="forum")
+	 * @ORM\OneToMany(targetEntity="\Game\Entities\Forums\ForumPost", mappedBy="forum")
 	 * @var ForumPost[]|ArrayCollection
 	 */
 	protected $posts;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="ForumLastVisit", mappedBy="forum", fetch="EXTRA_LAZY")
+	 * @ORM\OneToMany(targetEntity="\Game\Entities\Forums\ForumLastVisit", mappedBy="forum", fetch="EXTRA_LAZY")
 	 * @var ForumLastVisit[]|ArrayCollection
 	 */
 	protected $lastVisits;
@@ -55,7 +53,7 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * Can User view this Forum?
+	 * Can User view this Forums?
 	 *
 	 * @param User $user
 	 * @return bool
@@ -85,7 +83,7 @@ class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * Can User write on this Forum?
+	 * Can User write on this Forums?
 	 *
 	 * @param User $user
 	 * @return bool

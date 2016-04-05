@@ -3,7 +3,7 @@
 namespace Teddy\GameModule\Presenters;
 
 use Nette\Utils\ArrayHash;
-use Teddy\Entities\PM\Message;
+use Game\Entities\PM\Message;
 use Teddy\Entities\User\MessagesQuery;
 use Teddy\Forms\Form;
 use Teddy\Entities\PM\Messages;

@@ -8,10 +8,10 @@ namespace Teddy\Tests;
 
 use Kdyby\Clock\IDateTimeProvider;
 use Nette;
-use Teddy\Entities\Coins\CoinSack;
+use Game\Entities\Coins\CoinSack;
 use Teddy\Entities\Coins\CoinSacks;
 use Tester\Assert;
-use Teddy\Entities\User\User;
+use Game\Entities\User\User;
 
 require __DIR__ . '/../bootstrap.php';
 require __DIR__ . '/../TestCase.php';

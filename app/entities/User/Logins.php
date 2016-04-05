@@ -2,6 +2,8 @@
 
 namespace Teddy\Entities\User;
 
+use Game\Entities\User\Login;
+use Game\Entities\User\UserAgent;
 use Kdyby\Clock\IDateTimeProvider;
 use Nette;
 use Teddy\Entities;
@@ -35,7 +37,7 @@ class Logins extends Entities\Manager
 	public function __construct(EntityManager $em, Nette\Http\Request $request, Nette\Http\Response $response, IDateTimeProvider $dateTimeProvider)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(Login::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\User\Login::class);
 		$this->request = $request;
 		$this->response = $response;
 		$this->dateTimeProvider = $dateTimeProvider;
@@ -49,15 +51,15 @@ class Logins extends Entities\Manager
 	 * @param int $error
 	 * @return NULL
 	 */
-	public function log(User $user = NULL, $login = '', $error = 0)
+	public function log(\Game\Entities\User\User $user = NULL, $login = '', $error = 0)
 	{
 		if ($user instanceof User) {
 			$user->setLastLoginAt($this->dateTimeProvider->getDateTime());
 		}
 
 		$ua = $this->request->getHeader('User-Agent');
-		$userAgent = $this->em->getRepository(UserAgent::class)->findOneBy(['userAgent' => $ua]) ?: new UserAgent($ua);
-		$log = new Login($this->request, $userAgent, $login, $user, $error);
+		$userAgent = $this->em->getRepository(\Game\Entities\User\UserAgent::class)->findOneBy(['userAgent' => $ua]) ?: new \Game\Entities\User\UserAgent($ua);
+		$log = new \Game\Entities\User\Login($this->request, $userAgent, $login, $user, $error);
 		$this->em->persist($log);
 		$this->em->flush();
 	}

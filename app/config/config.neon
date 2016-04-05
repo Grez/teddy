@@ -29,8 +29,8 @@ services:
 	- Teddy\Entities\User\Logins()
 	- Teddy\Entities\Bans\Bans()
 	- Teddy\Entities\PM\Messages()
-	- Teddy\Entities\Forum\Forums()
-	- Teddy\Entities\Forum\ForumPosts()
+	- Teddy\Entities\Forums\Forums()
+	- Teddy\Entities\Forums\ForumPosts()
 	- Teddy\Entities\Coins\CoinSacks()
 
 	- Teddy\Forms\IUserLogsFilterFormFactory
@@ -81,6 +81,7 @@ doctrine:
 	dbname: ***
 	metadata:
 		Teddy: %appDir%
+		Game: %appDir%/../game
 
 webloader:
 	css:

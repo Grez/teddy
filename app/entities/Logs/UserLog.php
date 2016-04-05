@@ -11,20 +11,18 @@ use Teddy\TeddyException;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  * @ORM\Table(indexes={
  *   @ORM\Index(columns={"action"}),
  *   @ORM\Index(columns={"type"}),
  *   @ORM\Index(columns={"date"})
  * })
  */
-class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	use Identifier;
-
 	/**
-	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;

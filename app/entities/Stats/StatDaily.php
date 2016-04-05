@@ -10,12 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  */
-class StatDaily extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class StatDaily extends \Kdyby\Doctrine\Entities\BaseEntity
 {
-
-	use Identifier;
 
 	/**
 	 * @ORM\Column(type="date", unique=true)

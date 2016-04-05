@@ -15,14 +15,14 @@ class UserLogs extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(UserLog::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Logs\UserLog::class);
 	}
 
 
 
 	public function log(User $user, $type, $action, $data = NULL)
 	{
-		$userLog = new UserLog;
+		$userLog = new \Game\Entities\Logs\UserLog;
 		$userLog->setUser($user);
 		$userLog->setType($type);
 		$userLog->setAction($action);

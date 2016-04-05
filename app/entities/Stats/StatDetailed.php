@@ -10,15 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  * @ORM\Table(uniqueConstraints={
  *   @ORM\UniqueConstraint(columns={"date", "time"})
  * })
  */
-class StatDetailed extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class StatDetailed extends \Kdyby\Doctrine\Entities\BaseEntity
 {
-
-	use Identifier;
 
 	/**
 	 * @ORM\Column(type="date")

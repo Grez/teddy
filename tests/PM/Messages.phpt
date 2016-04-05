@@ -7,9 +7,9 @@
 namespace Teddy\Tests;
 
 use Nette;
-use Teddy\Entities\PM\Message;
+use Game\Entities\PM\Message;
 use Teddy\Entities\PM\Messages;
-use Teddy\Entities\User\User;
+use Game\Entities\User\User;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';

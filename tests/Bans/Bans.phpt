@@ -7,7 +7,7 @@
 namespace Teddy\Tests;
 
 use Nette;
-use Teddy\Entities\Bans\Ban;
+use Game\Entities\Bans\Ban;
 use Teddy\Entities\Bans\Bans;
 use Tester\Assert;
 

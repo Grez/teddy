@@ -2,42 +2,39 @@
 
 namespace Teddy\Entities\PM;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Teddy\Entities\User\User;
+use Game\Entities\User\User;
 use Teddy\User\InvalidArgumentException;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  * @ORM\Table(indexes={
  *   @ORM\Index(columns={"deleted_by_sender"}),
  *   @ORM\Index(columns={"deleted_by_recipient"})
  * })
  */
-class Message extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	use Identifier;
-
 	/**
-	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="to_user_id", referencedColumnName="id")
 	 * @var User
 	 */
 	protected $to;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Teddy\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id")
 	 * @var User
 	 */
 	protected $from;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Message")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\PM\Message")
 	 * @ORM\JoinColumn(name="conversation_id", referencedColumnName="id")
 	 * @var Message
 	 */

@@ -14,7 +14,7 @@ class SystemLogs extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(SystemLog::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Logs\SystemLog::class);
 	}
 
 
@@ -28,7 +28,7 @@ class SystemLogs extends Entities\Manager
 	 */
 	public function log($script, $action, $description)
 	{
-		$log = new SystemLog();
+		$log = new \Game\Entities\Logs\SystemLog();
 		$log->setScript(SystemLog::getScriptId($script));
 		$log->setAction(SystemLog::getActionId($action));
 		$log->setDescription($description);

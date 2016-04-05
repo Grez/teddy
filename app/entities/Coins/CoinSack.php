@@ -12,12 +12,10 @@ use Teddy\Entities\User\User;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  */
-class CoinSack extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class CoinSack extends \Kdyby\Doctrine\Entities\BaseEntity
 {
-
-	use Identifier;
 
 	/**
 	 * @ORM\Column(type="integer", nullable=FALSE)
@@ -51,7 +49,7 @@ class CoinSack extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $description;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Teddy\Entities\User\User", inversedBy="coinSacks")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User", inversedBy="coinSacks")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 * @var User
 	 */

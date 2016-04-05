@@ -93,7 +93,7 @@ class UserLogsListQuery extends QueryObject
 	private function createBasicDql(Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder()
-			->select('l')->from(UserLog::class, 'l')
+			->select('l')->from(\Game\Entities\Logs\UserLog::class, 'l')
 			->innerJoin('l.user', 'u');
 
 		foreach ($this->filter as $modifier) {

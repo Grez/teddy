@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\User;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Nette\Security\Passwords;
 use Nette\Utils\Random;
@@ -13,12 +12,10 @@ use Teddy\Entities\Coins\CoinSack;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  */
-class User extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 {
-
-	use Identifier;
 
 	/**
 	 * @ORM\Column(type="string", unique=true)
@@ -142,12 +139,12 @@ class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $adminDescription = '';
 
 	/**
-	 * @ORM\OneToMany(targetEntity="AdminPermission", mappedBy="user", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="\Game\Entities\User\AdminPermission", mappedBy="user", cascade={"persist", "remove"})
 	 */
 	protected $adminPermissions;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="\Teddy\Entities\Coins\CoinSack", mappedBy="user", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="\Game\Entities\Coins\CoinSack", mappedBy="user", cascade={"persist", "remove"})
 	 * @ORM\OrderBy({"expiresAt" = "ASC"})
 	 * @var CoinSack[]|ArrayCollection
 	 */

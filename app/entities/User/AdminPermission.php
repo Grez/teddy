@@ -10,15 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass()
  */
-class AdminPermission extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class AdminPermission extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
-	use Identifier;
-
 	/**
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="adminPermissions")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User", inversedBy="adminPermissions")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;

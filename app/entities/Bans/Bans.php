@@ -14,7 +14,7 @@ class Bans extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(Ban::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Bans\Ban::class);
 	}
 
 
@@ -29,7 +29,7 @@ class Bans extends Entities\Manager
 	public function ban($ip, $reason = '', $days = 0, $type = Ban::GAME)
 	{
 		$endsAt = $days > 0 ? (new \DateTime())->modify('+ ' . $days . ' days') : NULL;
-		$ban = new Ban($ip, $reason, $endsAt, $type);
+		$ban = new \Game\Entities\Bans\Ban($ip, $reason, $endsAt, $type);
 
 		$this->em->persist($ban);
 		$this->em->flush();

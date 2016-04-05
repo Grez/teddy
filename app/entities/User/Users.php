@@ -2,6 +2,7 @@
 
 namespace Teddy\Entities\User;
 
+use Game\Entities\User\User;
 use Nette;
 use Nette\Utils\ArrayHash;
 use Teddy\Entities;
@@ -34,7 +35,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	{
 		parent::__construct($em);
 		$this->salt = $salt;
-		$this->repository = $this->em->getRepository(User::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\User\User::class);
 	}
 
 
@@ -154,7 +155,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 		// Add new
 		foreach ($permissions as $presenter) {
-			$adminPermission = new AdminPermission();
+			$adminPermission = new \Game\Entities\User\AdminPermission();
 			$adminPermission->setUser($user);
 			$adminPermission->setPresenter($presenter);
 			$user->addAdminPermission($adminPermission);

@@ -2,6 +2,7 @@
 
 namespace Teddy\Entities\PM;
 
+use Game\Entities\PM\Message;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;

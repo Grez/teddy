@@ -3,6 +3,7 @@
 namespace Teddy\Entities\User;
 
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Kdyby\Doctrine\Entities\BaseEntity;
 use Kdyby\Doctrine\Entities\MagicAccessors;
 use Nette;
 use Teddy\Entities;
@@ -11,20 +12,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity(readOnly=TRUE)
+ * @ORM\MappedSuperclass()
  * @ORM\Table(indexes={
  *   @ORM\Index(columns={"ip"}),
  *   @ORM\Index(columns={"cookie"}),
  *   @ORM\Index(columns={"fingerprint"})
  * })
  */
-class Login
+abstract class Login extends BaseEntity
 {
 
-	use Identifier;
-
 	/**
-	 * @ORM\ManyToOne(targetEntity="User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
 	protected $user;
@@ -35,7 +34,7 @@ class Login
 	protected $login = '';
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="UserAgent", cascade="persist")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\UserAgent", cascade="persist")
 	 * @ORM\JoinColumn(name="user_agent_id", nullable=false, referencedColumnName="id")
 	 */
 	protected $userAgent;
