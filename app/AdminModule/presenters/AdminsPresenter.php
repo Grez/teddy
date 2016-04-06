@@ -3,6 +3,7 @@
 namespace Teddy\AdminModule\Presenters;
 
 use Nette;
+use Nette\Utils\ArrayHash;
 use Teddy\Entities\User\UserListQuery;
 use Teddy\Forms\Form;
 use Teddy\Entities\Logs\UserLog;
@@ -44,19 +45,21 @@ class AdminsPresenter extends BasePresenter
 
 	/**
 	 * @param Form $form
-	 * @param \Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
+	 * @return void
+	 * @throws Nette\Application\AbortException
 	 */
-	public function createAdminFormSuccess(Form $form, $values)
+	public function createAdminFormSuccess(Form $form, ArrayHash $values)
 	{
 		$user = $this->users->getByNick($values['user']);
 		if (!$user) {
-			$this->flashMessage('This user doesn\'t exist', 'danger');
-			return '';
+			$this->warningFlashMessage('This user doesn\'t exist');
+			return;
 		}
 
 		if ($user->isAdmin()) {
-			$this->flashMessage('This user is already an admin', 'danger');
-			return '';
+			$this->warningFlashMessage('This user is already an admin');
+			return;
 		}
 
 		$user->setAdmin(TRUE);
@@ -107,7 +110,7 @@ class AdminsPresenter extends BasePresenter
 		$admin = $this->users->find($id);
 
 		if (!$admin->isAdmin()) {
-			$this->flashMessage('This user isn\'t admin', 'danger');
+			$this->warningFlashMessage('This user isn\'t admin');
 			$this->redirect('this');
 		}
 
@@ -130,7 +133,7 @@ class AdminsPresenter extends BasePresenter
 		$admin->setAdminDescription($values['adminDescription']);
 		$this->users->save($admin);
 		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_EDIT_ADMIN, $admin->getNick());
-		$this->flashMessage('Admin edited', 'success');
+		$this->successFlashMessage('Admin edited');
 		$this->redirect('this');
 	}
 
