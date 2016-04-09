@@ -10,7 +10,9 @@ Long-polling (dlouhé dotazování)
 
 <Obrázek pro longpolling>
 
-Long-polling spočívá v tom, že server nechává spojení s klientem otevřené, až do doby, než má pro klienta nějakou odpověd, nebo vyprší maximální čas spojení. Pokud klient dostane zpět nějaká data, zpracuje je. Pokud ne, nebo dojde k přerušení spojení kvůli překročení maximálního limitu, tak klient pošle nový požadavek na server. Díky tomuto tak server může odeslat notifikace o nových událostech hned, kdy je má k dispozici. Pro implementaci long-pollingu jde například použít neviditelný <iframe> element.
+Long-polling spočívá v tom, že server nechává spojení s klientem otevřené, až do doby, než má pro klienta nějakou odpověd, nebo vyprší maximální čas spojení. Pokud klient dostane zpět nějaká data, zpracuje je. Pokud ne, nebo dojde k přerušení spojení kvůli překročení maximálního limitu, tak klient pošle nový požadavek na server. Díky tomuto server může odeslat notifikace o nových událostech hned, kdy je má k dispozici.
+
+Pro implementaci long-pollingu jde například použít neviditelný <iframe> element.
 
 Server-sent-events (serverem odesílané události)
 
@@ -31,6 +33,9 @@ Rychlost:
 
 Web RTC
 
+
+Porovnání Web Sockets s Web RTC
+- Web RTC umožňuje spojení klient-klient, na navázání spojení
 
 ___
 
@@ -55,6 +60,9 @@ ___
 Generování mapy
 
 Perlinův šum
+
+Pokud chceme generovat přirozeně vypadající objekty, potřebujeme nějakou spojitou pseudonáhodnou funkci. Jednou z nich je například Perlinův šum, vytvořený v 80. letech Kenem Perlinem.
+Perlinův šum má široké využití v počítačové grafice. Lze pomocí
 
 Šumová funkce je pseudonáhodný generátor čísel.
 

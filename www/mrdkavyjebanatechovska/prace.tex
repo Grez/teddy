@@ -1,0 +1,63 @@
+\documentclass[digital, table, nolof, nolot]{fithesis3}
+\usepackage[resetfonts]{cmap}
+\usepackage{lmodern}
+\usepackage[main=czech,english]{babel}
+\usepackage{paratype}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+
+\thesissetup{
+	university = mu,
+	faculty = fi,
+	type = bc,
+	author = Jiří Pudil,
+	gender = m,
+	advisor = {...},
+	title = {...},
+	TeXtitle = {\ldots},
+	keywords = {foo, bar, baz},
+	date = 2016/05/23,
+}
+
+\thesislong{abstract}{
+	...
+}
+
+\thesislong{thanks}{
+	...
+}
+
+\usepackage[backend=biber,style=iso-authoryear,babel=other,sortlocale=cs_CZ]{biblatex}
+\bibliography{prace}
+
+\usepackage[texindy]{imakeidx}
+\makeindex[options=-I omega -L czech]
+
+\usepackage{xcolor}
+\definecolor{lightgray}{gray}{0.8}
+
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Zdrojový kód}
+\renewcommand{\lstlistlistingname}{Seznam zdrojových kódů}
+\lstset{
+	numbers=left,
+	numberstyle=\color{lightgray}
+}
+
+\usepackage[unicode,breaklinks=true]{hyperref}
+
+\begin{document}
+
+	tu text
+
+	{\csname captions\languagename\endcsname
+	\makeatletter\thesis@selectLocale{\thesis@locale}\makeatother
+	\printbibliography[heading=bibintoc]}
+
+	\makeatletter\thesis@blocks@clear\makeatother
+	\phantomsection
+	\addcontentsline{toc}{chapter}{\indexname}
+	\printindex
+
+\end{document}
