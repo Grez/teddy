@@ -87,3 +87,37 @@ Web RTC
 Web RTC má tři hlavní komponenty: `getUserMedia`, `RTCPeerConnection`, `RTCDataChannel`
 
 getUserMedia
+
+
+___
+
+## Modul pro detekci hráčů spravujících více profilů
+
+Každá kompetitivní hra, kde se hráčské profily vzájemně ovlivňují musí nějak ošetřit situaci, kdy by jeden uživatel spravoval více profilů. Hráč by tak totiž jednoduše mohl získat výhodu nad ostatními (jednostranně výhodné obchody, útoky atp.). Možným řešením tohoto problému je například zmenšení lákavosti přímo na úrovni návrhu hry. Může to jednoduše být, že se hráč vždy objeví na náhodném místě na mapě, takže nemůže ovlivňovat svůj druhý profil kvůli vzdálenosti, nebo třeba nepovolíme obchod přímo mezi hráči, ale vytvoříme pouze globální burzu, kde kupující neví, kdo je prodávající apod. Tato opatření ovšem budou omezovat možnosti herního návrhu, proto bychom chtěli mít i možnost odhalovat samotné nepoctivé hráče. V této kapitole se zaměřím na možné způsoby, jak toho dosáhnout.
+
+#### IP adresa
+
+První možností, která se nabízí, je kontrolovat IP adresu. Vzhledem k tomu, že hráči velmi často pochází ze stejných kruhů (školy, kroužky, práce), ovšem musíme počítat s tím, že někteří hráči občas mohou mít stejnou IP adresu. Navíc musíme mít na paměti, že pod IP adresou jednoho telefonního operátora může být více různých hráčů, přestože se nikdy fyzicky nemuseli potkat.
+
+#### Uložit si identifikátor k zařízení
+
+O něco lepší řešení může být snaha identifikovat konkrétní zařízení, ze kterého se hráč přihlašuje. Toho můžeme docílit snadno pomocí cookies. Uložíme si u klienta nějaké náhodné číslo, které si zjistíme vždy, když se bude přihlašovat. Pokud uvidíme, že dva uživatelé měli stejný identifikátor, víme, že se přihlásili ze stejného zařízení.
+Tento identifikátor navíc nemusíme uložit pouze do obyčejných HTTP cookie, ale můžeme jej uložit i na spoustu jiných míst, kde je některé prohlížeče nedovolí jednoduše mazat. Flash cookies, HTML5 Local Storage, keš prohlížeče a jiné. Pro usnadnění se dá použít například knihovna https://github.com/samyk/evercookie
+
+#### CSS History Sniffing
+
+// http://arstechnica.com/security/2014/06/theyre-ba-ack-browser-sniffing-ghosts-return-to-haunt-chrome-ie-firefox/
+
+#### Identifikace zařízení pomocí "otisku"
+
+Žádná dvě zařízení připojená k Internetu nejsou identická. Každé se bude lišit minimálně ve své MAC adrese. K té se bohužel nedostaneme, ale i tak máme spoustu dalších znaků, podle kterých se budou stroje uživatelů lišit. User-agent, jazyk, nastavená časová zóna, instalovaná písma, rozlišení, zapnuté pluginy a spoustu dalších informací nám prohlížeč sdělí, pokud si o ně požádáme. Pokud si všechny tyto informace zjistíme a vytvoříme z nich nějaký otisk, tak jsme schopni s velkou pravděpodobností určit prohlížeč jedinečný prohlížeč i bez pomocí cookie. Takto lze odhalit například uživatele, kteří využívají anonymních režimů.
+Do praktické části jsem začlenil knihovnu FingerPrint.js, která přesně tento otisk sestavuje.
+https://github.com/Valve/fingerprintjs2
+
+#### Heslo uživatele
+
+Mírně kontroverzní, avšak velmi účinnou metodou na odhalování hráčů s více profily může být také podívat se na jejich hesla. Významná část uživatelů používá pouze jedno heslo na všech stránkách. Pokud bude mít více hráčů stejné, tak je možné, že se ve skutečnosti jedná o jednu osobu.
+Samozřejmě toto může být značně kontroverzní, vzhledem k možným dopadům při uniknutí dat z databáze. Ukládat hesla jako prostý text by tedy bylo velice nepraktické. Rozumný kompromis by ovšem mohl být používat jednotnou "sůl" při hashování hesel, tak aby případný útočník nevěděl o jaké heslo se jedná, ale zároveň bychom byli schopni odhalovat podvádějící hráče.
+
+### Validace pomocí třetí strany
+
