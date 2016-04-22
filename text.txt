@@ -59,7 +59,13 @@ ___
 
 Generování mapy
 
-Generátor náhodných čísel
+Šumová funkce je v podstatě generátor pseudonáhodných čísel. Pro každý vstup tedy vrací stejný, pseudonáhodný, výstup. Má dané minimum a maximum a nevykazuje opakující se vzory. Oproti běžnému generátoru pseudonáhodných čísel navíc po šumové funkci chceme, aby byla spojitá. Je tedy interpolovaná na spojitou funkci.
+
+<generator_nahodnych_cisel.png> Výstup z generátoru náhodných čísel
+<generator_nahodnych_cisel_interpolovan.png> Stejný generátor převeden na spojitou funkci
+
+
+
 
 Jednou z vlastností dobrých generátorů náhodných čísel, je že mezi jednotlivými čísly nenajdeme žádnou souvislost. Neexistuje v nich tedy vzor. Pokud chceme
 
