@@ -16,7 +16,7 @@ Pro implementaci long-pollingu jde například použít neviditelný <iframe> el
 
 Server-sent-events (serverem odesílané události)
 
-Long-polling je do jisté míry ohýbání HTTP. Server-sent-events se snaží od tohoto aplikaci odstínit. Implementuje tedy tedy long-polling přímo na úrovni prohlížeče. Aplikace už jednoduše zavolá požadavek na určitou URL adresu a o udržování spojení se stará přímo sám prohlížeč. Máme tak jednoduše vytvořené jednosměrné spojení ze serveru ke klientovi.
+Long-polling je do jisté míry ohýbání HTTP. Server-sent-events se snaží od tohoto aplikaci odstínit. Implementuje tedy obsluhu spojení se serverem přímo na úrovni prohlížeče. Aplikace už jednoduše zavolá požadavek na určitou URL adresu a o udržování spojení se stará přímo sám prohlížeč. Máme tak jednoduše vytvořené jednosměrné spojení ze serveru ke klientovi.
 
 Web Sockets
 
@@ -59,7 +59,21 @@ ___
 
 Generování mapy
 
-Perlinův šum
+Generátor náhodných čísel
+
+Jednou z vlastností dobrých generátorů náhodných čísel, je že mezi jednotlivými čísly nenajdeme žádnou souvislost. Neexistuje v nich tedy vzor. Pokud chceme
+
+Když chceme vytvořit přirozeně vypadající objekt, většinou se neobejdeme bez nějaké náhodnostní funkce. Ve skutečnosti
+Pokud se podíváme na svět kolem sebe, tak zjistíme, že ovšem není úplně náhodný. Vedle malého pahorku nenajdeme Mount Everest. Většinou ovšem nedokážeme říct, zda budeme kousek vedle stoupat, nebo klesat. Přechody jsou tedy náhodné, ale jsou hladké. Z toho plyne, že potřebujeme náhodnost, ale takovou, která pro podobné vstupy vrátí podobné výstupy. Toto si uvědomil v 80. letech Ken Perlin, když vytvořil takzvaný "Perlinův šum", pseudonáhodnou funkci, která bere v potaz rozdíly mezi hodnotami na vstupu. Pokud dostane na vstup dvě podobné hodnoty, vrátí sice náhodné, ale přesto podobné výstupy.
+https://books.google.cz/books?id=78ucBAAAQBAJ&pg=PA240&dq=perlin+noise&hl=cs&sa=X&redir_esc=y#v=onepage&q=perlin%20noise&f=false
+
+<bp_img_perlinuv_sum_0_100.png>
+<generator_nahodnych_cisel_0_100.png>
+
+Perlinův šum má v počítačové grafice celou řadu aplikací. Plameny ohně, kouř, vodní hladinu, oblaka a mnohé další. Dá se použít také na generování mapy. Stačí vzít jeho 2D implementaci, kdy výstup pro dané souřadnice bude vždy označovat výšku v daném bodě. Poté už jen jednoduše mapu vykreslíme (nízké lokace budeme modře značit jako vodu, vysoké hnědě jako hory, ostatní v odstínech zelené).
+
+<perlin_heightmapa.png> Výšková mapa vygenerovaná Perlinovým šumem
+<perlinuv_sum_zvetsene_meritko_zabarvena.png> Výsledná mapa po zabarvení
 
 Pokud chceme generovat přirozeně vypadající objekty, potřebujeme nějakou spojitou pseudonáhodnou funkci. Jednou z nich je například Perlinův šum, vytvořený v 80. letech Kenem Perlinem.
 Perlinův šum má široké využití v počítačové grafice. Lze pomocí
@@ -93,31 +107,57 @@ ___
 
 ## Modul pro detekci hráčů spravujících více profilů
 
-Každá kompetitivní hra, kde se hráčské profily vzájemně ovlivňují musí nějak ošetřit situaci, kdy by jeden uživatel spravoval více profilů. Hráč by tak totiž jednoduše mohl získat výhodu nad ostatními (jednostranně výhodné obchody, útoky atp.). Možným řešením tohoto problému je například zmenšení lákavosti přímo na úrovni návrhu hry. Může to jednoduše být, že se hráč vždy objeví na náhodném místě na mapě, takže nemůže ovlivňovat svůj druhý profil kvůli vzdálenosti, nebo třeba nepovolíme obchod přímo mezi hráči, ale vytvoříme pouze globální burzu, kde kupující neví, kdo je prodávající apod. Tato opatření ovšem budou omezovat možnosti herního návrhu, proto bychom chtěli mít i možnost odhalovat samotné nepoctivé hráče. V této kapitole se zaměřím na možné způsoby, jak toho dosáhnout.
+Každá kompetitivní hra, kde se hráčské profily vzájemně ovlivňují musí nějak ošetřit situaci, kdy by jeden uživatel spravoval více profilů. Pomocí těchto "multiloginů" by hráč totiž mohl jednoduše získat výhodu nad ostatními (jednostranně výhodné obchody, útoky a podobně).
+Možná řešení spadají v podstatě do tří kategorií.
 
-#### IP adresa
+### Herní design
 
-První možností, která se nabízí, je kontrolovat IP adresu. Vzhledem k tomu, že hráči velmi často pochází ze stejných kruhů (školy, kroužky, práce), ovšem musíme počítat s tím, že někteří hráči občas mohou mít stejnou IP adresu. Navíc musíme mít na paměti, že pod IP adresou jednoho telefonního operátora může být více různých hráčů, přestože se nikdy fyzicky nemuseli potkat.
+Při navrhování hry máme vždy možnost koncipovat hru tak, abychom snížili výhodnost vlastnění více profilů. Může to jednoduše být, že se hráč vždy objeví na náhodném místě na mapě a nemůže tak ovlivňovat svůj druhý profil kvůli vzdálenosti. Případně když ve hře máme obchod mezi hráči, tak ho nemusíme dát "na přímo" mezi nimi, ale vytvořit třeba pouze celoherní "burzu", kde kupující nevidí prodávajícího. Častou volbou může být také implementace systému podobného Elo koeficientu v šachách. Hráč by tak po opakovaných výhrách nad jiným profilem získával stále méně.
+Všechna tato opatření budou ovšem nějakým způsobem omezovat prvky hry, které můžeme implementovat. Proto tato opatření nemusí být vždy vhodná.
 
-#### Uložit si identifikátor k zařízení
+### Identifikace pomocí třetí strany
 
-O něco lepší řešení může být snaha identifikovat konkrétní zařízení, ze kterého se hráč přihlašuje. Toho můžeme docílit snadno pomocí cookies. Uložíme si u klienta nějaké náhodné číslo, které si zjistíme vždy, když se bude přihlašovat. Pokud uvidíme, že dva uživatelé měli stejný identifikátor, víme, že se přihlásili ze stejného zařízení.
-Tento identifikátor navíc nemusíme uložit pouze do obyčejných HTTP cookie, ale můžeme jej uložit i na spoustu jiných míst, kde je některé prohlížeče nedovolí jednoduše mazat. Flash cookies, HTML5 Local Storage, keš prohlížeče a jiné. Pro usnadnění se dá použít například knihovna https://github.com/samyk/evercookie
+Další možností, jak omezit podvádějící hráče je využít služeb třetích stran. Povinné spárování herního profilu s Facebookem, identifikace pomocí kódu z SMS nebo svázání profilu s kreditní kartou mohou být některé z nich. Toto řešení mohou být sice účinná, ale pro hráče také značně obtěžující. Pokud zároveň s podvádějícími hráči odradíme další hráče, tak to nebude úplně ideální způsob.
 
-#### CSS History Sniffing
+### Systémové možnosti k odhalení multiloginů
 
-// http://arstechnica.com/security/2014/06/theyre-ba-ack-browser-sniffing-ghosts-return-to-haunt-chrome-ie-firefox/
+#### Identifikace pomocí IP adresy
 
-#### Identifikace zařízení pomocí "otisku"
+První možností, která se nabízí, je zaznamenávat IP adresy hráčů. Musíme mít ovšem na paměti, že ne všechny zařízení mají unikátní IP adresu, takže za jednou může být více reálných hráčů. Pokud vezmeme do úvahy, že někteří hráči ke hře přitáhnou i své kamarády ze školy, nebo kolegy z práce, zjistíme, že spoléhat se na samotnou IP adresu je nedostatečné. Navíc musíme mít na paměti, že IP adres je omezený počet a přestože se někteří lidé nemuseli ani fyzicky nikdy potkat, mohl jim operátor připojit stejnou IP adresu.
 
-Žádná dvě zařízení připojená k Internetu nejsou identická. Každé se bude lišit minimálně ve své MAC adrese. K té se bohužel nedostaneme, ale i tak máme spoustu dalších znaků, podle kterých se budou stroje uživatelů lišit. User-agent, jazyk, nastavená časová zóna, instalovaná písma, rozlišení, zapnuté pluginy a spoustu dalších informací nám prohlížeč sdělí, pokud si o ně požádáme. Pokud si všechny tyto informace zjistíme a vytvoříme z nich nějaký otisk, tak jsme schopni s velkou pravděpodobností určit prohlížeč jedinečný prohlížeč i bez pomocí cookie. Takto lze odhalit například uživatele, kteří využívají anonymních režimů.
+#### Identifikace zařízení, pomocí toho, co si k němu uložíme
+
+O něco lepší řešení může být snaha identifikovat konkrétní zařízení, ze kterého se hráč přihlašuje. Toho můžeme docílit snadno pomocí cookies. Uložíme si u klienta nějaké unikátní náhodné číslo, které si zjistíme vždy, když se bude přihlašovat. Pokud uvidíme, že dva uživatelé měli stejný identifikátor, víme, že se přihlásili ze stejného zařízení. Pokud mezi těmito profily uvidíme nějakou podezřelou aktivitu a hráči budou tvrdit, že o sobě neví, můžeme si být poměrně jistí, že nemluví pravdu.
+Samotné cookies se dají jednoduše smazat, pokud pro přihlášení použijeme anonymní režim v prohlížeči, tak to za nás dokonce poté udělá prohlížeč automaticky. Identifikátor ovšem nemusíme uložit pouze do HTTP cookies. HTML5 Local Storage, Flash cookies nebo například keš prohlížeče mohou stejně dobře posloužit k těmto účelů. Známá knihovna, sloužící k tomuto účelu, je například Evercookie https://github.com/samyk/evercookie
+
+#### Identifikace zařízení pomocí informací, které posílá
+
+Žádná dvě zařízení připojená k Internetu nejsou identická. Každé se bude lišit minimálně ve své MAC adrese. K té se bohužel nedostaneme, ale i tak máme spoustu dalších informací, podle kterých můžeme zařízení rozlišovat. User-agent, jazyk, nastavená časová zóna, instalovaná písma, rozlišení, zapnuté pluginy a spoustu dalšího nám prohlížeč sdělí, pokud si o ně požádáme. Pokud si všechny tyto informace zjistíme a vytvoříme z nich nějaký otisk, tak jsme schopni s velkou pravděpodobností určit jedinečný prohlížeč i bez pomocí cookie. Uživatel tak může promazat veškeré své cookies, dočasné soubory a podobná místa, kam jsme si mohli uložit nějaký identifikátor, a přesto budeme s nějakou mírou pravděpodobnosti schopni určit, že se jedná o jedno zařízení.
 Do praktické části jsem začlenil knihovnu FingerPrint.js, která přesně tento otisk sestavuje.
 https://github.com/Valve/fingerprintjs2
 
+// #### CSS History Sniffing
+
+// V minulosti se dal také uživatel do jisté míry identifikovat pomocí navštívených stránek. Kombinací CSS pravidla `:visited`, obrázku na pozadí a kontrolou, zda byl obrázek načten (buď na serveru, nebo přes JavaScript), šlo zjistit, zda uživatel navštívil některou stránku. Dnes už ovšem většina prohlížečů tomuto zamezuje http://sixrevisions.com/css/visited-pseudo-class-strange/
+// http://arstechnica.com/security/2014/06/theyre-ba-ack-browser-sniffing-ghosts-return-to-haunt-chrome-ie-firefox/
+
 #### Heslo uživatele
 
-Mírně kontroverzní, avšak velmi účinnou metodou na odhalování hráčů s více profily může být také podívat se na jejich hesla. Významná část uživatelů používá pouze jedno heslo na všech stránkách. Pokud bude mít více hráčů stejné, tak je možné, že se ve skutečnosti jedná o jednu osobu.
-Samozřejmě toto může být značně kontroverzní, vzhledem k možným dopadům při uniknutí dat z databáze. Ukládat hesla jako prostý text by tedy bylo velice nepraktické. Rozumný kompromis by ovšem mohl být používat jednotnou "sůl" při hashování hesel, tak aby případný útočník nevěděl o jaké heslo se jedná, ale zároveň bychom byli schopni odhalovat podvádějící hráče.
+##### Hashování hesel
 
-### Validace pomocí třetí strany
+Důležitou částí každé webové aplikace je ochrana uživatelských hesel. Pokud se někdo dostane k naší databázi, tak nechceme, aby se dostal k uživatelským heslům. Za tímto účelem se používá takzvané "hashování". https://crackstation.net/hashing-security.htm
+Hashovací algoritmy jsou funkce, které na daný vstup vrátí vždy stejný výstup (tzv. "otisk"). Jsou jednocestné, což znamená, že z výstupu už nelze rozpoznat původní vstup. Hashovací funkce vhodná k ukládání hesel by měla splňovat 3 podmínky:
+1) Být odolná vůči získání předlohy: pro zadaný hash `h` je složité najít vstup `m` takový, že `h = hash(m)`
+2) Být odolná vůči získání jiné předlohy: pro zadaný vstup `x` je složité najít vstup `y`, takový že `hash(x) = hash(y)`
+3) Být odolná vůči nalezení kolize: mělo by být složité najít dva vstupy `x, y` takové, že `hash(x) = hash(y)`
+https://en.wikipedia.org/wiki/Cryptographic_hash_function
 
+Abychom ztížili možnost případného prolomení hesla pomocí předgenerovaných tabulek, přidává se před hashováním k heslu navíc takzvaná sůl. Náhodný, dostatečně dlouhý, řetězec znaků, který je zahashován spolu s původním heslem.
+
+##### Odhalování multiloginů pomocí hesel
+
+Přestože téměř každý uživatel byl jistě někdy poučen, že by měl pro každý účet používat unikátní heslo, většina tak nečiní http://media.ofcom.org.uk/news/2013/uk-adults-taking-online-password-security-risks/. Dá se očekávat, že se tato neopatrnost bude týkat také hráčů, kteří budou porušovat pravidla vlastněním více účtů.
+Pokud použijeme všechna doporučení z předchozí kapitoly, tak nemáme možnost porovnat hesla uživatelů. Pokud jsme ovšem ochotni snížit zabezpečení uživatelských hesel, můžeme použít jednotnou sůl. Díky tomu sice zvýšíme rychlost potenciálního hromadného prolamování všech hesel zároveň, ale útok na jednoho konkrétního uživatele bude stále stejně náročný. Další možností může být například ukládání hesel s jednotnou solí pouze u podezřelých profilů.
+Oba způsoby do určité míry připomínají "security through obscurity" (bezpečnost skrze utajení) https://cs.wikipedia.org/wiki/Security_through_obscurity, tedy že budou fungovat pouze do doby, než se o nich hráči dozví. Navíc snižují zabezpečení uživatelských hesel. Z těchto důvodů jsem v praktické části implementoval pouze první způsob, který se dá navíc zapnout volitelně a zároveň bych jej nedoporučil používat, pokud by hra měla výrazně více uživatelů.
+
+http://gamedev.stackexchange.com/questions/1775/how-to-handle-multiple-accounts-creation-and-cheating
