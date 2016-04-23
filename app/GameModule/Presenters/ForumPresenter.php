@@ -71,14 +71,14 @@ class ForumPresenter extends BasePresenter
 		$post = $this->forumPostsFacade->find($postId);
 		if (!$post || !$post->canDelete($this->user)) {
 			$this->warningFlashMessage('This post doesn\'t exist or you can\'t delete it');
-			$this->redrawControl();
+			$this->refreshPage();
 		}
 
 		$post->delete($this->user);
 		$this->em->flush();
 
 		$this->successFlashMessage('Post has been deleted');
-		$this->redrawControl();
+		$this->refreshPage();
 	}
 
 
@@ -112,7 +112,7 @@ class ForumPresenter extends BasePresenter
 		$forum = $this->forumFacade->find($values->forum);
 		if (!$forum || !$forum->canView($this->user)) {
 			$this->warningFlashMessage('This forum doesn\'t exist');
-			$this->redrawControl();
+			$this->refreshPage();
 		}
 
 		/** @var ForumPost|NULL $conversation */
@@ -123,7 +123,7 @@ class ForumPresenter extends BasePresenter
 
 		} catch (AccessDenied $e) {
 			$this->warningFlashMessage($e->getMessage());
-			$this->redrawControl();
+			$this->refreshPage();
 		}
 
 		$form->setValues([
@@ -133,7 +133,7 @@ class ForumPresenter extends BasePresenter
 		]);
 		$this->em->flush();
 		$this->successFlashMessage('Post sent');
-		$this->redrawControl();
+		$this->refreshPage();
 	}
 
 }

@@ -113,4 +113,28 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->flashMessage($message, 'success');
 	}
 
+
+
+	/**
+	 * Invalidates snippets on ajax / redirects to itself on normal request
+	 * @param string $redirect
+	 * @param string[] $snippets
+	 */
+	protected function refreshPage($redirect = 'this', array $snippets = NULL)
+	{
+		if ($this->isAjax()) {
+			if ($snippets) {
+				foreach ($snippets as $snippet) {
+					$this->redrawControl($snippet);
+				}
+
+			} else {
+				$this->redrawControl();
+			}
+
+		} else {
+			$this->redirect($redirect);
+		}
+	}
+
 }

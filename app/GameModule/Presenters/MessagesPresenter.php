@@ -91,14 +91,14 @@ class MessagesPresenter extends BasePresenter
 		$msg = $this->msgsFacade->find($id);
 		if (!$msg || !$msg->isReadableByUser($this->user)) {
 			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
-			$this->redirect('default');
+			$this->refreshPage('default');
 		}
 
 		$this->msgsFacade->deleteBy($msg, $this->user);
 		$this->em->flush();
 
 		$this->successFlashMessage('Message has been deleted');
-		$this->redirect('default');
+		$this->refreshPage('default');
 	}
 
 
@@ -112,7 +112,7 @@ class MessagesPresenter extends BasePresenter
 		$form->addHidden('conversation');
 		$form->addText('to', 'Recipient')
 			->setRequired();
-		$form->addText('subject', 'Předmět')
+		$form->addText('subject', 'Subject')
 			->setRequired();
 		$form->addTextarea('text', 'Message')
 			->setRequired();
@@ -131,8 +131,8 @@ class MessagesPresenter extends BasePresenter
 	{
 		$recipient = $this->users->getByNick($values->to);
 		if (!$recipient) {
-			$this->warningFlashMessage('This user doesn\'t exist.');
-			$this->redirect('this');
+			$form->addError('This user doesn\'t exist.');
+			return;
 		}
 
 		$this->msgsFacade->createMessage($recipient, $this->user, $values->subject, $values->text, $values->conversation);
