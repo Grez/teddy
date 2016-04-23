@@ -10,7 +10,9 @@
 
 <body>
 <script> document.documentElement.className += ' js' </script>
-<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+<div n:snippet="flashes">
+	<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+</div>
 
 <h1>{$user->nick}</h1>
 <ul>

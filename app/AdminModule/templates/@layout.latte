@@ -52,7 +52,9 @@
 </nav>
 
 <div class="container">
-	<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+	<div n:snippet="flashes">
+		<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+	</div>
 	{include content}
 </div>
 
