@@ -20,18 +20,24 @@ class UsersPresenter extends BasePresenter
 	protected $editedUser;
 
 
-
 	/**
-	 * @param string $user
+	 * @param int (act. string) $userId
 	 */
-	public function renderUser($userId)
+	public function actionUser($userId)
 	{
 		$this->editedUser = $this->users->find($userId);
 		if (!$this->editedUser) {
 			$this->warningFlashMessage('This user doesn\'t exist');
 			$this->redirect('default');
 		}
+	}
 
+
+	/**
+	 * @param int (act. string) $userId
+	 */
+	public function renderUser($userId)
+	{
 		$this->template->editedUser = $this->editedUser;
 	}
 
@@ -97,7 +103,17 @@ class UsersPresenter extends BasePresenter
 			->setDisabled()
 			->setDefaultValue($this->editedUser->getLastActivityAt()->format('Y-m-d H:i:s'));
 		$form->addSubmit('send', 'Save');
+		$form->onSuccess[] = $this->editUserFormSuccess;
 		return $form->setBootstrapRenderer();
+	}
+
+
+
+	public function editUserFormSuccess(Form $form, ArrayHash $values)
+	{
+		$this->users->update($this->editedUser, $values);
+		$this->successFlashMessage('User info has been updated.');
+		$this->redirect('this');
 	}
 
 }

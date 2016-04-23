@@ -6,6 +6,8 @@ tests/tmp/*
 !tests/tmp/.keep
 www/webtemp/*
 !www/webtemp/.keep
+www/images/uploaded/*
+!www/images/uploaded/.keep
 
 .DS_Store
 !.gitignore

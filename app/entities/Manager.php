@@ -7,6 +7,7 @@ use Kdyby\Doctrine\EntityManager;
 use Kdyby\Doctrine\EntityRepository;
 use Kdyby\Doctrine\QueryObject;
 use Nette;
+use Nette\Utils\ArrayHash;
 
 
 
@@ -116,6 +117,7 @@ abstract class Manager extends Nette\Object
 	 * Delete entity and flush
 	 *
 	 * @param BaseEntity entity
+	 * @return BaseEntity
 	 */
 	public function delete(BaseEntity $entity)
 	{
@@ -128,12 +130,12 @@ abstract class Manager extends Nette\Object
 
 	/**
 	 * @param BaseEntity $entity
-	 * @param array|Nette\Utils\ArrayHash $values
+	 * @param array|ArrayHash $values
 	 */
 	protected function setData(BaseEntity $entity, $values)
 	{
 		foreach ($values as $key => $value) {
-			if ($value instanceof Nette\Utils\ArrayHash || is_array($value)) {
+			if ($value instanceof ArrayHash || is_array($value)) {
 				$this->setData($entity, $value);
 			} else {
 				$method = "set" . ucfirst($key);

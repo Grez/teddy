@@ -9,6 +9,8 @@ use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Teddy\Entities\Coins\CoinSack;
+use Teddy\Services\ImageService;
+
 
 
 /**
@@ -19,28 +21,33 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @ORM\Column(type="string", unique=true)
+	 * @var string
 	 */
 	protected $nick;
 
 	/**
 	 * @ORM\Column(type="string", unique=TRUE)
+	 * @var string
 	 */
 	protected $email;
 
 	/**
 	 * @ORM\Column(type="string")
+	 * @var string
 	 */
 	protected $password;
 
 	/**
 	 * @ORM\Column(type="string")
+	 * @var string
 	 */
 	protected $name = '';
 
 	/**
 	 * @ORM\Column(type="boolean")
+	 * @var bool
 	 */
-	protected $emailVerified = 0;
+	protected $emailVerified = FALSE;
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -90,9 +97,10 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $fbId = '';
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=TRUE)
+	 * @var string
 	 */
-	protected $avatar = '';
+	protected $avatar;
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -367,6 +375,65 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	public function getApiKey()
 	{
 		return $this->apiKey;
+	}
+
+
+
+	/**
+	 * @param string $email
+	 * @return User
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+		return $this;
+	}
+
+
+
+	/**
+	 * @return string
+	 */
+	public function getAvatar()
+	{
+		return $this->avatar;
+	}
+
+
+
+	/**
+	 * @param string $avatar
+	 * @return User
+	 */
+	public function setAvatar($avatar)
+	{
+		$this->avatar = $avatar;
+		return $this;
+	}
+
+
+
+	/**
+	 * @return bool
+	 */
+	public function hasAvatar()
+	{
+		return $this->avatar !== NULL;
+	}
+
+
+
+	/**
+	 * Deletes User's avatar
+	 *
+	 * @param ImageService $imageService
+	 * @return $this
+	 */
+	public function deleteAvatar(ImageService $imageService)
+	{
+		@unlink($imageService->getAvatarPath($this->avatar));
+		$this->avatar = NULL;
+		return $this;
 	}
 
 }

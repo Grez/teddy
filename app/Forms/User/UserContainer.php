@@ -13,7 +13,6 @@ class UserContainer extends Nette\Forms\Container
 	public function __construct()
 	{
 		parent::__construct();
-		$this->addHidden('id');
 	}
 
 }

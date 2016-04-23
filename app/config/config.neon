@@ -50,6 +50,8 @@ services:
 		class: Teddy\Entities\PM\MessagesListener
 		tags: [kdyby.subscriber]
 
+	imageService: Teddy\Services\ImageService(%wwwDir%/images/uploaded)
+
 extensions:
 	console: Kdyby\Console\DI\ConsoleExtension
 	events: Kdyby\Events\DI\EventsExtension

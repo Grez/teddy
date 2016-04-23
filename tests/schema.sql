@@ -187,7 +187,7 @@ CREATE TABLE `user` (
   `location` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `gender` smallint(6) NOT NULL,
   `fb_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci NULL,
   `donate` int(11) NOT NULL,
   `activated` tinyint(1) NOT NULL,
   `affiliate` varchar(255) COLLATE utf8_unicode_ci NOT NULL,

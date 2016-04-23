@@ -27,6 +27,7 @@ class PersonalContainer extends Nette\Forms\Container
 		$this->addUpload('avatar', 'Avatar')
 			->addCondition(Form::FILLED)
 			->addRule(Form::IMAGE);
+		$this->addCheckbox('deleteAvatar', 'Delete avatar');
 	}
 
 }
