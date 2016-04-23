@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\Forums;
 
-use Game\Entities\Forums\Forum;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
