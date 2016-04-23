@@ -85,6 +85,7 @@ doctrine:
 		Teddy: %appDir%
 		Game: %appDir%/../game
 
+# FIXME: default CSS is only on index, default JS is everywhere...
 webloader:
 	css:
 		default:
@@ -92,6 +93,7 @@ webloader:
 				bootstrap: teddy/bootstrap.css
 				bootstrapTheme: teddy/bootstrap-theme.css
 				style: teddy/style.less
+				overlay: teddy/ajax.overlay.css
 			fileFilters:
 				- @lessFilter
 				- @wlCssFilter
@@ -100,6 +102,7 @@ webloader:
 				bootstrap: teddy/bootstrap.css
 				bootstrapTheme: teddy/bootstrap-theme.css
 				style: teddy/game/style.less
+				overlay: teddy/ajax.overlay.css
 			fileFilters:
 				- @lessFilter
 				- @wlCssFilter
@@ -109,6 +112,7 @@ webloader:
 				bootstrapTheme: teddy/bootstrap-theme.css
 				datepicker: teddy/bootstrap-datepicker/bootstrap-datepicker.css
 				style: teddy/admin/style.less
+				overlay: teddy/ajax.overlay.css
 			fileFilters:
 				- @lessFilter
 				- @wlCssFilter
@@ -124,6 +128,7 @@ webloader:
 				datepicker: teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
 				datepickerCs: teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
 				netteAjax: teddy/nette.ajax.js
+				overlay: teddy/ajax.overlay.js
 		game:
 			files:
 				events: teddy/game/events.js
