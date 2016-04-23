@@ -19,8 +19,15 @@ use Nette\Forms\Controls;
 class Form extends \Nette\Application\UI\Form
 {
 
-	/** @var BaseEntity */
+	/**
+	 * @var BaseEntity
+	 */
 	protected $entity;
+
+	/**
+	 * @var bool
+	 */
+	protected $ajax = FALSE;
 
 
 
@@ -42,7 +49,8 @@ class Form extends \Nette\Application\UI\Form
 		$renderer->wrappers['control']['errorcontainer'] = 'span class=help-block';
 
 		// make form and controls compatible with Twitter Bootstrap
-		$this->getElementPrototype()->class('form-horizontal');
+		$classes = $this->ajax ? 'form-horizontal ajax' : 'form-horizontal';
+		$this->getElementPrototype()->class($classes);
 
 		foreach ($this->getControls() as $control) {
 			if ($control instanceof Controls\Button) {
@@ -141,8 +149,19 @@ class Form extends \Nette\Application\UI\Form
 	 */
 	public function render()
 	{
-		$this->setBootstrapRenderer();
 		parent::render();
+	}
+
+
+
+	/**
+	 * @param boolean $ajax
+	 * @return Form
+	 */
+	public function setAjax($ajax)
+	{
+		$this->ajax = $ajax;
+		return $this;
 	}
 
 }

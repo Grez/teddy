@@ -71,14 +71,14 @@ class ForumPresenter extends BasePresenter
 		$post = $this->forumPostsFacade->find($postId);
 		if (!$post || !$post->canDelete($this->user)) {
 			$this->warningFlashMessage('This post doesn\'t exist or you can\'t delete it');
-			$this->redirect('this');
+			$this->redrawControl();
 		}
 
 		$post->delete($this->user);
 		$this->em->flush();
 
 		$this->successFlashMessage('Post has been deleted');
-		$this->redirect('this');
+		$this->redrawControl();
 	}
 
 
@@ -89,14 +89,15 @@ class ForumPresenter extends BasePresenter
 	public function createComponentNewPostForm()
 	{
 		$form = new Form();
+		$form->setAjax(TRUE);
 		$form->addHidden('conversation');
 		$form->addHidden('forum');
-		$form->addText('subject', 'Předmět');
+		$form->addText('subject', 'Subject');
 		$form->addTextarea('text', 'Text')
 			->setRequired();
 		$form->addSubmit('send', 'Submit');
 		$form->onSuccess[] = $this->newPostFormSuccess;
-		return $form;
+		return $form->setBootstrapRenderer();
 	}
 
 
@@ -111,7 +112,7 @@ class ForumPresenter extends BasePresenter
 		$forum = $this->forumFacade->find($values->forum);
 		if (!$forum || !$forum->canView($this->user)) {
 			$this->warningFlashMessage('This forum doesn\'t exist');
-			$this->redirect('this');
+			$this->redrawControl();
 		}
 
 		/** @var ForumPost|NULL $conversation */
@@ -122,12 +123,17 @@ class ForumPresenter extends BasePresenter
 
 		} catch (AccessDenied $e) {
 			$this->warningFlashMessage($e->getMessage());
-			$this->redirect('this');
+			$this->redrawControl();
 		}
 
+		$form->setValues([
+			'conversation' => NULL,
+			'subject' => NULL,
+			'text' => NULL,
+		]);
 		$this->em->flush();
 		$this->successFlashMessage('Post sent');
-		$this->redirect('this');
+		$this->redrawControl();
 	}
 
 }

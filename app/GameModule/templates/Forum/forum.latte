@@ -1,17 +1,19 @@
 {block content}
 	<h1>{$forum->getName()}</h1>
-	{if $forum->canWrite($user)}
-		{control newPostForm}
-	{else}
-		<p>You can't post here</p>
-	{/if}
+	<div n:snippet="forum" class="ajax-overlay">
+		{if $forum->canWrite($user)}
+			{control newPostForm}
+		{else}
+			<p>You can't post here</p>
+		{/if}
 
-	<div n:foreach="$posts as $post">
-		<a>{$post->getAuthor()->getNick()}</a>
-		<a n:href="delete!, postId => $post->getId()">[x]</a>
-		<span>{$post->getCreatedAt()|date:'d.m.Y H:i:s'}</span>
+		<div n:foreach="$posts as $post">
+			<a>{$post->getAuthor()->getNick()}</a>
+			<a n:href="delete!, postId => $post->getId()" n:class="ajax">[x]</a>
+			<span>{$post->getCreatedAt()|date:'d.m.Y H:i:s'}</span>
 
-		<p>{$post->getText()}</p>
+			<p>{$post->getText()}</p>
+		</div>
+		{control visualPaginator}
 	</div>
-	{control visualPaginator}
 {/block}
