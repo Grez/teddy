@@ -149,6 +149,7 @@ class Form extends \Nette\Application\UI\Form
 	 */
 	public function render()
 	{
+		$this->setBootstrapRenderer();
 		parent::render();
 	}
 
