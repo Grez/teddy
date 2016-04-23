@@ -42,12 +42,12 @@ class MessagesPresenter extends BasePresenter
 
 
 	/**
-	 * @param string|NULL $id nick
+	 * @param string|NULL $to nick
 	 */
-	public function actionNew($id = NULL)
+	public function actionNew($to = NULL)
 	{
-		if ($id) {
-			$this['newMsgForm']['to']->setValue($id)->setAttribute('readonly', 'readonly');
+		if ($to) {
+			$this['newMsgForm']['to']->setValue($to)->setAttribute('readonly', 'readonly');
 		}
 	}
 

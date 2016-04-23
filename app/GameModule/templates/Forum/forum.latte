@@ -8,7 +8,7 @@
 		{/if}
 
 		<div n:foreach="$posts as $post">
-			<a>{$post->getAuthor()->getNick()}</a>
+			<a n:href="User:detail, id => $post->getAuthor()->getNick()">{$post->getAuthor()->getNick()}</a>
 			<a n:href="delete!, postId => $post->getId()" n:class="ajax">[x]</a>
 			<span>{$post->getCreatedAt()|date:'d.m.Y H:i:s'}</span>
 
