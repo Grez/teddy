@@ -44,7 +44,7 @@ class Logins extends Entities\Manager
 
 
 	/**
-	 * @param User $user
+	 * @param \Game\Entities\User\User $user
 	 * @param string $login
 	 * @param int $error
 	 * @return NULL
