@@ -7,7 +7,6 @@ use Game\Entities\Bans\Ban;
 use Teddy\Entities\Bans\Bans;
 use Teddy\Entities\Logs\BansQuery;
 use Game\Entities\Logs\UserLog;
-use Game\Entities\User\Login;
 use Teddy\Entities\User\LoginListQuery;
 use Game\Entities\User\User;
 use Game\Entities\User\UserAgent;

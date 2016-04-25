@@ -2,8 +2,6 @@
 
 namespace Teddy\Entities\User;
 
-use Game\Entities\User\Login;
-use Game\Entities\User\UserAgent;
 use Kdyby\Clock\IDateTimeProvider;
 use Nette;
 use Teddy\Entities;
@@ -80,7 +78,7 @@ class Logins extends Entities\Manager
 		$criteria = [
 			'ip' => $ip,
 			'date >=' => $date,
-			'error' => Login::ERROR_WRONG_PASSWORD,
+			'error' => \Game\Entities\User\Login::ERROR_WRONG_PASSWORD,
 		];
 		$result = $this->findBy($criteria);
 		return (count($result) >= self::ATTEMPTS);
