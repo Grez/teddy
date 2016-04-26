@@ -24,13 +24,22 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 
 
 
+	public function __construct($showDeleted = FALSE)
+	{
+		if (!$showDeleted) {
+			$this->onlyUndeleted();
+		}
+	}
+
+
+
 	/**
 	 * @return $this
 	 */
-	public function onlyActivated()
+	public function onlyUndeleted()
 	{
 		$this->filter[] = function (QueryBuilder $qb) {
-			$qb->andWhere('u.activated = TRUE');
+			$qb->andWhere('u.deleted = FALSE');
 		};
 		return $this;
 	}

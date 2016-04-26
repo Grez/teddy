@@ -2,6 +2,8 @@
 
 namespace Teddy\Entities\User;
 
+use Game\Entities\User\AdminPermission;
+use Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper;
 use Nette;
 use Nette\Security\Passwords;
 use Nette\Utils\Random;
@@ -51,22 +53,26 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 * Generated in __construct()
 	 */
 	protected $verificationCode = 0;
 
 	/**
 	 * @ORM\Column(type="smallint")
+	 * @var int
 	 */
 	protected $age = 0;
 
 	/**
 	 * @ORM\Column(type="string")
+	 * @var string
 	 */
 	protected $location = '';
 
 	/**
 	 * @ORM\Column(type="smallint")
+	 * @var int
 	 */
 	protected $gender = 0;
 
@@ -103,14 +109,10 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $avatar;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="boolean", nullable=FALSE)
+	 * @var bool
 	 */
-	protected $donate = 0;
-
-	/**
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $activated = FALSE;
+	protected $deleted = FALSE;
 
 	/**
 	 * @ORM\Column(type="string")
@@ -143,11 +145,13 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @ORM\Column(type="string")
+	 * @var string
 	 */
 	protected $adminDescription = '';
 
 	/**
 	 * @ORM\OneToMany(targetEntity="\Game\Entities\User\AdminPermission", mappedBy="user", cascade={"persist", "remove"})
+	 * @var AdminPermission[]|ArrayCollection
 	 */
 	protected $adminPermissions;
 
@@ -180,7 +184,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->registeredAt = new \DateTime();
 		$this->lastLoginAt = new \DateTime("@0");
 		$this->lastActivityAt = new \DateTime("@0");
-		$this->adminPermissions = new ArrayCollection;
+		$this->adminPermissions = new ArrayCollection();
 		$this->coinSacks = new ArrayCollection();
 	}
 
@@ -319,6 +323,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	}
 
 
+
 	/**
 	 * @param CoinSack $coinSack
 	 */
@@ -337,7 +342,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	 */
 	public function getCoinSacks()
 	{
-		return new \Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper($this->coinSacks);
+		return new ReadOnlyCollectionWrapper($this->coinSacks);
 	}
 
 
