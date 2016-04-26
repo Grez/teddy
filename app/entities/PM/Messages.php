@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\PM;
 
-use Game\Entities\PM\Message;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
@@ -37,7 +36,7 @@ class Messages extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(Message::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\PM\Message::class);
 	}
 
 
@@ -51,11 +50,11 @@ class Messages extends Entities\Manager
 	 * @param string $text
 	 * @param int $conversation
 	 * @param int $type
-	 * @return Message
+	 * @return \Game\Entities\PM\Message
 	 */
-	public function createMessage(User $to, User $from, $subject = '', $text = '', $conversation = 0, $type = Message::NORMAL_MSG)
+	public function createMessage(User $to, User $from, $subject = '', $text = '', $conversation = 0, $type = \Game\Entities\PM\Message::NORMAL_MSG)
 	{
-		$msg = new Message($to, $from, $subject, $text, $type);
+		$msg = new \Game\Entities\PM\Message($to, $from, $subject, $text, $type);
 		if ($conversation > 0) {
 			$msg->setConversation($this->find($conversation));
 		}
@@ -69,9 +68,9 @@ class Messages extends Entities\Manager
 	/**
 	 * Marks message as read
 	 *
-	 * @param Message $msg
+	 * @param \Game\Entities\PM\Message $msg
 	 */
-	public function readMessage(Message $msg)
+	public function readMessage(\Game\Entities\PM\Message $msg)
 	{
 		$msg->markRead();
 		$this->onReadMessage($msg);
@@ -82,9 +81,9 @@ class Messages extends Entities\Manager
 	/**
 	 * Marks message as unread
 	 *
-	 * @param Message $msg
+	 * @param \Game\Entities\PM\Message $msg
 	 */
-	public function unreadMessage(Message $msg)
+	public function unreadMessage(\Game\Entities\PM\Message $msg)
 	{
 		$msg->markUnread();
 		$this->onUnreadMessage($msg);
@@ -92,11 +91,11 @@ class Messages extends Entities\Manager
 
 
 	/**
-	 * @param Message $msg
-	 * @param User $user
+	 * @param \Game\Entities\PM\Message $msg
+	 * @param \Game\Entities\User\User $user
 	 * @throws \Teddy\User\InvalidArgumentException
 	 */
-	public function deleteBy(Message $msg, User $user)
+	public function deleteBy(\Game\Entities\PM\Message $msg, \Game\Entities\User\User $user)
 	{
 		$msg->deleteBy($user);
 		$this->onDeleteMessage($msg, $user);
@@ -105,10 +104,10 @@ class Messages extends Entities\Manager
 
 
 	/**
-	 * @param User $user
+	 * @param \Game\Entities\User\User $user
 	 * @return int
 	 */
-	public function getUnreadMessagesCount(User $user)
+	public function getUnreadMessagesCount(\Game\Entities\User\User $user)
 	{
 		$query = (new Entities\User\MessagesQuery())
 			->onlyReceivedBy($user)
