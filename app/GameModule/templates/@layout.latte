@@ -9,28 +9,53 @@
 </head>
 
 <body>
+
 <script> document.documentElement.className += ' js' </script>
-<div n:snippet="flashes">
-	<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+<!-- Static navbar -->
+<nav class="navbar navbar-inverse navbar-static-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a n:href="Main:default" class="navbar-brand">{$user->nick}</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li n:class="$presenter->isLinkCurrent('Messages:*') ? 'active'"><a n:href="Messages:default">Messages</a></li>
+				<li n:class="$presenter->isLinkCurrent('Forum:*') ? 'active'"><a n:href="Forum:default">Forum</a></li>
+				<li n:class="$presenter->isLinkCurrent('User:*') ? 'active', dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						Users <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a n:href="User:default" n:class="$presenter->isLinkCurrent('User:default') ? 'active'">Users</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a n:href="Logout:">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div n:snippet="flashes">
+		<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+	</div>
+
+	{control events}
+	{include content}
 </div>
 
-<h1>{$user->nick}</h1>
-<ul>
-	<li><a n:href="Messages:default">Messages</a></li>
-	<li><a n:href="Forum:default">Forum</a></li>
-	<li>
-		<a n:href="User:default">Users</a>
-		<ul>
-			<li><a n:href="User:detail">Your profile</a></li>
-		</ul>
-	</li>
-	<li><a n:href="Logout:">Logout</a></li>
-</ul>
+
 
 {control js}
 {control jsGame}
-{control events}
-{include content}
 
 </body>
 </html>
