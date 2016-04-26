@@ -17,13 +17,33 @@ class ImageService extends Object
 	/**
 	 * @var string
 	 */
+	protected $wwwDir;
+
+	/**
+	 * @var string
+	 */
 	protected $imagePath;
 
 
 
-	public function __construct($imagePath)
+	public function __construct($wwwDir, $imagePath)
 	{
 		$this->imagePath = $imagePath;
+		$this->wwwDir = $wwwDir;
+	}
+
+
+
+	/**
+	 * Gets path for frontend
+	 *
+	 * @param $filename string
+	 * @return string
+	 */
+	public function getAvatar($filename)
+	{
+		$path = $this->imagePath . '/' . self::AVATAR;
+		return $path . '/' . $filename;
 	}
 
 
@@ -36,7 +56,7 @@ class ImageService extends Object
 	 */
 	public function getAvatarPath($filename = NULL)
 	{
-		$path = $this->imagePath . '/' . self::AVATAR;
+		$path = $this->wwwDir . $this->imagePath . '/' . self::AVATAR;
 		@mkdir($path, 0777, TRUE);
 
 		return $filename ? $path . '/' . $filename : $path;

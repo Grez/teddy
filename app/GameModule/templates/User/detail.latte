@@ -1,7 +1,7 @@
 {block content}
 	{ifset $player}
 		<h1>{$player->getNick()}</h1>
-		<table>
+		<table class="table">
 			<tr n:if="$player->getLocation()">
 				<th>Location</th>
 				<td>{$player->getLocation()}</td>
@@ -20,17 +20,21 @@
 			</tr>
 			<tr n:if="$player->getAvatar()">
 				<th>Avatar</th>
-				<td>{$player->getAvatar()}</td>
+				<td><img src="{$imageService->getAvatar($player->getAvatar())}" width="100"></td>
 			</tr>
 		</table>
 		<a n:href="Messages:new to => $player->getNick()">Send message</a>
+
 	{else}
+
 		<h1>{$user->getNick()}</h1>
 		<h2>Personal info</h2>
-	{control updateUserForm}
+		{control updateUserForm}
+
 		<h2>Change password</h2>
-	{control changePasswordForm}
+		{control changePasswordForm}
+
 		<h2>Change e-mail</h2>
-	{control changeEmailForm}
+		{control changeEmailForm}
 	{/ifset}
 {/block}

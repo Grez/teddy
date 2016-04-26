@@ -33,9 +33,9 @@ class UserPresenter extends BasePresenter
 	/**
 	 * @param string $id (Player's nick)
 	 */
-	public function renderDetail($id = '')
+	public function renderDetail($id = NULL)
 	{
-		if ($id != '') {
+		if ($id) {
 			$player = $this->users->getByNick($id);
 			if ($player == NULL) {
 				$this->flashMessage('This user doesn\'t exist', 'error');
@@ -43,6 +43,7 @@ class UserPresenter extends BasePresenter
 			}
 			$this->template->player = $player;
 		}
+		$this->template->imageService = $this->imageService;
 	}
 
 
