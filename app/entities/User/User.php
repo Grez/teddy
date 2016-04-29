@@ -28,7 +28,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $nick;
 
 	/**
-	 * @ORM\Column(type="string", unique=TRUE)
+	 * @ORM\Column(type="string")
 	 * @var string
 	 */
 	protected $email;

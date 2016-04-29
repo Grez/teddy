@@ -2,6 +2,7 @@
 
 namespace Teddy\IndexModule\Presenters;
 
+use Nette\Utils\ArrayHash;
 use Teddy\Entities\Bans\Ban;
 use Teddy\Forms\Form;
 
@@ -42,7 +43,7 @@ class HomepagePresenter extends BasePresenter
 
 	/**
 	 * @param Form $form
-	 * @param \Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
 	 */
 	public function registrationFormSuccess(Form $form, $values)
 	{
@@ -62,10 +63,9 @@ class HomepagePresenter extends BasePresenter
 		$ban = $this->bans->hasGameBan($_SERVER['REMOTE_ADDR']);
 
 		if ($ban) {
-			$form->addError('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 'Error');
+			$form->addError('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason());
 		} else {
-			$form->addText('email', 'Email')
-				->addRule($form::EMAIL)
+			$form->addText('nick', 'Nick')
 				->setType('email')
 				->setRequired();
 			$form->addPassword('password', 'Password')
@@ -80,16 +80,17 @@ class HomepagePresenter extends BasePresenter
 
 	/**
 	 * @param Form $form
-	 * @param \Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
 	 */
 	public function loginFormSuccess(Form $form, $values)
 	{
 		try {
-			$this->getUser()->login($values->email, $values->password);
-			$this->flashMessage('You were successfully logged in.');
+			$this->getUser()->login($values->nick, $values->password);
+			$this->successFlashMessage('You were successfully logged in.');
 			$this->redirect(':Game:Main:');
+
 		} catch (\Nette\Security\AuthenticationException $e) {
-			$this->flashMessage($e->getMessage(), 'danger');
+			$this->warningFlashMessage($e->getMessage());
 			$this->redirect('this');
 		}
 	}
