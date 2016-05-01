@@ -77,6 +77,18 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
+	 * @param string $password
+	 * @return User[]
+	 */
+	public function getByPassword($password)
+	{
+		$data = $this->repository->findBy(['password' => $password]);
+		return $data;
+	}
+
+
+
+	/**
 	 * @param int $id
 	 * @param string $apikey
 	 * @return User|NULL
@@ -94,7 +106,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function register(ArrayHash $data)
 	{
-		$password = Passwords::hash($data['password']);
+		$password = Passwords::hash($data['password'], ['salt' => $this->salt]);
 
 		$user = new User($data->email, $data->nick);
 		$user->setPassword($password);

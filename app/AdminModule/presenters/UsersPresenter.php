@@ -3,6 +3,9 @@
 namespace Teddy\AdminModule\Presenters;
 
 use Nette\Utils\ArrayHash;
+use Teddy\AdminModule\Components\IUserControlFactory;
+use Teddy\AdminModule\Components\IUserControlFactory2;
+use Teddy\AdminModule\Components\UserControl;
 use Teddy\Entities\User\User;
 use Teddy\Forms\Form;
 use Teddy\User\UserDoesNotExistException;
@@ -15,9 +18,15 @@ class UsersPresenter extends BasePresenter
 {
 
 	/**
-	 * @var User|NULL
+	 * @var \Game\Entities\User\User|NULL
 	 */
 	protected $editedUser;
+
+	/**
+	 * @var IUserControlFactory
+	 * @inject
+	 */
+	public $userControlFactory;
 
 
 	/**
@@ -90,30 +99,13 @@ class UsersPresenter extends BasePresenter
 	/**
 	 * @return Form
 	 */
-	protected function createComponentEditUserForm()
+	protected function createComponentUser()
 	{
-		$form = new Form();
-		$form->addText('nick', 'Nick')
-			->setRequired()
-			->setDefaultValue($this->editedUser->getNick());
-		$form->addText('registered', 'Registered')
-			->setDisabled()
-			->setDefaultValue($this->editedUser->getRegisteredAt()->format('Y-m-d H:i:s'));
-		$form->addText('lastActivity', 'Last activity')
-			->setDisabled()
-			->setDefaultValue($this->editedUser->getLastActivityAt()->format('Y-m-d H:i:s'));
-		$form->addSubmit('send', 'Save');
-		$form->onSuccess[] = $this->editUserFormSuccess;
-		return $form->setBootstrapRenderer();
-	}
-
-
-
-	public function editUserFormSuccess(Form $form, ArrayHash $values)
-	{
-		$this->users->update($this->editedUser, $values);
-		$this->successFlashMessage('User info has been updated.');
-		$this->redirect('this');
+		$control = $this->userControlFactory->create($this->editedUser);
+		$control->onUserEdited = function (UserControl $userControl, User $user) {
+			$this->successFlashMessage('User edited');
+		};
+		return $control;
 	}
 
 }

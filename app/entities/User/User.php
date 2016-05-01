@@ -441,4 +441,14 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 		return $this;
 	}
 
+
+
+	/**
+	 * @return string
+	 */
+	public function getPassword()
+	{
+		return $this->password;
+	}
+
 }

@@ -19,7 +19,6 @@ nette:
 	session:
 		expiration: 14 days
 
-
 services:
 	- Teddy\Entities\Logs\SystemLogs()
 	- Teddy\Entities\Logs\UserLogs()
@@ -33,10 +32,14 @@ services:
 	- Teddy\Entities\Forums\ForumPosts()
 	- Teddy\Entities\Coins\CoinSacks()
 
-	- Teddy\Forms\IUserLogsFilterFormFactory
+	- Teddy\Forms\IUserLogsFilterFormFactory()
 	- Teddy\GameModule\Components\IEventsControlFactory()
 
-	- Teddy\AdminModule\Components\IStatsControlFactory
+	- Teddy\AdminModule\Components\IStatsControlFactory()
+	userControl:
+		class: Teddy\AdminModule\Components\UserControl(%salt%)
+		implement: Teddy\AdminModule\Components\IUserControlFactory
+
 	router: Teddy\Router\RouterFactory::create
 	user: Teddy\Security\User
 	wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
