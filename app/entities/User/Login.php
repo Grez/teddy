@@ -75,13 +75,13 @@ abstract class Login extends BaseEntity
 
 
 
-	public function __construct(Nette\Http\Request $request, UserAgent $userAgent, $login = '', User $user = NULL, $error = 0)
+	public function __construct($ip, $cookie, $fingerprint, UserAgent $userAgent, $login = '', User $user = NULL, $error = 0)
 	{
 		$this->date = new \DateTime();
 		$this->userAgent = $userAgent;
-		$this->ip = $request->getRemoteAddress();
-		$this->cookie = $request->getCookie('login') ?: NULL;
-		$this->fingerprint = $request->getCookie('fingerprint') ?: NULL;
+		$this->ip = $ip;
+		$this->cookie = $cookie;
+		$this->fingerprint = $fingerprint;
 		$this->login = $login;
 		$this->user = $user;
 		$this->error = $error;

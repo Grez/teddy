@@ -56,8 +56,12 @@ class Logins extends Entities\Manager
 		}
 
 		$ua = $this->request->getHeader('User-Agent');
+		$ip = $this->request->getRemoteAddress();
+		$cookie = $this->request->getCookie('login') ?: mt_rand(1e8, 9e8);
+		$this->response->setCookie('login', $cookie, time() + 86400 * 365 * 42); // 42 years is answer to everything, including tracking cookies :D
+		$fingerprint = $this->request->getCookie('fingerprint');
 		$userAgent = $this->em->getRepository(\Game\Entities\User\UserAgent::class)->findOneBy(['userAgent' => $ua]) ?: new \Game\Entities\User\UserAgent($ua);
-		$log = new \Game\Entities\User\Login($this->request, $userAgent, $login, $user, $error);
+		$log = new \Game\Entities\User\Login($ip, $cookie, $fingerprint, $userAgent, $login, $user, $error);
 		$this->em->persist($log);
 		$this->em->flush();
 	}
