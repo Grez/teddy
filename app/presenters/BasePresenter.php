@@ -137,4 +137,32 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		}
 	}
 
+
+
+	/**
+	 * Formats view template file names.
+	 * If it doesn't find template in active presenter, it looks for its parent
+	 *
+	 * @return array
+	 */
+	public function formatTemplateFiles()
+	{
+		$name = $this->getName();
+		$presenter = substr($name, strrpos(':' . $name, ':'));
+		$dir = dirname($this->getReflection()->getFileName());
+		$dir = is_dir("$dir/templates") ? $dir : dirname($dir);
+		$files = array(
+			"$dir/templates/$presenter/$this->view.latte",
+			"$dir/templates/$presenter.$this->view.latte",
+		);
+
+		$object = new \ReflectionObject($this);
+		$dir = dirname($object->getParentClass()->getFileName());
+		$dir = is_dir("$dir/templates") ? $dir : dirname($dir);
+		return array_merge($files, [
+			"$dir/templates/$presenter/$this->view.latte",
+			"$dir/templates/$presenter.$this->view.latte",
+		]);
+	}
+
 }
