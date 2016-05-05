@@ -151,10 +151,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$presenter = substr($name, strrpos(':' . $name, ':'));
 		$dir = dirname($this->getReflection()->getFileName());
 		$dir = is_dir("$dir/templates") ? $dir : dirname($dir);
-		$files = array(
+		$files = [
 			"$dir/templates/$presenter/$this->view.latte",
 			"$dir/templates/$presenter.$this->view.latte",
-		);
+		];
 
 		$object = new \ReflectionObject($this);
 		$dir = dirname($object->getParentClass()->getFileName());
