@@ -8,7 +8,7 @@ use Teddy\Forms\Form;
 
 
 
-class HomepagePresenter extends BasePresenter
+class HomepagePresenter extends \Game\IndexModule\Presenters\BasePresenter
 {
 
 	/**

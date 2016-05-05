@@ -10,7 +10,7 @@ use Teddy\Entities\Logs\UserLog;
 
 
 
-class AdminsPresenter extends BasePresenter
+class AdminsPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 
 	/** @var array */

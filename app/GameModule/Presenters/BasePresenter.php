@@ -9,7 +9,7 @@ use Teddy\GameModule\Components\IEventsControlFactory;
 
 
 
-abstract class BasePresenter extends Teddy\Presenters\BasePresenter
+abstract class BasePresenter extends \Game\Presenters\BasePresenter
 {
 
 	/** @var User */

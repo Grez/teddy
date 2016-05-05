@@ -2,7 +2,7 @@
 
 namespace Teddy\GameModule\Presenters;
 
-class LogoutPresenter extends BasePresenter
+class LogoutPresenter extends \Game\GameModule\Presenters\BasePresenter
 {
 
 	public function actionDefault()

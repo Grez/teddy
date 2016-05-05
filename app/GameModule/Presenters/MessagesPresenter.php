@@ -10,10 +10,7 @@ use Teddy\Entities\PM\Messages;
 
 
 
-/**
- * @TODO: Get conversation
- */
-class MessagesPresenter extends BasePresenter
+class MessagesPresenter extends \Game\GameModule\Presenters\BasePresenter
 {
 
 	/**

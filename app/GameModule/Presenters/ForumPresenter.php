@@ -11,7 +11,7 @@ use Teddy\Forms\Form;
 
 
 
-class ForumPresenter extends BasePresenter
+class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 {
 
 	/**

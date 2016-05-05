@@ -6,7 +6,7 @@ use Teddy\Forms\Form;
 
 
 
-class ForgottenPasswordPresenter extends BasePresenter
+class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresenter
 {
 
 	/** @var \Teddy\Entities\User\User */

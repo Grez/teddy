@@ -9,7 +9,7 @@ use Teddy\Services\ImageService;
 
 
 
-class UserPresenter extends BasePresenter
+class UserPresenter extends \Game\GameModule\Presenters\BasePresenter
 {
 
 	/**

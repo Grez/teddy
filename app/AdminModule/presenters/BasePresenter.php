@@ -9,7 +9,7 @@ use Teddy\Entities\Logs\UserLogs;
 
 
 
-class BasePresenter extends Teddy\Presenters\BasePresenter
+class BasePresenter extends \Game\Presenters\BasePresenter
 {
 
 	/** @var User */

@@ -7,7 +7,7 @@ use Teddy;
 
 
 
-class MainPresenter extends BasePresenter
+class MainPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 
 	/** @var Teddy\Forms\IUserLogsFilterFormFactory @inject */

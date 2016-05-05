@@ -6,10 +6,7 @@ use Teddy\AdminModule\Components\IStatsControlFactory;
 
 
 
-/**
- * @TODO: maintenance, restart?
- */
-class GamePresenter extends BasePresenter
+class GamePresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 	/**
 	 * @var IStatsControlFactory

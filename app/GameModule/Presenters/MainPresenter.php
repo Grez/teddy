@@ -4,7 +4,7 @@ namespace Teddy\GameModule\Presenters;
 
 
 
-class MainPresenter extends BasePresenter
+class MainPresenter extends \Game\GameModule\Presenters\BasePresenter
 {
 
 }

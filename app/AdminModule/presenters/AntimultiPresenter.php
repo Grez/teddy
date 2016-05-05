@@ -16,9 +16,9 @@ use Teddy\Forms\Form;
 
 
 /**
- * @TODO: kontrolor, zahraničí, thor hammer
+ * @TODO: kontrolor, zahraničí
  */
-class AntimultiPresenter extends BasePresenter
+class AntimultiPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 
 	/** @var Bans @inject */

@@ -7,7 +7,7 @@ use Tracy\Debugger;
 
 
 
-class ErrorPresenter extends BasePresenter
+class ErrorPresenter extends \Game\Presenters\BasePresenter
 {
 
 	/**

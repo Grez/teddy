@@ -14,7 +14,7 @@ use Teddy\User\UserDoesNotExistException;
  * @TODO: user info, referrals
  * @TODO: logout user
  */
-class UsersPresenter extends BasePresenter
+class UsersPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 
 	/**

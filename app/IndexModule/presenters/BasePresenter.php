@@ -7,7 +7,7 @@ use Teddy;
 
 
 
-class BasePresenter extends Teddy\Presenters\BasePresenter
+class BasePresenter extends \Game\Presenters\BasePresenter
 {
 
 }

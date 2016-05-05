@@ -7,6 +7,7 @@ $configurator = new Teddy\Configurator;
 $configurator->createRobotLoader()
 	->addDirectory(__DIR__)
 	->addDirectory(__DIR__ . '/../game')
+	->addDirectory(__DIR__ . '/../game/presenters')
 	->register();
 
 $container = $configurator->createContainer();
