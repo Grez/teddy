@@ -41,6 +41,11 @@
         "kdyby/tester-extras": "@dev",
         "mockery/mockery": "^0.9.4"
     },
+    "autoload": {
+        "psr-4": {
+            "Teddy\\": "app/"
+        }
+    },
     "repositories": [
         {
             "type": "vcs",
