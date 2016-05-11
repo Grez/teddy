@@ -217,22 +217,27 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * Returns email, hides inner letters if required
-	 *
-	 * @param bool $hide
 	 * @return string
 	 */
-	public function getEmail($hide = FALSE)
+	public function getEmail()
 	{
-		if (!$hide) {
-			return $this->email;
-		} else {
-			$parts = explode('@', $this->email, 2);
-			if (strlen($parts[0]) > 2) {
-				$parts[0] = substr($parts[0], 0, 1) . str_repeat('*', strlen($parts[0]) - 2) . substr($parts[0], -1);
-			}
-			return $parts[0] . '@' . $parts[1];
+		return $this->email;
+	}
+
+
+
+	/**
+	 * Hides inner letters (e.g. a***n@admin.cz)
+	 *
+	 * @return string
+	 */
+	public function getAnonymizedEmail()
+	{
+		$parts = explode('@', $this->getEmail(), 2);
+		if (strlen($parts[0]) > 2) {
+			$parts[0] = substr($parts[0], 0, 1) . str_repeat('*', strlen($parts[0]) - 2) . substr($parts[0], -1);
 		}
+		return $parts[0] . '@' . $parts[1];
 	}
 
 

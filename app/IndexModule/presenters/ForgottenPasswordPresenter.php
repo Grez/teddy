@@ -2,6 +2,7 @@
 
 namespace Teddy\IndexModule\Presenters;
 
+use Nette\Mail\Message;
 use Teddy\Forms\Form;
 
 
@@ -9,7 +10,9 @@ use Teddy\Forms\Form;
 class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresenter
 {
 
-	/** @var \Teddy\Entities\User\User */
+	/**
+	 * @var \Teddy\Entities\User\User|NULL
+	 */
 	protected $user;
 
 
@@ -21,7 +24,7 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 	{
 		$this->user = $this->users->getByToken($token);
 		if (!$this->user) {
-			$this->flashMessage('This token isn\'t valid or has already expired. Please ask for another e-mail.', 'error');
+			$this->warningFlashMessage('This token isn\'t valid or has already expired. Please ask for another e-mail.');
 			$this->redirect('default');
 		}
 	}
@@ -51,13 +54,23 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 	{
 		$user = $this->users->getByNick($values->nick);
 		if (!$user) {
-			$this->flashMessage('This user doesn\'t exist.', 'error');
-			$this->redirect('this');
+			$this->warningFlashMessage('This user doesn\'t exist.');
+			return;
 		}
+
 
 		$token = $user->generateToken();
 		$this->em->flush();
-		$this->flashMessage('Your token was sent to ' . $user->getEmail(TRUE) . ' (' . $token . ')'); // here come dragons... I mean, e-mail!
+
+		$mail = new Message();
+		$mail->addTo($user->getEmail());
+		$mail->setFrom('no-reply@teddy.cz', 'No-reply');
+		$mail->setSubject('Changing password');
+		$link = $_SERVER['HTTP_ORIGIN'] . $this->link('setNew', ['token' => $token]);
+		$mail->setHtmlBody(sprintf('You may change your password on this <a href="%s">link</a>', $link));
+		$this->mailer->send($mail);
+
+		$this->successFlashMessage('Your token was sent to ' . $user->getAnonymizedEmail() . ' (' . $token . ')'); // here come dragons... I mean, e-mail!
 		$this->redirect('this');
 	}
 
@@ -87,7 +100,7 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 		$this->user->setPassword($password);
 		$this->user->invalidateToken();
 		$this->em->flush();
-		$this->flashMessage('Your password has been changed. You may login now.');
+		$this->successFlashMessage('Your password has been changed. You may login now.');
 		$this->redirect('Homepage:default');
 	}
 }

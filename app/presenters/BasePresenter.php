@@ -15,17 +15,35 @@ use IPub\VisualPaginator\Components as VisualPaginator;
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
-	/** @var \Kdyby\Doctrine\EntityManager @inject */
+	/**
+	 * @var \Kdyby\Doctrine\EntityManager
+	 * @inject
+	 */
 	public $em;
 
-	/** @var \Teddy\Entities\Bans\Bans @inject */
+	/**
+	 * @var \Teddy\Entities\Bans\Bans
+	 * @inject
+	 */
 	public $bans;
 
-	/** @var \Teddy\Entities\User\Users @inject */
+	/**
+	 * @var \Teddy\Entities\User\Users
+	 * @inject
+	 */
 	public $users;
 
-	/** @var \WebLoader\Nette\LoaderFactory @inject */
+	/**
+	 * @var \WebLoader\Nette\LoaderFactory
+	 * @inject
+	 */
 	public $webLoader;
+
+	/**
+	 * @var Nette\Mail\IMailer
+	 * @inject
+	 */
+	public $mailer;
 
 
 
