@@ -70,7 +70,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function getByToken($token)
 	{
-		$data = $this->repository->findBy(['token' => $token, 'tokenExpiration >=' => new \DateTime()]);
+		$data = $this->repository->findBy(['token' => $token, 'tokenExpiresAt >=' => new \DateTime()]);
 		return (count($data)) ? $data[0] : FALSE;
 	}
 
