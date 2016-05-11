@@ -85,7 +85,6 @@ doctrine:
 	password: ***
 	dbname: ***
 	metadata:
-		Teddy: %appDir%
 		Game: %appDir%/../game
 
 # FIXME: default CSS is only on index, default JS is everywhere...
