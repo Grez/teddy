@@ -24,15 +24,15 @@ class UserTest extends TestCase
 		$user = new User('mario.luigi@quattro.formaggi.it');
 		$user->setEmail('john.doe@gmail.com');
 		Assert::equal('john.doe@gmail.com', $user->getEmail());
-		Assert::equal('j******e@gmail.com', $user->getEmail(TRUE));
+		Assert::equal('j******e@gmail.com', $user->getAnonymizedEmail());
 
 		$user->setEmail('j@doe.com');
 		Assert::equal('j@doe.com', $user->getEmail());
-		Assert::equal('j@doe.com', $user->getEmail(TRUE));
+		Assert::equal('j@doe.com', $user->getAnonymizedEmail());
 
 		$user->setEmail('jd@johndoe.com');
 		Assert::equal('jd@johndoe.com', $user->getEmail());
-		Assert::equal('jd@johndoe.com', $user->getEmail(TRUE));
+		Assert::equal('jd@johndoe.com', $user->getAnonymizedEmail());
 	}
 
 }
