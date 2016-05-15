@@ -13,7 +13,7 @@ class User extends Nette\Security\User
 {
 
 	/**
-	 * @var \Teddy\Entities\User\User
+	 * @var \Game\Entities\User\User
 	 */
 	private $entity;
 
@@ -66,7 +66,7 @@ class User extends Nette\Security\User
 
 
 	/**
-	 * @return \Teddy\Entities\User\User
+	 * @return \Game\Entities\User\User
 	 */
 	public function getEntity()
 	{
