@@ -5,14 +5,16 @@ namespace Teddy\GameModule\Presenters;
 use Teddy;
 use Game\Entities\User\User;
 use Nette;
-use Teddy\GameModule\Components\IEventsControlFactory;
+use Game\GameModule\Components\IEventsControlFactory;
 
 
 
 abstract class BasePresenter extends \Game\Presenters\BasePresenter
 {
 
-	/** @var User */
+	/**
+	 * @var User
+	 */
 	protected $user;
 
 	/**

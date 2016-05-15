@@ -33,7 +33,7 @@ services:
 	- Teddy\Entities\Coins\CoinSacks()
 
 	- Teddy\Forms\IUserLogsFilterFormFactory()
-	- Teddy\GameModule\Components\IEventsControlFactory()
+	events: Game\GameModule\Components\IEventsControlFactory()
 
 	- Teddy\AdminModule\Components\IStatsControlFactory()
 	userControl:

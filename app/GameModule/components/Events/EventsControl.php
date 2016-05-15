@@ -70,12 +70,3 @@ class EventsControl extends Control
 	}
 
 }
-
-
-
-interface IEventsControlFactory
-{
-
-	/** @return EventsControl */
-	function create();
-}
