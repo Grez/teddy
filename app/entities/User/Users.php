@@ -106,11 +106,8 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function register(ArrayHash $data)
 	{
-		$password = Passwords::hash($data['password'], ['salt' => $this->salt]);
-
 		$user = new User($data->email, $data->nick);
-		$user->setPassword($password);
-		$this->save($user);
+		$this->changePassword($user, $data['password']); // also makes flush
 	}
 
 
@@ -122,7 +119,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function changePassword(User $user, $password)
 	{
-		$options = ($this->salt != '') ? ['salt' => $this->salt] : [];
+		$options = $this->salt ? ['salt' => $this->salt] : [];
 		$hashed = Passwords::hash($password, $options);
 		$user->setPassword($hashed);
 		$this->save($user);

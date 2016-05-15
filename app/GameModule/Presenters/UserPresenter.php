@@ -139,7 +139,7 @@ class UserPresenter extends \Game\GameModule\Presenters\BasePresenter
 	public function changePasswordSuccess(Form $form, ArrayHash $values)
 	{
 		$this->users->changePassword($this->user, $values->password_new);
-		$this->flashMessage('Your password has been changed');
+		$this->successFlashMessage('Your password has been changed');
 		$this->redirect('this');
 	}
 
