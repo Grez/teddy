@@ -20,22 +20,22 @@ nette:
 		expiration: 14 days
 
 services:
-	- Teddy\Entities\Logs\SystemLogs()
-	- Teddy\Entities\Logs\UserLogs()
-	- Teddy\Entities\Stats\StatDetailedManager()
-	- Teddy\Entities\Stats\StatDailyManager()
-	- Teddy\Entities\User\Users(%salt%)
-	- Teddy\Entities\User\Logins()
-	- Teddy\Entities\Bans\Bans()
-	- Teddy\Entities\PM\Messages()
-	- Teddy\Entities\Forums\Forums()
-	- Teddy\Entities\Forums\ForumPosts()
-	- Teddy\Entities\Coins\CoinSacks()
+	systemLogs: Teddy\Entities\Logs\SystemLogs()
+	userLogs: Teddy\Entities\Logs\UserLogs()
+	statDetailedManager: Teddy\Entities\Stats\StatDetailedManager()
+	statDailyManager: Teddy\Entities\Stats\StatDailyManager()
+	users: Teddy\Entities\User\Users(%salt%)
+	logins: Teddy\Entities\User\Logins()
+	bans: Teddy\Entities\Bans\Bans()
+	messages: Teddy\Entities\PM\Messages()
+	forums: Teddy\Entities\Forums\Forums()
+	forumPosts: Teddy\Entities\Forums\ForumPosts()
+	coinSacks: Teddy\Entities\Coins\CoinSacks()
 
-	- Teddy\Forms\IUserLogsFilterFormFactory()
+	userLogsFilterForm: Teddy\Forms\IUserLogsFilterFormFactory()
 	events: Game\GameModule\Components\IEventsControlFactory()
 
-	- Teddy\AdminModule\Components\IStatsControlFactory()
+	statsControlFactory: Teddy\AdminModule\Components\IStatsControlFactory()
 	userControl:
 		class: Teddy\AdminModule\Components\UserControl(%salt%)
 		implement: Teddy\AdminModule\Components\IUserControlFactory
