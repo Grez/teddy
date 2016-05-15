@@ -22,6 +22,11 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 	 */
 	private $select = [];
 
+	/**
+	 * @var \Game\Entities\User\User[]
+	 */
+	private $blackListedUsers = [];
+
 
 
 	public function __construct($showDeleted = FALSE)
@@ -41,6 +46,18 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 		$this->filter[] = function (QueryBuilder $qb) {
 			$qb->andWhere('u.deleted = FALSE');
 		};
+		return $this;
+	}
+
+
+
+	/**
+	 * @param \Game\Entities\User\User $user
+	 * @return $this
+	 */
+	public function excludeUser(\Game\Entities\User\User $user)
+	{
+		$this->blackListedUsers[] = $user;
 		return $this;
 	}
 
@@ -154,7 +171,8 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 	private function createBasicDql(Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder()
-			->select('u')->from(\Game\Entities\User\User::class, 'u');
+			->select('u')->from(\Game\Entities\User\User::class, 'u')
+			->andWhere('u NOT IN (:blackListedUsers)', $this->blackListedUsers);
 
 		foreach ($this->filter as $modifier) {
 			$modifier($qb);
