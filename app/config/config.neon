@@ -35,6 +35,10 @@ services:
 	userLogsFilterForm: Teddy\Forms\IUserLogsFilterFormFactory()
 	events: Game\GameModule\Components\IEventsControlFactory()
 
+	changePasswordControlFactory: Teddy\IndexModule\Components\IChangePasswordControlFactory()
+	changeEmailControlFactory: Teddy\IndexModule\Components\IChangeEmailControlFactory()
+	userInfoControlFactory: Teddy\IndexModule\Components\IUserInfoControlFactory()
+
 	statsControlFactory: Teddy\AdminModule\Components\IStatsControlFactory()
 	userControl:
 		class: Teddy\AdminModule\Components\UserControl(%salt%)

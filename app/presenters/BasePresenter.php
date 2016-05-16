@@ -45,6 +45,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	 */
 	public $mailer;
 
+	/**
+	 * @var array
+	 */
+	protected $snippetsToRefresh = ['flashes'];
+
 
 
 	/**

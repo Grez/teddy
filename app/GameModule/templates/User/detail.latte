@@ -27,14 +27,9 @@
 
 	{else}
 
-		<h1>{$user->getNick()}</h1>
-		<h2>Personal info</h2>
-		{control updateUserForm}
+		{control userInfo}
+		{control changePassword}
+		{control changeEmail}
 
-		<h2>Change password</h2>
-		{control changePasswordForm}
-
-		<h2>Change e-mail</h2>
-		{control changeEmailForm}
 	{/ifset}
 {/block}

@@ -1,0 +1,47 @@
+<div n:snippet="updateInfo" n:class="ajax-overlay">
+	<h2>Update info</h2>
+	<form n:name="form">
+		{var $personal = $form['user']['personal']}
+		<div class="form-group">
+			<div class="col-sm-3 control-label"><label n:name="$personal['name']" /></div>
+			<div class="col-sm-9"><input n:name="$personal['name']"></div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-3 control-label"><label n:name="$personal['age']" /></div>
+			<div class="col-sm-9"><input n:name="$personal['age']"></div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-3 control-label"><label n:name="$personal['location']" /></div>
+			<div class="col-sm-9"><input n:name="$personal['location']"></div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-3 control-label"><label n:name="$personal['gender']" /></div>
+			<div class="col-sm-9">
+				{foreach $personal[gender]->items as $key => $label}
+					<div class="radio">
+						<label n:name="$personal[gender]:$key"><input n:name="$personal[gender]:$key"> {$label}</label>
+					</div>
+				{/foreach}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-3 control-label"><label n:name="$personal['avatar']" /></div>
+			<div class="col-sm-9">
+				<input n:name="$personal['avatar']">
+				<div class="checkbox" n:if="$personal['avatar']->getOption('avatar')">
+					<img src="{$imageService->getAvatar($personal['avatar']->getOption('avatar'))}" width="100">
+					<label n:name="$personal['deleteAvatar']"><input n:name="$personal['deleteAvatar']">{$personal['deleteAvatar']->caption}</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-3 control-label"></div>
+			<div class="col-sm-9"><input n:name="send"></div>
+		</div>
+	</form>
+</div>

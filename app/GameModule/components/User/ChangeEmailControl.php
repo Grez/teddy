@@ -14,9 +14,9 @@ use Teddy\Security\User;
 
 
 /**
- * @method onSuccess(ChangePasswordControl $this)
+ * @method onSuccess(ChangeEmailControl $this)
  */
-class ChangePasswordControl extends Control
+class ChangeEmailControl extends Control
 {
 
 	/**
@@ -47,7 +47,7 @@ class ChangePasswordControl extends Control
 	/**
 	 * @var string
 	 */
-	protected $template = 'changePassword';
+	protected $template = 'changeEmail';
 
 
 
@@ -70,15 +70,13 @@ class ChangePasswordControl extends Control
 		$form->addPassword('password', 'Current password')
 			->addRule([$this->users, 'validatePassword'], 'You\'ve entered wrong password.', $this->user->getId())
 			->setRequired();
-		$form->addPassword('password_new', 'New password')
+		$form->addText('email', 'New e-mail')
+			->addRule(Form::EMAIL, 'Please enter valid e-mail.')
 			->setRequired();
-		$form->addPassword('password_again', 'Password again')
-			->setRequired()
-			->addRule(Form::EQUAL, 'Passwords do not match', $form['password_new']);
 		$form->onSuccess[] = $this->formSuccess;
 		$form->onError[] = $this->formError;
 		$form->addSubmit('send', 'Submit');
-		return $form->setBootstrapRenderer();
+		return $form;
 	}
 
 
@@ -89,10 +87,10 @@ class ChangePasswordControl extends Control
 	 */
 	public function formSuccess(Form $form, ArrayHash $values)
 	{
-		$this->users->changePassword($this->user->getEntity(), $values->password_new);
+		$this->user->getEntity()->setEmail($values->email);
+		$this->users->save($this->user->getEntity());
 		$this['form']['password']->setValue(NULL);
-		$this['form']['password_new']->setValue(NULL);
-		$this['form']['password_again']->setValue(NULL);
+		$this['form']['email']->setValue(NULL);
 		$this->redrawControl();
 		$this->onSuccess($this);
 	}
@@ -120,9 +118,9 @@ class ChangePasswordControl extends Control
 
 
 
-interface IChangePasswordControlFactory
+interface IChangeEmailControlFactory
 {
 
-	/** @return ChangePasswordControl */
+	/** @return ChangeEmailControl */
 	function create();
 }
