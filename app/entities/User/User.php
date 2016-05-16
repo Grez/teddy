@@ -11,14 +11,15 @@ use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Teddy\Entities\Coins\CoinSack;
-use Teddy\Services\ImageService;
+use Teddy\Images\WithImage;
+use Teddy\Images\ImageService;
 
 
 
 /**
  * @ORM\MappedSuperclass()
  */
-abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
+abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithImage
 {
 
 	/**
@@ -454,6 +455,18 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity
 	public function getPassword()
 	{
 		return $this->password;
+	}
+
+
+
+	/**
+	 * @param ImageService $imageService
+	 * @param string|null $variant
+	 * @return string
+	 */
+	public function resolveImage(ImageService $imageService, $variant = NULL)
+	{
+		return $imageService->getAvatar($this->getAvatar());
 	}
 
 }

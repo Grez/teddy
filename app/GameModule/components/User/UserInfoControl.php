@@ -11,7 +11,7 @@ use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI\Control;
 use Teddy\Security\User;
-use Teddy\Services\ImageService;
+use Teddy\Images\ImageService;
 
 
 
@@ -56,14 +56,20 @@ class UserInfoControl extends Control
 	 */
 	protected $template = 'userInfo';
 
+	/**
+	 * @var Teddy\TemplateHelpers
+	 */
+	private $templateHelpers;
 
 
-	public function __construct(EntityManager $em, Users $users, User $user, ImageService $imageService)
+
+	public function __construct(EntityManager $em, Users $users, User $user, ImageService $imageService, Teddy\TemplateHelpers $templateHelpers)
 	{
 		$this->em = $em;
 		$this->users = $users;
 		$this->user = $user;
 		$this->imageService = $imageService;
+		$this->templateHelpers = $templateHelpers;
 	}
 
 
@@ -149,6 +155,7 @@ class UserInfoControl extends Control
 	{
 		$template = parent::createTemplate();
 		$template->imageService = $this->imageService;
+		$this->templateHelpers->register($template->getLatte());
 		$template->setFile(__DIR__ . '/' . $this->template . '.latte');
 		$template->render();
 	}

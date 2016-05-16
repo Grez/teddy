@@ -39,6 +39,8 @@ services:
 	changeEmailControlFactory: Teddy\IndexModule\Components\IChangeEmailControlFactory()
 	userInfoControlFactory: Teddy\IndexModule\Components\IUserInfoControlFactory()
 
+	templateHelpers: Teddy\TemplateHelpers()
+
 	statsControlFactory: Teddy\AdminModule\Components\IStatsControlFactory()
 	userControl:
 		class: Teddy\AdminModule\Components\UserControl(%salt%)
@@ -57,7 +59,7 @@ services:
 		class: Teddy\Entities\PM\MessagesListener
 		tags: [kdyby.subscriber]
 
-	imageService: Teddy\Services\ImageService(%wwwDir%, /images/uploaded)
+	imageService: Teddy\Images\ImageService(%wwwDir%, /images/uploaded)
 
 extensions:
 	console: Kdyby\Console\DI\ConsoleExtension

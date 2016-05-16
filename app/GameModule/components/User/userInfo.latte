@@ -33,7 +33,7 @@
 			<div class="col-sm-9">
 				<input n:name="$personal['avatar']">
 				<div class="checkbox" n:if="$personal['avatar']->getOption('avatar')">
-					<img src="{$imageService->getAvatar($personal['avatar']->getOption('avatar'))}" width="100">
+					<img src="{$user->getEntity()|img}" height="100">
 					<label n:name="$personal['deleteAvatar']"><input n:name="$personal['deleteAvatar']">{$personal['deleteAvatar']->caption}</label>
 				</div>
 			</div>

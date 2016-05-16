@@ -1,6 +1,6 @@
 <?php
 
-namespace Teddy\Services;
+namespace Teddy\Images;
 
 use Nette\Object;
 

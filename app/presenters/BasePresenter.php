@@ -5,6 +5,7 @@ namespace Teddy\Presenters;
 use Nette;
 use Teddy\Entities;
 use IPub\VisualPaginator\Components as VisualPaginator;
+use Teddy\TemplateHelpers;
 
 
 
@@ -20,6 +21,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	 * @inject
 	 */
 	public $em;
+
+	/**
+	 * @var TemplateHelpers
+	 * @inject
+	 */
+	public $templateHelpers;
 
 	/**
 	 * @var \Teddy\Entities\Bans\Bans
@@ -186,6 +193,15 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			"$dir/templates/$presenter/$this->view.latte",
 			"$dir/templates/$presenter.$this->view.latte",
 		]);
+	}
+
+
+
+	protected function createTemplate()
+	{
+		$template = parent::createTemplate();
+		$this->templateHelpers->register($template->getLatte());
+		return $template;
 	}
 
 }
