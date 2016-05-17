@@ -2,8 +2,6 @@
 
 namespace Teddy;
 
-
-
 use Teddy\Images\ImageService;
 use Teddy\Images\WithImage;
 
@@ -51,6 +49,5 @@ class TemplateHelpers extends \Nette\Object
 	{
 		return $hasImage->resolveImage($this->imageService, $variant);
 	}
+
 }
-
-
