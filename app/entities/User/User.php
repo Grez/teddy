@@ -481,4 +481,14 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 		return $this;
 	}
 
+
+
+	/**
+	 * @return boolean
+	 */
+	public function isDeleted()
+	{
+		return $this->deleted;
+	}
+
 }

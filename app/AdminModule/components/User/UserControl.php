@@ -15,6 +15,8 @@ use Teddy\Images\ImageService;
 
 /**
  * @method void onUserEdited(UserControl $this, User $user)
+ * @method void onUserDeleted(UserControl $this, User $user)
+ * @method void onUserReactivated(UserControl $this, User $user)
  */
 class UserControl extends Control
 {
@@ -23,6 +25,16 @@ class UserControl extends Control
 	 * @var array
 	 */
 	public $onUserEdited;
+
+	/**
+	 * @var array
+	 */
+	public $onUserDeleted;
+
+	/**
+	 * @var array
+	 */
+	public $onUserReactivated;
 
 	/**
 	 * @var EntityManager
@@ -77,6 +89,24 @@ class UserControl extends Control
 		$template->usersWithSamePassword = $this->getUsersWithSamePassword();
 		$template->setFile(__DIR__ . '/user.latte');
 		$template->render();
+	}
+
+
+
+	public function handleDelete()
+	{
+		$this->editedUser->setDeleted(TRUE);
+		$this->users->save($this->editedUser);
+		$this->onUserDeleted($this, $this->editedUser);
+	}
+
+
+
+	public function handleReactivate()
+	{
+		$this->editedUser->setDeleted(FALSE);
+		$this->users->save($this->editedUser);
+		$this->onUserReactivated($this, $this->editedUser);
 	}
 
 
