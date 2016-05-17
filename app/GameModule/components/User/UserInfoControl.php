@@ -2,16 +2,16 @@
 
 namespace Teddy\IndexModule\Components;
 
+use Game\Components\Control;
 use Nette\Http\FileUpload;
 use Nette\Utils\ArrayHash;
-use Nette\Utils\DateTime;
 use Teddy;
 use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
-use Nette\Application\UI\Control;
 use Teddy\Security\User;
 use Teddy\Images\ImageService;
+use Teddy\TemplateHelpers;
 
 
 
@@ -56,20 +56,15 @@ class UserInfoControl extends Control
 	 */
 	protected $template = 'userInfo';
 
-	/**
-	 * @var Teddy\TemplateHelpers
-	 */
-	private $templateHelpers;
 
 
-
-	public function __construct(EntityManager $em, Users $users, User $user, ImageService $imageService, Teddy\TemplateHelpers $templateHelpers)
+	public function __construct(TemplateHelpers $templateHelpers, EntityManager $em, Users $users, User $user, ImageService $imageService)
 	{
+		parent::__construct($templateHelpers);
 		$this->em = $em;
 		$this->users = $users;
 		$this->user = $user;
 		$this->imageService = $imageService;
-		$this->templateHelpers = $templateHelpers;
 	}
 
 
@@ -154,8 +149,6 @@ class UserInfoControl extends Control
 	public function render()
 	{
 		$template = parent::createTemplate();
-		$template->imageService = $this->imageService;
-		$this->templateHelpers->register($template->getLatte());
 		$template->setFile(__DIR__ . '/' . $this->template . '.latte');
 		$template->render();
 	}

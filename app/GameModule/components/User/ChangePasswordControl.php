@@ -3,13 +3,13 @@
 namespace Teddy\IndexModule\Components;
 
 use Nette\Utils\ArrayHash;
-use Nette\Utils\DateTime;
 use Teddy;
 use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
-use Nette\Application\UI\Control;
+use Game\Components\Control;
 use Teddy\Security\User;
+use Teddy\TemplateHelpers;
 
 
 
@@ -51,8 +51,9 @@ class ChangePasswordControl extends Control
 
 
 
-	public function __construct(EntityManager $em, Users $users, User $user)
+	public function __construct(TemplateHelpers $templateHelpers, EntityManager $em, Users $users, User $user)
 	{
+		parent::__construct($templateHelpers);
 		$this->em = $em;
 		$this->users = $users;
 		$this->user = $user;
