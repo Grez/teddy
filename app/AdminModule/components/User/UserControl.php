@@ -9,6 +9,7 @@ use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI\Control;
+use Teddy\Images\ImageService;
 
 
 
@@ -48,9 +49,14 @@ class UserControl extends Control
 	 */
 	protected $users;
 
+	/**
+	 * @var ImageService
+	 */
+	protected $imageService;
 
 
-	public function __construct($salt, User $editedUser, EntityManager $em, Users $users, Teddy\Security\User $userContext)
+
+	public function __construct($salt, User $editedUser, EntityManager $em, Users $users, Teddy\Security\User $userContext, ImageService $imageService)
 	{
 		parent::__construct();
 		$this->salt = $salt;
@@ -58,6 +64,7 @@ class UserControl extends Control
 		$this->editedUser = $editedUser;
 		$this->userContext = $userContext;
 		$this->users = $users;
+		$this->imageService = $imageService;
 	}
 
 
@@ -81,14 +88,22 @@ class UserControl extends Control
 	{
 		$form = new Form();
 		$form->addText('nick', 'Nick')
-			->setRequired()
-			->setDefaultValue($this->editedUser->getNick());
+			->setRequired();
 		$form->addText('registered', 'Registered')
 			->setDisabled()
 			->setDefaultValue($this->editedUser->getRegisteredAt()->format('Y-m-d H:i:s'));
 		$form->addText('lastActivity', 'Last activity')
 			->setDisabled()
 			->setDefaultValue($this->editedUser->getLastActivityAt()->format('Y-m-d H:i:s'));
+
+		$form['user'] = new \Teddy\Forms\User\UserContainer();
+		$form['user']['personal'] = new \Teddy\Forms\User\PersonalContainer();
+		unset($form['user']['personal']['avatar']);
+		if (!$this->editedUser->hasAvatar()) {
+			unset($form['user']['personal']['deleteAvatar']);
+		}
+		$form->bindEntity($this->editedUser);
+
 		$form->addSubmit('send', 'Save');
 		$form->onSuccess[] = $this->editUserFormSuccess;
 		return $form->setBootstrapRenderer();
@@ -98,7 +113,12 @@ class UserControl extends Control
 
 	public function editUserFormSuccess(Form $form, ArrayHash $values)
 	{
+		$personal = $values->user->personal;
+		if (isset($personal->deleteAvatar) && $personal->deleteAvatar)  {
+			$this->editedUser->deleteAvatar($this->imageService);
+		}
 		$this->users->update($this->editedUser, $values);
+
 		$this->onUserEdited($this, $this->editedUser);
 		$this->redirect('this');
 	}
