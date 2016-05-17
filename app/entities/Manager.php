@@ -142,8 +142,12 @@ abstract class Manager extends Nette\Object
 			if ($value instanceof ArrayHash || is_array($value)) {
 				$this->setData($entity, $value);
 			} else {
-				$method = "set" . ucfirst($key);
-				$entity->$method($value);
+				try {
+					$method = "set" . ucfirst($key);
+					$entity->$method($value);
+				} catch (\Kdyby\Doctrine\MemberAccessException $e) {
+					continue;
+				}
 			}
 		}
 	}
