@@ -15,12 +15,12 @@ class UserLogsListQuery extends QueryObject
 	/**
 	 * @var array|\Closure[]
 	 */
-	private $filter = [];
+	protected $filter = [];
 
 	/**
 	 * @var array|\Closure[]
 	 */
-	private $select = [];
+	protected $select = [];
 
 
 

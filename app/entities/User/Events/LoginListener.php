@@ -11,13 +11,19 @@ use Teddy\Entities\Bans\Bans;
 class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
 {
 
-	/** @var Logins */
+	/**
+	 * @var Logins
+	 */
 	protected $logins;
 
-	/** @var Users */
+	/**
+	 * @var Users
+	 */
 	protected $users;
 
-	/** @var Bans */
+	/**
+	 * @var Bans
+	 */
 	protected $bans;
 
 

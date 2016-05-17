@@ -18,17 +18,17 @@ class Logins extends Entities\Manager
 	/**
 	 * @var Nette\Application\Request
 	 */
-	private $request;
+	protected $request;
 
 	/**
 	 * @var Nette\Http\Response
 	 */
-	private $response;
+	protected $response;
 
 	/**
 	 * @var IDateTimeProvider
 	 */
-	private $dateTimeProvider;
+	protected $dateTimeProvider;
 
 
 

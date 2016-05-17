@@ -14,10 +14,14 @@ use Nette\Utils\ArrayHash;
 abstract class Manager extends Nette\Object
 {
 
-	/** @var EntityManager */
+	/**
+	 * @var EntityManager
+	 */
 	protected $em;
 
-	/** @var EntityRepository */
+	/**
+	 * @var EntityRepository
+	 */
 	protected $repository;
 
 

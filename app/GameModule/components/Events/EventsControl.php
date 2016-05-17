@@ -19,12 +19,12 @@ class EventsControl extends Control
 	/**
 	 * @var User
 	 */
-	private $user;
+	protected $user;
 
 	/**
 	 * @var Messages
 	 */
-	private $messagesFacade;
+	protected $messagesFacade;
 
 	/**
 	 * @var int

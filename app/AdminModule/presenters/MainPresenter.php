@@ -10,7 +10,10 @@ use Teddy;
 class MainPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 
-	/** @var Teddy\Forms\IUserLogsFilterFormFactory @inject */
+	/**
+	 * @var Teddy\Forms\IUserLogsFilterFormFactory
+	 * @inject
+	 */
 	public $filterFormFactory;
 
 

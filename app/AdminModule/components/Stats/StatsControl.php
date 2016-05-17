@@ -15,16 +15,24 @@ use Nette\Application\UI\Control;
 class StatsControl extends Control
 {
 
-	/** @var \DateTime|null */
+	/**
+	 * @var \DateTime|null
+	 */
 	protected $from = NULL;
 
-	/** @var \DateTime|null */
+	/**
+	 * @var \DateTime|null
+	 */
 	protected $to = NULL;
 
-	/** @var array */
+	/**
+	 * @var array
+	 */
 	protected $metrics = [];
 
-	/** @var array */
+	/**
+	 * @var array
+	 */
 	protected $availableMetrics = [
 		'players_total' => 'Players total',
 		'players_active' => 'Players active',
@@ -34,12 +42,12 @@ class StatsControl extends Control
 	/**
 	 * @var EntityManager
 	 */
-	private $em;
+	protected $em;
 
 	/**
 	 * @var StatDailyManager
 	 */
-	private $statDailyManager;
+	protected $statDailyManager;
 
 
 

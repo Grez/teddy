@@ -11,14 +11,20 @@ use Kdyby;
 class UserLogsFilterForm extends Nette\Application\UI\Control
 {
 
-	/** @var int|NULL @persistent */
+	/**
+	 * @var int|NULL @persistent
+	 */
 	public $userId;
 
-	/** @var Kdyby\Doctrine\EntityManager */
-	private $em;
+	/**
+	 * @var Kdyby\Doctrine\EntityManager
+	 */
+	protected $em;
 
-	/** @var Teddy\Entities\User\Users */
-	private $users;
+	/**
+	 * @var Teddy\Entities\User\Users
+	 */
+	protected $users;
 
 
 

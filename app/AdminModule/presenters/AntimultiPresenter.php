@@ -21,7 +21,10 @@ use Teddy\Forms\Form;
 class AntimultiPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 
-	/** @var Bans @inject */
+	/**
+	 * @var Bans
+	 * @inject
+	 */
 	public $bans;
 
 

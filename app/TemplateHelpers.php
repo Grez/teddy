@@ -13,7 +13,7 @@ class TemplateHelpers extends \Nette\Object
 	/**
 	 * @var ImageService
 	 */
-	private $imageService;
+	protected $imageService;
 
 
 

@@ -12,13 +12,20 @@ use Teddy\Entities\Logs\UserLogs;
 class BasePresenter extends \Game\Presenters\BasePresenter
 {
 
-	/** @var User */
+	/**
+	 * @var User
+	 */
 	protected $user;
 
-	/** @var UserLogs @inject */
+	/**
+	 * @var UserLogs
+	 * @inject
+	 */
 	public $userLogs;
 
-	/** @var array */
+	/**
+	 * @var array
+	 */
 	protected $presenters = [
 		'Admin:Main' => 'Main',
 		'Admin:Users' => 'Users',

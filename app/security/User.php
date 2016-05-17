@@ -15,7 +15,7 @@ class User extends Nette\Security\User
 	/**
 	 * @var \Game\Entities\User\User
 	 */
-	private $entity;
+	protected $entity;
 
 	/**
 	 * @var Users

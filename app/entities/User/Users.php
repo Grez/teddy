@@ -11,22 +11,36 @@ use Kdyby\Doctrine\EntityManager;
 
 
 
+/**
+ * @method onWrongNick(string $nick)
+ * @method onWrongPassword(\Game\Entities\User\User $user)
+ */
 class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 {
 
-	/** int User is active if he logged in last ACTIVE days */
+	/**
+	 * int User is active if he logged in last ACTIVE days
+	 */
 	const ACTIVE = 30;
 
-	/** int User is considered online if his last activity is in last ONLINE minutes */
+	/**
+	 * int User is considered online if his last activity is in last ONLINE minutes
+	 */
 	const ONLINE = 15;
 
-	/** @var array of function(string $login); Occurs when user uses wrong login */
+	/**
+	 * @var array
+	 */
 	public $onWrongNick;
 
-	/** @var array of function(string $login); Occurs when user uses wrong password */
+	/**
+	 * @var array
+	 */
 	public $onWrongPassword;
 
-	/** @var string; used for comparing passwords (config.local.neon) */
+	/**
+	 * @var string; used for comparing passwords (config.local.neon)
+	 */
 	protected $salt = '';
 
 

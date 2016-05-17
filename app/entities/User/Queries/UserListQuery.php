@@ -15,19 +15,19 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 	/**
 	 * @var array|\Closure[]
 	 */
-	private $filter = [];
+	protected $filter = [];
 
 	/**
 	 * @var array|\Closure[]
 	 */
-	private $select = [];
+	protected $select = [];
 
 	/**
 	 * Blacklisted users
 	 *
 	 * @var int[]
 	 */
-	private $blackListedUserIds = [0];
+	protected $blackListedUserIds = [0];
 
 
 

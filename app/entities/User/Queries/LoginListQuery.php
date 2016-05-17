@@ -13,12 +13,12 @@ class LoginListQuery extends \Kdyby\Doctrine\QueryObject
 	/**
 	 * @var array|\Closure[]
 	 */
-	private $filter = [];
+	protected $filter = [];
 
 	/**
 	 * @var array|\Closure[]
 	 */
-	private $select = [];
+	protected $select = [];
 
 
 

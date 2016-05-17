@@ -38,7 +38,7 @@ abstract class BaseCommand extends Console\Command\Command
 	/**
 	 * @var float
 	 */
-	private $commandStartTime;
+	protected $commandStartTime;
 
 
 
