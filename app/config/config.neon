@@ -76,6 +76,8 @@ extensions:
 console:
 	url: http://www.teddy.l/
 	commands:
+		detailedStats: Teddy\Console\GenerateDetailedStatsCommand()
+		dailyStats: Teddy\Console\GenerateDailyStatsCommand()
 
 migrations:
 	table: doctrine_migrations # database table for applied migrations

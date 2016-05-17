@@ -5,6 +5,7 @@ namespace Teddy\Entities\Stats;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
+use Teddy\Entities\User\UserListQuery;
 
 
 
@@ -14,14 +15,13 @@ class StatDetailedManager extends Entities\Manager
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em);
-		$this->repository = $this->em->getRepository(StatDetailed::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\Stats\StatDetailed::class);
 	}
 
 
 
 	/**
 	 * Saves statistics about players + server
-	 * Used by cron_minute
 	 *
 	 * @return NULL
 	 */
@@ -54,11 +54,11 @@ class StatDetailedManager extends Entities\Manager
 
 
 	/**
-	 * @param \DateTime|null $from
-	 * @param \DateTime|null $to
+	 * @param \DateTimeInterface|null $from
+	 * @param \DateTimeInterface|null $to
 	 * @return array
 	 */
-	public function getStats($from = NULL, $to = NULL, $types = [])
+	public function getStats($from = NULL, $to = NULL)
 	{
 		$criteria = [];
 
@@ -73,7 +73,7 @@ class StatDetailedManager extends Entities\Manager
 		$criteria['date >='] = $from;
 		$criteria['date <='] = $to;
 
-		return $this->repository->findBy($criteria, ['date' => 'DESC'], 30);
+		return $this->repository->findBy($criteria, ['date' => 'DESC'], 60);
 	}
 
 }
