@@ -56,7 +56,7 @@ class Form extends \Nette\Application\UI\Form
 			if ($control instanceof Controls\Button) {
 				$control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn btn-default');
 				$usedPrimary = TRUE;
-			} elseif ($control instanceof Controls\TextBase || $control instanceof Controls\SelectBox || $control instanceof Controls\MultiSelectBox) {
+			} elseif ($control instanceof Controls\TextBase || $control instanceof Controls\SelectBox || $control instanceof Controls\MultiSelectBox || $control instanceof \Nella\Forms\DateTime\DateInput) {
 				$control->getControlPrototype()->addClass('form-control');
 			} elseif ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
 				if ($control->getSeparatorPrototype()->getName() == 'inline') {

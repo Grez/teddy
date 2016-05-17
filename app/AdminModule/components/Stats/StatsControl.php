@@ -105,7 +105,7 @@ class StatsControl extends Control
 
 			$this->metrics = ($values['metrics']) ?: array_keys($this->availableMetrics);
 		};
-		return $form;
+		return $form->setBootstrapRenderer();
 	}
 }
 
