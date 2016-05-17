@@ -469,4 +469,16 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 		return $imageService->getAvatar($this->getAvatar());
 	}
 
+
+
+	/**
+	 * @param boolean $deleted
+	 * @return User
+	 */
+	public function setDeleted($deleted)
+	{
+		$this->deleted = $deleted;
+		return $this;
+	}
+
 }
