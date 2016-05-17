@@ -17,6 +17,7 @@ use Teddy\Images\ImageService;
  * @method void onUserEdited(UserControl $this, User $user)
  * @method void onUserDeleted(UserControl $this, User $user)
  * @method void onUserReactivated(UserControl $this, User $user)
+ * @method void onUserPasswordChange(UserControl $this, User $user)
  */
 class UserControl extends Control
 {
@@ -24,17 +25,22 @@ class UserControl extends Control
 	/**
 	 * @var array
 	 */
-	public $onUserEdited;
+	public $onUserEdited = [];
 
 	/**
 	 * @var array
 	 */
-	public $onUserDeleted;
+	public $onUserDeleted = [];
 
 	/**
 	 * @var array
 	 */
-	public $onUserReactivated;
+	public $onUserReactivated = [];
+
+	/**
+	 * @var array
+	 */
+	public $onUserPasswordChange = [];
 
 	/**
 	 * @var EntityManager
@@ -151,6 +157,25 @@ class UserControl extends Control
 
 		$this->onUserEdited($this, $this->editedUser);
 		$this->redirect('this');
+	}
+
+
+
+	/**
+	 * @return Form
+	 */
+	protected function createComponentPasswordChangeForm()
+	{
+		$form = new Form();
+		$form->addPassword('password_new', 'New password')
+			->setRequired();
+		$form->onSuccess[] = function (Form $form, ArrayHash $values) {
+			$this->users->changePassword($this->editedUser, $values->password_new);
+			$this->onUserPasswordChange($this, $this->editedUser);
+			$this->redirect('this');
+		};
+		$form->addSubmit('send', 'Submit');
+		return $form->setBootstrapRenderer();
 	}
 
 

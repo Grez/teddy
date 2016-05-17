@@ -111,6 +111,9 @@ class UsersPresenter extends \Game\AdminModule\Presenters\BasePresenter
 		$control->onUserReactivated = function (UserControl $userControl, User $user) {
 			$this->successFlashMessage('User reactivated');
 		};
+		$control->onUserPasswordChange = function (UserControl $userControl, User $user) {
+			$this->successFlashMessage('User\'s password changed');
+		};
 		return $control;
 	}
 
