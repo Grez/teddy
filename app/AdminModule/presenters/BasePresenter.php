@@ -33,7 +33,6 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 		'Admin:Game' => [
 			'name' => 'Game',
 			'views' => [
-				'default' => 'Overview',
 				'stats' => 'Stats',
 			]
 		],

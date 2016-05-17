@@ -15,6 +15,7 @@ class GamePresenter extends \Game\AdminModule\Presenters\BasePresenter
 	public $statsControlFactory;
 
 
+
 	protected function createComponentStats()
 	{
 		return $this->statsControlFactory->create();
