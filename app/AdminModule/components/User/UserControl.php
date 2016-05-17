@@ -4,6 +4,7 @@ namespace Teddy\AdminModule\Components;
 
 use Game\Entities\User\User;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Strings;
 use Teddy;
 use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
@@ -101,6 +102,7 @@ class UserControl extends Control
 
 	public function handleDelete()
 	{
+		$this->editedUser->setNick($this->editedUser->getNick() . ' (deleted)');
 		$this->editedUser->setDeleted(TRUE);
 		$this->users->save($this->editedUser);
 		$this->onUserDeleted($this, $this->editedUser);
@@ -110,6 +112,10 @@ class UserControl extends Control
 
 	public function handleReactivate()
 	{
+		if (Strings::substring($this->editedUser->getNick(), -10) === ' (deleted)') {
+			$this->editedUser->setNick(Strings::substring($this->editedUser->getNick(), 0, -10));
+		}
+
 		$this->editedUser->setDeleted(FALSE);
 		$this->users->save($this->editedUser);
 		$this->onUserReactivated($this, $this->editedUser);
