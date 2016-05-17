@@ -201,7 +201,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 		list($nick, $password) = $credentials;
 		$user = $this->getByNick($nick);
 
-		if (!$user) {
+		if (!$user || $user->isDeleted()) {
 			$this->onWrongNick($nick);
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
 		}
