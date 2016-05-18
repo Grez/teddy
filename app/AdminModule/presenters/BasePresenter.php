@@ -57,18 +57,18 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 
 		$user = $this->getUser();
 		if (!$user->isLoggedIn()) {
-			$this->flashMessage(_('You are not logged in'), 'error');
+			$this->warningFlashMessage('You are not logged in');
 			$this->redirect(':Index:Homepage:default');
 		}
 
 		$this->user = $this->users->find($user->id);
 		if (!$this->user->isAdmin()) {
-			$this->flashMessage(_('You are not admin'), 'error');
+			$this->warningFlashMessage('You are not admin');
 			$this->redirect(':Index:Homepage:default');
 		}
 
 		if ($this->presenter->getName() !== 'Admin:Main' && !$this->user->isAllowed($this->presenter->getName())) {
-			$this->flashMessage(_('You are not allowed here'), 'error');
+			$this->warningFlashMessage('You are not allowed here');
 			$this->redirect(':Admin:Main:default');
 		}
 
