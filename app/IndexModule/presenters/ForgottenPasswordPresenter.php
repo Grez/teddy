@@ -70,7 +70,7 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 		$mail->setHtmlBody(sprintf('You may change your password on this <a href="%s">link</a>', $link));
 		$this->mailer->send($mail);
 
-		$this->successFlashMessage('Your token was sent to ' . $user->getAnonymizedEmail() . ' (' . $token . ')'); // here come dragons... I mean, e-mail!
+		$this->successFlashMessage('Your token was sent to ' . $user->getAnonymizedEmail()); // here come dragons... I mean, e-mail!
 		$this->redirect('this');
 	}
 
