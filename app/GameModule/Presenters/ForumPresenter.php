@@ -72,6 +72,7 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 		if (!$post || !$post->canDelete($this->user)) {
 			$this->warningFlashMessage('This post doesn\'t exist or you can\'t delete it');
 			$this->refreshPage();
+			return;
 		}
 
 		$post->delete($this->user);
@@ -113,6 +114,7 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 		if (!$forum || !$forum->canView($this->user)) {
 			$this->warningFlashMessage('This forum doesn\'t exist');
 			$this->refreshPage();
+			return;
 		}
 
 		/** @var ForumPost|NULL $conversation */
@@ -124,6 +126,7 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 		} catch (AccessDenied $e) {
 			$this->warningFlashMessage($e->getMessage());
 			$this->refreshPage();
+			return;
 		}
 
 		$form->setValues([

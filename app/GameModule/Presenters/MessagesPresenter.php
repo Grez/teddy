@@ -89,6 +89,7 @@ class MessagesPresenter extends \Game\GameModule\Presenters\BasePresenter
 		if (!$msg || !$msg->isReadableByUser($this->user)) {
 			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
 			$this->refreshPage('default');
+			return;
 		}
 
 		$this->msgsFacade->deleteBy($msg, $this->user);

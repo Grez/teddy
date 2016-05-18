@@ -51,8 +51,8 @@ class UserPresenter extends \Game\GameModule\Presenters\BasePresenter
 	{
 		if ($id) {
 			$player = $this->users->getByNick($id);
-			if ($player == NULL) {
-				$this->flashMessage('This user doesn\'t exist', 'error');
+			if (!$player) {
+				$this->warningFlashMessage('This user doesn\'t exist');
 				$this->redirect('default');
 			}
 			$this->template->player = $player;
