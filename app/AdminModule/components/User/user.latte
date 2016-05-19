@@ -2,7 +2,7 @@
 {if $editedUser->isDeleted()}
 	<p>This user is deleted. <a n:href="reactivate!">Reactivate</a>.</p>
 {else}
-	<p><a n:href="delete!" onclick="return confirm('Do you really want to delete user?')">Delete user</a></p>
+	<p><a n:href="delete!" data-confirm="Do you really want to delete user?">Delete user</a></p>
 {/if}
 {control editUserForm}
 

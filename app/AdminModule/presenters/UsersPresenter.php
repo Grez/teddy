@@ -104,15 +104,19 @@ class UsersPresenter extends \Game\AdminModule\Presenters\BasePresenter
 		$control = $this->userControlFactory->create($this->editedUser);
 		$control->onUserEdited = function (UserControl $userControl, User $user) {
 			$this->successFlashMessage('User edited');
+			$this->redirect('this');
 		};
 		$control->onUserDeleted = function (UserControl $userControl, User $user) {
 			$this->successFlashMessage('User deleted');
+			$this->redirect('this');
 		};
 		$control->onUserReactivated = function (UserControl $userControl, User $user) {
 			$this->successFlashMessage('User reactivated');
+			$this->redirect('this');
 		};
 		$control->onUserPasswordChange = function (UserControl $userControl, User $user) {
 			$this->successFlashMessage('User\'s password changed');
+			$this->redirect('this');
 		};
 		return $control;
 	}

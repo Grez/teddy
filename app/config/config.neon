@@ -138,6 +138,7 @@ webloader:
 				datepicker: teddy/bootstrap-datepicker/js/bootstrap-datepicker.min.js
 				datepickerCs: teddy/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js
 				netteAjax: teddy/nette.ajax.js
+				confirm: teddy/confirm.js # needs to be before overlay!
 				overlay: teddy/ajax.overlay.js
 		game:
 			files:
