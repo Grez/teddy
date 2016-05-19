@@ -7,13 +7,23 @@
 			<p>You can't post here</p>
 		{/if}
 
-		<div n:foreach="$posts as $post">
-			<a n:href="User:detail, id => $post->getAuthor()->getNick()">{$post->getAuthor()->getNick()}</a>
-			<a n:href="delete!, postId => $post->getId()" n:class="ajax" n:if="$post->canDelete($user)">[x]</a>
-			<span>{$post->getCreatedAt()|date:'d.m.Y H:i:s'}</span>
-
-			<p>{$post->getText()}</p>
+		<div n:foreach="$posts as $post" n:class="panel, panel-default, $post->isUnreadBy($user) ? panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<div class="text-right" style="display: inline-block; float: right">
+						<a n:href="delete!, postId => $post->getId()" n:class="ajax" n:if="$post->canDelete($user)">[x]</a>
+						#{$post->getId()}
+					</div>
+					<a n:href="User:detail, id => $post->getAuthor()->getNick()">{$post->getAuthor()->getNick()}</a>,
+					{$post->getSubject()}
+				</h3>
+				<div>{$post->getCreatedAt()|date:'d.m.Y H:i:s'}</div>
+			</div>
+			<div class="panel-body">
+				{$post->getText()|escape|nl2br|noescape}
+			</div>
 		</div>
+
 		{control visualPaginator}
 	</div>
 {/block}
