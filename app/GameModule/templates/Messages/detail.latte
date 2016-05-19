@@ -1,12 +1,22 @@
 {block content}
 	<h2>Message</h2>
-	<div class="msg-detail">
-		{$msg->getFrom()->getNick()}
-		{$msg->getSubject()}
-		{$msg->getSentAt()->format('Y-m-d H:i:s')}
-		<a n:href="delete!, id => $msg->getId()">Delete</a>
-		<br>
-		{$msg->getText()}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<div class="text-right" style="display: inline-block; float: right">#{$msg->getId()}</div>
+				<a n:href="User:detail, $msg->getTo()->getNick()">{$msg->getTo()->getNick()}</a>,
+				{$msg->getSubject()}
+			</h3>
+			<div>{$msg->getSentAt()|date:'Y-m-d H:i:s'}</div>
+		</div>
+		<div class="panel-body">
+			{$msg->getText()|escape|nl2br|noescape}
+		</div>
+		<div class="panel-footer">
+			<div class="text-right"><a n:href="delete!, id => $msg->getId()">Delete</a></div>
+		</div>
 	</div>
+
+	<h3>Reply</h3>
 	{control newMsgForm}
 {/block}

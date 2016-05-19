@@ -2,11 +2,12 @@
 
 	<h2>Messages</h2>
 	<h3><a n:href="new">New message</a></h3>
-	{if count($msgs)}
-		<div n:snippet="messages" n:class="ajax-overlay">
+	<div n:snippet="messages" n:class="ajax-overlay">
+		{if count($msgs)}
 			<table class="table">
 				<thead>
 					<tr>
+						<th>ID</th>
 						<th>From</th>
 						<th>To</th>
 						<th>Subject</th>
@@ -16,20 +17,22 @@
 				</thead>
 				<tbody>
 					<tr n:foreach="$msgs as $msg" n:class="msg, $msg->unread ? unread">
-						<td>{$msg->getFrom()->getNick()}</td>
-						<td>{$msg->getTo()->getNick()}</td>
+						<td><a n:href="detail, id => $msg->getId()">{$msg->getId()}</a></td>
+						<td><a n:href="User:detail, $msg->getFrom()->getNick()">{$msg->getTo()->getNick()}</td>
+						<td><a n:href="User:detail, $msg->getTo()->getNick()">{$msg->getTo()->getNick()}</td>
 						<td>{$msg->getSubject()}</td>
-						<td>{$msg->getSentAt()->format('Y-m-d H:i:s')}</td>
+						<td>{$msg->getSentAt()|date:'Y-m-d H:i:s'}</td>
 						<td>
-							<a n:href="detail, id => $msg->getId()">Detail</a>
-							<a n:href="delete!, id => $msg->getId()" n:class="ajax">Delete</a>
+							<a n:href="detail, id => $msg->getId()">Read</a>
+							<a n:href="delete!, id => $msg->getId()" n:class="ajax" data-confirm="Do you really want to delete this message?">Delete</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			{control visualPaginator}
-		</div>
-	{else}
-		<p>You have no messages</p>
-	{/if}
+		{else}
+			<p>You have no messages</p>
+		{/if}
+	</div>
+
 {/block}
