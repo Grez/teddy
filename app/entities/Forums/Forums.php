@@ -118,6 +118,7 @@ class Forums extends Entities\Manager
 	/**
 	 * @param User $user
 	 * @param \Game\Entities\Forums\Forum $forum
+	 * @return \Game\Entities\Forums\ForumLastVisit
 	 */
 	public function updateLastVisit(User $user, \Game\Entities\Forums\Forum $forum)
 	{
@@ -129,6 +130,7 @@ class Forums extends Entities\Manager
 		$lastVisit->updateLastVisitAt();
 		$this->em->persist($lastVisit);
 		$this->em->flush($lastVisit);
+		return $lastVisit;
 	}
 
 }

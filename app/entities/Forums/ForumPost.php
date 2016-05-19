@@ -6,7 +6,7 @@ use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Teddy\Entities\User\User;
+use Game\Entities\User\User;
 
 
 
