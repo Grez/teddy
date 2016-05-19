@@ -5,7 +5,7 @@ namespace Teddy\Entities\Forums;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
-use Teddy\Entities\User\User;
+use Game\Entities\User\User;
 
 
 
@@ -67,6 +67,35 @@ class Forums extends Entities\Manager
 
 
 	/**
+	 * Returns User's Forums with unread posts count
+	 *
+	 * @param User $user
+	 * @return \Game\Entities\Forums\Forum[]
+	 */
+	public function getForumsWithUnreadPosts(User $user)
+	{
+		$forums = $this->getForumsForUser($user);
+		$query = (new ForumsQuery($user))
+			->withUnreadPostsCount()
+			->onlyForums($forums);
+
+		/** @var \Game\Entities\Forums\Forum[] $forums */
+		$result = $this->repository->fetch($query);
+
+		$forums = [];
+		foreach ($result as $item) {
+			/** @var \Game\Entities\Forums\Forum $forum */
+			$forum = $item[0];
+			$forum->setUnreadPostsCountForUser($user, $item['unread_posts_count']);
+			$forums[] = $forum;
+		}
+
+		return $forums;
+	}
+
+
+
+	/**
 	 * @param User $author
 	 * @param \Game\Entities\Forums\Forum $forum
 	 * @param string $subject
@@ -88,9 +117,9 @@ class Forums extends Entities\Manager
 
 	/**
 	 * @param User $user
-	 * @param Forum $forum
+	 * @param \Game\Entities\Forums\Forum $forum
 	 */
-	public function updateLastVisit(User $user, Forum $forum)
+	public function updateLastVisit(User $user, \Game\Entities\Forums\Forum $forum)
 	{
 		$lastVisit = $this->em->getRepository(\Game\Entities\Forums\ForumLastVisit::class)->findOneBy([
 			'user' => $user,
@@ -99,6 +128,7 @@ class Forums extends Entities\Manager
 		$lastVisit = $lastVisit ?: new \Game\Entities\Forums\ForumLastVisit($user, $forum);
 		$lastVisit->updateLastVisitAt();
 		$this->em->persist($lastVisit);
+		$this->em->flush($lastVisit);
 	}
 
 }

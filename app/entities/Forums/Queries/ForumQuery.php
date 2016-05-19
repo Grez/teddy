@@ -2,11 +2,13 @@
 
 namespace Teddy\Entities\Forums;
 
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Game\Entities\User\User;
 use Kdyby\Persistence\Queryable;
 
 
-class PostsQuery extends \Kdyby\Doctrine\QueryObject
+class ForumsQuery extends \Kdyby\Doctrine\QueryObject
 {
 
 	/**
@@ -19,27 +21,30 @@ class PostsQuery extends \Kdyby\Doctrine\QueryObject
 	 */
 	protected $select = [];
 
+	/**
+	 * @var User
+	 */
+	protected $user;
 
 
-	public function __construct($showDeleted = FALSE)
+
+	public function __construct(User $user)
 	{
-		if (!$showDeleted) {
-			$this->onlyNotDeleted();
-		}
+		$this->user = $user;
 	}
 
 
 
 	/**
-	 * @param \Game\Entities\Forums\Forum|int $forum
 	 * @return $this
 	 */
-	public function onlyFromForum($forum)
+	public function withUnreadPostsCount()
 	{
-		$forumId = $forum instanceof \Game\Entities\Forums\Forum ? $forum->getId() : $forum;
-
-		$this->filter[] = function (QueryBuilder $qb) use ($forumId) {
-			$qb->andWhere('f.id = :forumId', $forumId);
+		$this->select[] = function (QueryBuilder $qb) {
+			$qb->addSelect('COUNT(up.id) AS unread_posts_count, lv');
+			$qb->leftJoin('f.lastVisits', 'lv');
+			$qb->leftJoin('f.posts', 'up', Join::WITH, 'up.createdAt >= lv.lastVisitAt OR lv.lastVisitAt IS NULL');
+			$qb->groupBy('f');
 		};
 		return $this;
 	}
@@ -49,10 +54,12 @@ class PostsQuery extends \Kdyby\Doctrine\QueryObject
 	/**
 	 * @return $this
 	 */
-	public function onlyNotDeleted()
+	public function withPosts()
 	{
-		$this->filter[] = function (QueryBuilder $qb) {
-			$qb->andWhere('p.deletedAt IS NULL');
+		$this->select[] = function (QueryBuilder $qb) {
+			$qb->addSelect('p');
+			$qb->leftJoin('f.posts', 'p');
+			$qb->groupBy('f');
 		};
 		return $this;
 	}
@@ -60,13 +67,13 @@ class PostsQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param string $order
+	 * @param \Game\Entities\Forums\Forum[] $forums
 	 * @return $this
 	 */
-	public function orderByCreatedAt($order = 'DESC')
+	public function onlyForums(array $forums)
 	{
-		$this->select[] = function (QueryBuilder $qb) use ($order) {
-			$qb->addOrderBy('p.createdAt', $order);
+		$this->filter[] = function (QueryBuilder $qb) use ($forums) {
+			$qb->andWhere('f IN (:forumsWhiteList)', $forums);
 		};
 		return $this;
 	}
@@ -96,7 +103,7 @@ class PostsQuery extends \Kdyby\Doctrine\QueryObject
 	 */
 	protected function doCreateCountQuery(Queryable $repository)
 	{
-		return $this->createBasicDql($repository)->select('COUNT(p.id)');
+		return $this->createBasicDql($repository)->select('COUNT(f.id)');
 	}
 
 
@@ -108,8 +115,7 @@ class PostsQuery extends \Kdyby\Doctrine\QueryObject
 	private function createBasicDql(Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder()
-			->select('p')->from(\Game\Entities\Forums\ForumPost::class, 'p')
-			->innerJoin('p.forum', 'f');
+			->select('f')->from(\Game\Entities\Forums\Forum::class, 'f');
 
 		foreach ($this->filter as $modifier) {
 			$modifier($qb);

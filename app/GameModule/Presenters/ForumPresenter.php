@@ -6,6 +6,7 @@ use Nette\Utils\ArrayHash;
 use Teddy\Entities\Forums\AccessDenied;
 use Game\Entities\Forums\Forum;
 use Game\Entities\Forums\ForumPost;
+use Teddy\Entities\Forums\ForumsQuery;
 use Teddy\Entities\Forums\PostsQuery;
 use Teddy\Forms\Form;
 
@@ -28,10 +29,9 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 
 
 
-	protected function beforeRender()
+	public function renderDefault()
 	{
-		parent::beforeRender();
-		$this->template->forums = $this->forumFacade->getForumsForUser($this->user);
+		$this->template->forums = $this->forumFacade->getForumsWithUnreadPosts($this->user);
 	}
 
 
@@ -47,6 +47,8 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 			$this->warningFlashMessage('You can\'t view this forum or it doesn\'t exist');
 			$this->redirect('default');
 		}
+
+		$this->forumFacade->updateLastVisit($this->user, $forum);
 
 		$query = (new PostsQuery())
 			->onlyFromForum($forum)

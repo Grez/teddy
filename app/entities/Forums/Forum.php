@@ -8,7 +8,7 @@ use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Teddy\Entities\User\User;
+use Game\Entities\User\User;
 
 
 
@@ -29,6 +29,13 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 	 * @var ForumLastVisit[]|ArrayCollection
 	 */
 	protected $lastVisits;
+
+	/**
+	 * Indexed by User ids
+	 *
+	 * @var int[]
+	 */
+	protected $unreadPostsCount = [];
 
 	protected $forums = [
 		Forums::ADMIN_ANNOUNCEMENTS => 'Admin announcements',
@@ -121,6 +128,66 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 			->setMaxResults(1);
 
 		return $this->lastVisits->matching($criteria)->first();
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @return int
+	 */
+	public function countUnreadPostsForUser(User $user)
+	{
+		$lastVisit = $this->getLastVisitBy($user);
+		$criteria = (new Criteria())
+			->andWhere(Criteria::expr()->isNull('deletedAt'));
+
+		if ($lastVisit) {
+			$criteria->where(Criteria::expr()->gt('createdAt', $lastVisit->getLastVisitAt()));
+		}
+
+		return $this->posts->matching($criteria)->count();
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @return int
+	 */
+	public function getUnreadPostsCountForUser(User $user)
+	{
+		if (isset($this->unreadPostsCount[$user->getId()])) {
+			return $this->unreadPostsCount[$user->getId()];
+		}
+
+		$unreadPostsCount = $this->countUnreadPostsForUser($user);
+		$this->setUnreadPostsCountForUser($user, $unreadPostsCount);
+		return $unreadPostsCount;
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @param int $unreadPostsCount
+	 * @return Forum
+	 */
+	public function setUnreadPostsCountForUser(User $user, $unreadPostsCount)
+	{
+		$this->unreadPostsCount[$user->getId()] = intVal($unreadPostsCount);
+		return $this;
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @return bool
+	 */
+	public function hasUnreadPostsForUser(User $user)
+	{
+		return $this->getUnreadPostsCountForUser($user) > 0;
 	}
 
 }

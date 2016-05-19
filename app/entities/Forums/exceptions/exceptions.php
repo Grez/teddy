@@ -2,9 +2,11 @@
 
 namespace Teddy\Entities\Forums;
 
+use Teddy\TeddyException;
 
 
-class AccessDenied extends \Exception
+
+class AccessDenied extends TeddyException
 {
 
 }
