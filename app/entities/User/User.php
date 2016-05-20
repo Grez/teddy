@@ -491,4 +491,16 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 		return $this->deleted;
 	}
 
+
+
+	/**
+	 * @param \DateTime $lastActivityAt
+	 * @return User
+	 */
+	public function setLastActivityAt($lastActivityAt)
+	{
+		$this->lastActivityAt = $lastActivityAt;
+		return $this;
+	}
+
 }

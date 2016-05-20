@@ -2,6 +2,7 @@
 
 namespace Teddy\Presenters;
 
+use Kdyby\Clock\IDateTimeProvider;
 use Nette;
 use Teddy\Entities;
 use IPub\VisualPaginator\Components as VisualPaginator;
@@ -51,6 +52,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	 * @inject
 	 */
 	public $mailer;
+
+	/**
+	 * @var IDateTimeProvider
+	 * @inject
+	 */
+	public $timeProvider;
 
 	/**
 	 * @var array

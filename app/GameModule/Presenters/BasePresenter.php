@@ -47,6 +47,22 @@ abstract class BasePresenter extends \Game\Presenters\BasePresenter
 
 
 	/**
+	 * Log user has done sth
+	 * Maybe disable for ajax?
+	 *
+	 * @param $response
+	 * @throws \Exception
+	 */
+	public function shutdown($response)
+	{
+		parent::shutdown($response);
+		$this->user->setLastActivityAt($this->timeProvider->getDateTime());
+		$this->em->flush();
+	}
+
+
+
+	/**
 	 * @return Teddy\GameModule\Components\EventsControl
 	 */
 	protected function createComponentEvents()
