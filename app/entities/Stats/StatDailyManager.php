@@ -36,8 +36,7 @@ class StatDailyManager extends Entities\Manager
 		$stats = $query->getResult();
 
 		$result = $this->findBy(['date' => $date]);
-		$statDaily = (is_array($result) && count($result)) ? $result[0] : new \Game\Entities\Stats\StatDaily();
-		$statDaily->setDate($date);
+		$statDaily = (is_array($result) && count($result)) ? $result[0] : new \Game\Entities\Stats\StatDaily($date);
 		$statDaily->setPlayersTotal($stats[0]['playersTotal']);
 		$statDaily->setPlayersActive($stats[0]['playersActive']);
 		$statDaily->setPlayersOnline($stats[0]['playersOnline']);

@@ -17,23 +17,34 @@ abstract class StatDaily extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @ORM\Column(type="date", unique=true)
+	 * @var \DateTime
 	 */
 	protected $date;
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $playersTotal = 0;
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $playersActive = 0;
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $playersOnline = 0;
+
+
+
+	public function __construct(\DateTime $date)
+	{
+		$this->date = $date;
+	}
 
 
 
