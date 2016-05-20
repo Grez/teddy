@@ -97,6 +97,10 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 		$this->setSubject($subject);
 		$this->text = $text;
 		$this->type = $type;
+
+		if ($to === $from) {
+			$this->unread = FALSE;
+		}
 	}
 
 
