@@ -214,4 +214,14 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 		return $this;
 	}
 
+
+
+	/**
+	 * @return boolean
+	 */
+	public function isUnread()
+	{
+		return $this->unread;
+	}
+
 }

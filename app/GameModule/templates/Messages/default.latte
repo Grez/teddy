@@ -20,7 +20,10 @@
 						<td><a n:href="detail, id => $msg->getId()">{$msg->getId()}</a></td>
 						<td><a n:href="User:detail, $msg->getFrom()->getNick()">{$msg->getFrom()->getNick()}</td>
 						<td><a n:href="User:detail, $msg->getTo()->getNick()">{$msg->getTo()->getNick()}</td>
-						<td>{$msg->getSubject()}</td>
+						<td>
+							<span n:if="$msg->getFrom() !== $user && $msg->isUnread()" class="label label-default">!</span>
+							{$msg->getSubject()}
+						</td>
 						<td>{$msg->getSentAt()|date:'Y-m-d H:i:s'}</td>
 						<td>
 							<a n:href="detail, id => $msg->getId()">Read</a>
