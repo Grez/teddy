@@ -29,8 +29,8 @@ class MessagesPresenter extends \Game\GameModule\Presenters\BasePresenter
 	public function renderDefault()
 	{
 		$query = (new MessagesQuery())
-			->onlyNotDeletedByRecipient()
 			->onlyReadableBy($this->user)
+			->onlyNotDeletedByUser($this->user)
 			->orderBySentAt();
 		$msgs = $this->msgsFacade->fetch($query);
 		$msgs->applyPaginator($this['visualPaginator']->getPaginator(), 20);

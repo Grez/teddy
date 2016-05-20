@@ -36,6 +36,8 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
+	 * Careful! This doesn't handle deleted messages, use $this->onlyNotDeletedByUser()
+	 *
 	 * @param User $user
 	 * @return $this
 	 */
@@ -71,6 +73,21 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 	{
 		$this->filter[] = function (QueryBuilder $qb) use ($user) {
 			$qb->andWhere('m.from = :from')->setParameter('from', $user);
+		};
+		return $this;
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @return $this
+	 */
+	public function onlyNotDeletedByUser(User $user)
+	{
+		$this->filter[] = function (QueryBuilder $qb) use ($user) {
+			$qb->andWhere('m.deletedByRecipient = FALSE OR m.to != :notDeletedBy', $user);
+			$qb->andWhere('m.deletedBySender = FALSE OR m.from != :notDeletedBy', $user);
 		};
 		return $this;
 	}

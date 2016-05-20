@@ -110,6 +110,51 @@ class MessagesTest extends TestCase
 		Assert::equal(1, count($result));
 	}
 
+
+
+	/**
+	 * Both see message, only recipient sees message, no one sees message
+	 * @warning: kdyby/doctrine caches results, so we need to recreate $query each time -_-
+	 */
+	public function testMessageQueryDeleted()
+	{
+		$senderQuery = (new MessagesQuery())
+			->onlyReadableBy($this->from)
+			->onlyNotDeletedByUser($this->from);
+		/** @var ResultSet $result */
+		$result = $this->getEm()->getRepository(Message::class)->fetch($senderQuery);
+		Assert::equal(1, count($result));
+		Assert::equal($this->to, $result->toArray()[0]->getTo());
+
+		$recipientQuery = (new MessagesQuery())
+			->onlyReadableBy($this->to)
+			->onlyNotDeletedByUser($this->to);
+		/** @var ResultSet $result */
+		$result = $this->getEm()->getRepository(Message::class)->fetch($recipientQuery);
+		Assert::equal(1, count($result));
+		Assert::equal($this->to, $result->toArray()[0]->getTo());
+
+		/** @var Message $msg */
+		$msg = $result->toArray()[0];
+		$msg->deleteBy($this->to);
+		$this->getEm()->flush();
+
+		$senderQuery = (new MessagesQuery())
+			->onlyReadableBy($this->from)
+			->onlyNotDeletedByUser($this->from);
+		/** @var ResultSet $result */
+		$result = $this->getEm()->getRepository(Message::class)->fetch($senderQuery);
+		Assert::equal(1, count($result));
+
+		$recipientQuery = (new MessagesQuery())
+			->onlyReadableBy($this->to)
+			->onlyNotDeletedByUser($this->to);
+		/** @var ResultSet $result */
+		$result = $this->getEm()->getRepository(Message::class)->fetch($recipientQuery);
+		echo $recipientQuery->getLastQuery()->getSQL();
+		Assert::equal(0, count($result));
+	}
+
 }
 
 $test = new MessagesTest();
