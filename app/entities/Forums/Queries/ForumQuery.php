@@ -43,7 +43,7 @@ class ForumsQuery extends \Kdyby\Doctrine\QueryObject
 		$this->select[] = function (QueryBuilder $qb) {
 			$qb->addSelect('COUNT(up.id) AS unread_posts_count, lv');
 			$qb->leftJoin('f.lastVisits', 'lv');
-			$qb->leftJoin('f.posts', 'up', Join::WITH, 'up.createdAt >= lv.lastVisitAt OR lv.lastVisitAt IS NULL');
+			$qb->leftJoin('f.posts', 'up', Join::WITH, '(up.createdAt >= lv.lastVisitAt OR lv.lastVisitAt IS NULL) AND up.deletedAt IS NULL');
 			$qb->groupBy('f');
 		};
 		return $this;
