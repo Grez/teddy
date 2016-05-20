@@ -41,11 +41,8 @@ class GenerateDailyStatsCommand extends \Game\Console\CronCommand
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		try {
-			$date = new \DateTime($input->getOption('date'));
-		} catch (\Exception $e) {
-			$date = $this->dateTimeProvider->getDate()->modify('-1 day');
-		}
+		$inputDate = ($input->getOption('date'));
+		$date = $inputDate ? new \DateTime($inputDate) : $this->dateTimeProvider->getDate()->modify('-1 day');
 
 		$this->statDailyManager->create($date);
 		return 0;
