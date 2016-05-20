@@ -15,9 +15,6 @@ use Teddy\Forms\Form;
 
 
 
-/**
- * @TODO: kontrolor, zahraničí
- */
 class AntimultiPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 

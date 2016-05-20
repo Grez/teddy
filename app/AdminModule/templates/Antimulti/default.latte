@@ -22,7 +22,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr n:foreach="$logins as $login">
+				<tr n:foreach="$logins as $login" n:class="$login->getError() ? danger">
 					<td>{$login->date|date:'Y-m-d H:i:s'}</td>
 					<td><a n:href="this, type => 'user', text => $login->user->nick">{$login->user->nick}</a></td>
 					<td><a n:href="this, type => 'ip', text => $login->ip">{$login->ip}</a></td>
