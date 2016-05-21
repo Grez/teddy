@@ -3,6 +3,7 @@
 namespace Teddy\Entities\User;
 
 use Game\Entities\User\User;
+use Kdyby\Doctrine\Entities\BaseEntity;
 use Nette;
 use Nette\Utils\ArrayHash;
 use Teddy\Entities;
@@ -122,6 +123,34 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	{
 		$user = new User($data->email, $data->nick);
 		$this->changePassword($user, $data['password']); // also makes flush
+	}
+
+
+
+	/**
+	 * @param BaseEntity $entity
+	 * @throws \Teddy\TeddyException
+	 */
+	public function delete(BaseEntity $entity)
+	{
+		throw new \Teddy\TeddyException('You can\'t delete user. You can only mark him as deleted. Use Users::markDeleted instead.');
+	}
+
+
+
+	/**
+	 * Marks User as deleted and deletes his roles
+	 *
+	 * @param \Game\Entities\User\User $user
+	 * @return \Game\Entities\User\User
+	 */
+	public function markDeleted(\Game\Entities\User\User $user)
+	{
+		$user->setNick($user->getNick() . ' (deleted)');
+		$user->setDeleted(TRUE);
+		$this->deleteAdmin($user);
+		$this->em->flush();
+		return $user;
 	}
 
 

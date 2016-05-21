@@ -59,7 +59,10 @@ class UserControl extends Control
 	protected $userContext;
 
 	/**
-	 * @var
+	 * From config.local.neon
+	 * If isset all hashed password use this salt
+	 *
+	 * @var string
 	 */
 	protected $salt;
 
@@ -102,9 +105,7 @@ class UserControl extends Control
 
 	public function handleDelete()
 	{
-		$this->editedUser->setNick($this->editedUser->getNick() . ' (deleted)');
-		$this->editedUser->setDeleted(TRUE);
-		$this->users->save($this->editedUser);
+		$this->users->markDeleted($this->editedUser);
 		$this->onUserDeleted($this, $this->editedUser);
 	}
 

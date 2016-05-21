@@ -503,4 +503,26 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 		return $this;
 	}
 
+
+
+	/**
+	 * @return string
+	 */
+	public function getNick()
+	{
+		return $this->nick;
+	}
+
+
+
+	/**
+	 * @param string $nick
+	 * @return User
+	 */
+	public function setNick($nick)
+	{
+		$this->nick = $nick;
+		return $this;
+	}
+
 }
