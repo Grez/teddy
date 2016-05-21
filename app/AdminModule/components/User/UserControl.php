@@ -113,12 +113,7 @@ class UserControl extends Control
 
 	public function handleReactivate()
 	{
-		if (Strings::substring($this->editedUser->getNick(), -10) === ' (deleted)') {
-			$this->editedUser->setNick(Strings::substring($this->editedUser->getNick(), 0, -10));
-		}
-
-		$this->editedUser->setDeleted(FALSE);
-		$this->users->save($this->editedUser);
+		$this->users->reactivate($this->editedUser);
 		$this->onUserReactivated($this, $this->editedUser);
 	}
 

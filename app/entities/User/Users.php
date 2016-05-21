@@ -2,10 +2,10 @@
 
 namespace Teddy\Entities\User;
 
-use Game\Entities\User\User;
 use Kdyby\Doctrine\Entities\BaseEntity;
 use Nette;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Strings;
 use Teddy\Entities;
 use Nette\Security\Passwords;
 use Kdyby\Doctrine\EntityManager;
@@ -57,7 +57,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 	/**
 	 * @param string $nick
-	 * @return User|false
+	 * @return \Game\Entities\User\User|false
 	 */
 	public function getByNick($nick)
 	{
@@ -69,7 +69,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 	/**
 	 * @param string $email
-	 * @return User|false
+	 * @return \Game\Entities\User\User|false
 	 */
 	public function getByEmail($email)
 	{
@@ -81,7 +81,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 	/**
 	 * @param int $token
-	 * @return User|false
+	 * @return \Game\Entities\User\User|false
 	 */
 	public function getByToken($token)
 	{
@@ -93,7 +93,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 	/**
 	 * @param string $password
-	 * @return User[]
+	 * @return \Game\Entities\User\User[]
 	 */
 	public function getByPassword($password)
 	{
@@ -106,7 +106,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	/**
 	 * @param int $id
 	 * @param string $apikey
-	 * @return User|NULL
+	 * @return \Game\Entities\User\User|NULL
 	 */
 	public function getByIdAndApikey($id, $apikey)
 	{
@@ -146,7 +146,15 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function markDeleted(\Game\Entities\User\User $user)
 	{
-		$user->setNick($user->getNick() . ' (deleted)');
+		// Change nick so other User can have it
+		$i = 0;
+		do {
+			$newNick = $user->getNick() . ' (deleted #' . $i . ')';
+			$nickExists = $this->getByNick($newNick);
+			$i++;
+		} while ($nickExists);
+
+		$user->setNick($newNick);
 		$user->setDeleted(TRUE);
 		$this->deleteAdmin($user);
 		$this->em->flush();
@@ -156,11 +164,35 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param User $user
+	 * @param \Game\Entities\User\User $user
+	 * @return \Game\Entities\User\User
+	 */
+	public function reactivate(\Game\Entities\User\User $user)
+	{
+		// Try to change nick back, otherwise set dummy name
+		$i = 0;
+		do {
+			// Deletes the " (deleted #0)" part from nick
+			$oldNick = preg_replace("/^(.*) (\(deleted+( #\d+)\))$/", "$1", $user->getNick());
+			$newNick = $i === 0 ? $oldNick : $oldNick . ' (reactivated #' . $i . ')';
+			$nickExists = $this->getByNick($newNick);
+			$i++;
+		} while ($nickExists);
+
+		$user->setNick($newNick);
+		$user->setDeleted(FALSE);
+		$this->em->flush();
+		return $user;
+	}
+
+
+
+	/**
+	 * @param \Game\Entities\User\User $user
 	 * @param string $password
 	 * @return null
 	 */
-	public function changePassword(User $user, $password)
+	public function changePassword(\Game\Entities\User\User $user, $password)
 	{
 		$options = $this->salt ? ['salt' => $this->salt] : [];
 		$hashed = Passwords::hash($password, $options);
@@ -171,9 +203,9 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param User $user
+	 * @param \Game\Entities\User\User $user
 	 */
-	public function deleteAdminPermissions(User $user)
+	public function deleteAdminPermissions(\Game\Entities\User\User $user)
 	{
 		foreach ($user->getAdminPermissions() as $permission) {
 			$this->em->remove($permission);
@@ -184,9 +216,9 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param User $user
+	 * @param \Game\Entities\User\User $user
 	 */
-	public function deleteAdmin(User $user)
+	public function deleteAdmin(\Game\Entities\User\User $user)
 	{
 		$this->deleteAdminPermissions($user);
 		$user->setAdminDescription('');
@@ -197,10 +229,10 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param User $user
+	 * @param \Game\Entities\User\User $user
 	 * @param array $permissions
 	 */
-	public function setAdminPermissions(User $user, $permissions)
+	public function setAdminPermissions(\Game\Entities\User\User $user, $permissions)
 	{
 		// Delete old
 		$this->deleteAdminPermissions($user);

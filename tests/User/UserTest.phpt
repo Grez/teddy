@@ -7,6 +7,7 @@
 namespace Teddy\Tests;
 
 use Nette;
+use Teddy\Entities\User\Users;
 use Tester;
 use Tester\Assert;
 use Game\Entities\User\User;
@@ -33,6 +34,47 @@ class UserTest extends TestCase
 		$user->setEmail('jd@johndoe.com');
 		Assert::equal('jd@johndoe.com', $user->getEmail());
 		Assert::equal('jd@johndoe.com', $user->getAnonymizedEmail());
+	}
+
+
+
+	public function testDeletingAndReactivating()
+	{
+		$mario = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi');
+		$trollMario = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi (deleted #0)');
+		$this->getEm()->persist([$mario, $trollMario]);
+		$this->getEm()->flush();
+
+		/** @var Users $users */
+		$users = $this->getService(Users::class);
+		$users->markDeleted($mario);
+		Assert::true($mario->isDeleted());
+		Assert::equal('Mario Luigi (deleted #1)', $mario->getNick());
+
+		$newMario = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi');
+		$this->getEm()->persist($newMario);
+		$this->getEm()->flush();
+
+		$ultraTroll = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi (reactivated #1)');
+		$this->getEm()->persist($ultraTroll);
+		$this->getEm()->flush();
+
+		$users->reactivate($mario);
+		Assert::false($mario->isDeleted());
+		Assert::equal('Mario Luigi (reactivated #2)', $mario->getNick());
+
+		// Check behaviour for normal User
+		$normalUser = new User('normal@user.cz', 'Normal User');
+		$this->getEm()->persist($normalUser);
+		$this->getEm()->flush();
+
+		$users->markDeleted($normalUser);
+		Assert::true($normalUser->isDeleted());
+		Assert::equal('Normal User (deleted #0)', $normalUser->getNick());
+
+		$users->reactivate($normalUser);
+		Assert::false($normalUser->isDeleted());
+		Assert::equal('Normal User', $normalUser->getNick());
 	}
 
 }
