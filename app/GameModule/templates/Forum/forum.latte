@@ -7,7 +7,7 @@
 			<p>You can't post here</p>
 		{/if}
 
-		<div n:foreach="$posts as $post" n:class="panel, panel-default, $post->isUnreadBy($user) ? panel-success">
+		<div n:foreach="$posts as $post" n:class="panel, panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<div class="text-right" style="display: inline-block; float: right">

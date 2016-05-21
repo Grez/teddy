@@ -11,31 +11,27 @@ use Teddy\User\InvalidArgumentException;
 
 /**
  * @ORM\MappedSuperclass()
- * @ORM\Table(indexes={
- *   @ORM\Index(columns={"deleted_by_sender"}),
- *   @ORM\Index(columns={"deleted_by_recipient"})
- * })
  */
 abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
-	 * @ORM\JoinColumn(name="to_user_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="to_user_id", referencedColumnName="id", nullable=FALSE)
 	 * @var User
 	 */
 	protected $to;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
-	 * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id", nullable=FALSE)
 	 * @var User
 	 */
 	protected $from;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="\Game\Entities\PM\Message")
-	 * @ORM\JoinColumn(name="conversation_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="conversation_id", referencedColumnName="id", nullable=TRUE)
 	 * @var Message
 	 */
 	protected $conversation;
@@ -53,7 +49,7 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $text;
 
 	/**
-	 * @ORM\Column(type="smallint")
+	 * @ORM\Column(type="smallint", nullable=FALSE)
 	 * @var int
 	 */
 	protected $type = 0;

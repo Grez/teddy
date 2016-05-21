@@ -6,7 +6,6 @@ use Nette\Utils\ArrayHash;
 use Teddy\Entities\Forums\AccessDenied;
 use Game\Entities\Forums\Forum;
 use Game\Entities\Forums\ForumPost;
-use Teddy\Entities\Forums\ForumsQuery;
 use Teddy\Entities\Forums\PostsQuery;
 use Teddy\Forms\Form;
 
@@ -52,7 +51,7 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 
 		$query = (new PostsQuery())
 			->onlyFromForum($forum)
-			->onlyNotDeleted()
+			->withUser()
 			->orderByCreatedAt();
 		$posts = $this->em->fetch($query)
 			->applyPaginator($this['visualPaginator']->getPaginator(), 20);

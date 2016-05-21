@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\Stats;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,52 +10,57 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\MappedSuperclass()
- * @ORM\Table(uniqueConstraints={
- *   @ORM\UniqueConstraint(columns={"date", "time"})
- * })
  */
 abstract class StatDetailed extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
 	/**
 	 * @ORM\Column(type="date")
+	 * @var \DateTime
 	 * Generated in __construct()
 	 */
 	protected $date;
 
 	/**
 	 * @ORM\Column(type="time")
+	 * @var \DateTime
 	 * Generated in __construct()
 	 */
 	protected $time;
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $playersTotal;
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $playersActive;
 
 	/**
 	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $playersOnline;
 
 	/**
 	 * @ORM\Column(type="float", nullable=true)
+	 * @var float
 	 */
 	protected $load1;
 
 	/**
 	 * @ORM\Column(type="float", nullable=true)
+	 * @var float
 	 */
 	protected $load5;
 
 	/**
 	 * @ORM\Column(type="float", nullable=true)
+	 * @var float
 	 */
 	protected $load15;
 

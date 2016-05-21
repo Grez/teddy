@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\Forums;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,9 +11,6 @@ use Game\Entities\User\User;
 
 /**
  * @ORM\MappedSuperclass()
- * @ORM\Table(indexes={
- *   @ORM\Index(columns={"deleted_at"})
- * })
  */
 abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 {

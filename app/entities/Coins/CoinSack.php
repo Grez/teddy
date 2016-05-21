@@ -2,11 +2,9 @@
 
 namespace Teddy\Entities\Coins;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Teddy\Entities\User\User;
 
 

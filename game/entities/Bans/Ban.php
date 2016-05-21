@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(indexes={
+ *   @ORM\Index(columns={"range_start", "range_end", "ends_at", "type"}),
+ * })
  */
 class Ban extends \Teddy\Entities\Bans\Ban
 {

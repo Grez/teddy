@@ -74,6 +74,20 @@ class PostsQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
+	 * @return $this
+	 */
+	public function withUser()
+	{
+		$this->select[] = function (QueryBuilder $qb) {
+			$qb->addSelect('u');
+			$qb->innerJoin('p.author', 'u');
+		};
+		return $this;
+	}
+
+
+
+	/**
 	 * @param Queryable $repository
 	 * @return \Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder
 	 */

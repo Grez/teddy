@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\Logs;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,11 +11,6 @@ use Teddy\TeddyException;
 
 /**
  * @ORM\MappedSuperclass()
- * @ORM\Table(indexes={
- *   @ORM\Index(columns={"action"}),
- *   @ORM\Index(columns={"type"}),
- *   @ORM\Index(columns={"date"})
- * })
  */
 abstract class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -24,27 +18,33 @@ abstract class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @var \Game\Entities\User\User
 	 */
 	protected $user;
 
 	/**
-	 * @ORM\Column(type="integer")
 	 * 0 - 1000 reserved for Teddy
+	 *
+	 * @ORM\Column(type="integer")
+	 * @var int
 	 */
 	protected $action = 0;
 
 	/**
 	 * @ORM\Column(type="boolean")
+	 * @var int
 	 */
 	protected $type = 0;
 
 	/**
 	 * @ORM\Column(type="array")
+	 * @var array
 	 */
 	protected $data;
 
 	/**
 	 * @ORM\Column(type="datetime")
+	 * @var \DateTime
 	 * Generated in __construct()
 	 */
 	protected $date;
@@ -69,9 +69,9 @@ abstract class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 	const USER_CHANGE_PASSWORD = 1;
 	const USER_DELETE_USER = 2;
 
-
-
 	/** Game actions */
+
+
 
 	public function __construct()
 	{

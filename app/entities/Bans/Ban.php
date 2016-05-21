@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\Bans;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,11 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\MappedSuperclass()
- * @ORM\Table(indexes={
- *   @ORM\Index(columns={"range_start"}),
- *   @ORM\Index(columns={"range_end"}),
- *   @ORM\Index(columns={"ends_at"})
- * })
  * @TODO: IPv6, unsigned is only for some engines
  */
 abstract class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
@@ -35,25 +29,25 @@ abstract class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * Generated in __construct()
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=FALSE)
 	 * @var \DateTime
 	 */
 	protected $createdAt;
 
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=FALSE)
 	 * @var \DateTime
 	 */
 	protected $endsAt;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=FALSE)
 	 * @var string
 	 */
 	protected $reason;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=FALSE)
 	 * @var int
 	 */
 	protected $type;
@@ -64,7 +58,7 @@ abstract class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 	/** Both registration and login */
 	const GAME = 2;
 
-	/** 403 error code, user is totally banned from site (DoS etc.) */
+	/** 403 error code, IP is totally banned from site (DoS etc.) */
 	const TOTAL = 3;
 
 
@@ -77,7 +71,7 @@ abstract class Ban extends \Kdyby\Doctrine\Entities\BaseEntity
 	public function __construct($ip, $reason = '', \DateTime $endsAt = NULL, $type = self::GAME)
 	{
 		$maxBan = new \DateTime('2100-01-01');
-		$this->endsAt =  $endsAt !== NULL && $endsAt < $maxBan ? $endsAt : $maxBan;
+		$this->endsAt = $endsAt !== NULL && $endsAt < $maxBan ? $endsAt : $maxBan;
 
 		$this->createdAt = new \DateTime();
 		$this->type = $type;

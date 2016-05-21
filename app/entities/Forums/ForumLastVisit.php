@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\Forums;
 
-use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;

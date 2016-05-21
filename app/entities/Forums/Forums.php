@@ -116,20 +116,18 @@ class Forums extends Entities\Manager
 
 
 	/**
+	 * @non-flushing
+	 *
 	 * @param User $user
 	 * @param \Game\Entities\Forums\Forum $forum
 	 * @return \Game\Entities\Forums\ForumLastVisit
 	 */
 	public function updateLastVisit(User $user, \Game\Entities\Forums\Forum $forum)
 	{
-		$lastVisit = $this->em->getRepository(\Game\Entities\Forums\ForumLastVisit::class)->findOneBy([
-			'user' => $user,
-			'forum' => $forum,
-		]);
+		$lastVisit = $forum->getLastVisitBy($user);
 		$lastVisit = $lastVisit ?: new \Game\Entities\Forums\ForumLastVisit($user, $forum);
 		$lastVisit->updateLastVisitAt();
 		$this->em->persist($lastVisit);
-		$this->em->flush($lastVisit);
 		return $lastVisit;
 	}
 
