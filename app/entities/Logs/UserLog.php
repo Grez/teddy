@@ -64,6 +64,9 @@ abstract class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 	const ADMIN_DELETE_ADMIN = 7;
 	const ADMIN_BAN_IP = 8;
 	const ADMIN_UNBAN_IP = 9;
+	const ADMIN_REACTIVATE_USER = 10;
+	const ADMIN_CHANGE_PASSWORD = 11;
+	const ADMIN_CHANGE_USER_NICK = 12;
 
 	/** User actions */
 	const USER_CHANGE_PASSWORD = 1;
@@ -109,6 +112,9 @@ abstract class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 				self::ADMIN_DELETE_ADMIN => 'Deleted admin %s',
 				self::ADMIN_BAN_IP => 'Banned ip %s, for %s days, reason: %s',
 				self::ADMIN_UNBAN_IP => 'Unbanned ip %s (reason of ban: %s)',
+				self::ADMIN_REACTIVATE_USER => 'Reactivated user %s',
+				self::ADMIN_CHANGE_PASSWORD => 'Changed password for user %s',
+				self::ADMIN_CHANGE_USER_NICK => 'Changed user nick from %s to %s',
 			],
 			self::USER => [
 				self::USER_CHANGE_PASSWORD => 'Changed password',

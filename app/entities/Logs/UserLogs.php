@@ -2,6 +2,7 @@
 
 namespace Teddy\Entities\Logs;
 
+use Game\Entities\Logs\UserLog;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
@@ -16,6 +17,13 @@ class UserLogs extends Entities\Manager
 	{
 		parent::__construct($em);
 		$this->repository = $this->em->getRepository(\Game\Entities\Logs\UserLog::class);
+	}
+
+
+
+	public function logAdminAction(User $user, $action, $data = NULL)
+	{
+		$this->log($user, UserLog::ADMIN, $action, $data);
 	}
 
 

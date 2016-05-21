@@ -2,10 +2,12 @@
 
 namespace Teddy\AdminModule\Components;
 
+use Game\Entities\Logs\UserLog;
 use Game\Entities\User\User;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
 use Teddy;
+use Teddy\Entities\Logs\UserLogs;
 use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
@@ -76,9 +78,14 @@ class UserControl extends Control
 	 */
 	protected $imageService;
 
+	/**
+	 * @var UserLogs
+	 */
+	private $logs;
 
 
-	public function __construct($salt, User $editedUser, EntityManager $em, Users $users, Teddy\Security\User $userContext, ImageService $imageService)
+
+	public function __construct($salt, User $editedUser, EntityManager $em, Users $users, Teddy\Security\User $userContext, ImageService $imageService, UserLogs $logs)
 	{
 		parent::__construct();
 		$this->salt = $salt;
@@ -87,6 +94,7 @@ class UserControl extends Control
 		$this->userContext = $userContext;
 		$this->users = $users;
 		$this->imageService = $imageService;
+		$this->logs = $logs;
 	}
 
 
@@ -105,7 +113,9 @@ class UserControl extends Control
 
 	public function handleDelete()
 	{
+		$nick = $this->editedUser->getNick();
 		$this->users->markDeleted($this->editedUser);
+		$this->logs->logAdminAction($this->userContext->getEntity(), UserLog::ADMIN_DELETE_USER, $nick);
 		$this->onUserDeleted($this, $this->editedUser);
 	}
 
@@ -114,6 +124,7 @@ class UserControl extends Control
 	public function handleReactivate()
 	{
 		$this->users->reactivate($this->editedUser);
+		$this->logs->logAdminAction($this->userContext->getEntity(), UserLog::ADMIN_REACTIVATE_USER, $this->editedUser->getNick());
 		$this->onUserReactivated($this, $this->editedUser);
 	}
 
@@ -149,16 +160,26 @@ class UserControl extends Control
 
 
 
+	/**
+	 * Changes user info
+	 *
+	 * @param Form $form
+	 * @param ArrayHash $values
+	 */
 	public function editUserFormSuccess(Form $form, ArrayHash $values)
 	{
 		$personal = $values->user->personal;
 		if (isset($personal->deleteAvatar) && $personal->deleteAvatar)  {
 			$this->editedUser->deleteAvatar($this->imageService);
 		}
-		$this->users->update($this->editedUser, $values);
 
+		$oldNick = $this->editedUser->getNick();
+		$this->users->update($this->editedUser, $values);
+		$this->logs->logAdminAction($this->userContext->getEntity(), UserLog::ADMIN_EDIT_USER, $this->editedUser->getNick());
+		if ($oldNick !== $values->nick) {
+			$this->logs->logAdminAction($this->userContext->getEntity(), UserLog::ADMIN_CHANGE_USER_NICK, [$oldNick, $values->nick]);
+		}
 		$this->onUserEdited($this, $this->editedUser);
-		$this->redirect('this');
 	}
 
 
@@ -171,13 +192,24 @@ class UserControl extends Control
 		$form = new Form();
 		$form->addPassword('password_new', 'New password')
 			->setRequired();
-		$form->onSuccess[] = function (Form $form, ArrayHash $values) {
-			$this->users->changePassword($this->editedUser, $values->password_new);
-			$this->onUserPasswordChange($this, $this->editedUser);
-			$this->redirect('this');
-		};
 		$form->addSubmit('send', 'Submit');
+		$form->onSuccess[] = $this->changePasswordFormSuccess;
 		return $form->setBootstrapRenderer();
+	}
+
+
+
+	/**
+	 * Changes User password and logs it
+	 *
+	 * @param Form $form
+	 * @param ArrayHash $values
+	 */
+	public function changePasswordFormSuccess(Form $form, ArrayHash $values)
+	{
+		$this->users->changePassword($this->editedUser, $values->password_new);
+		$this->logs->logAdminAction($this->userContext->getEntity(), UserLog::ADMIN_CHANGE_PASSWORD, $this->editedUser->getNick());
+		$this->onUserPasswordChange($this, $this->editedUser);
 	}
 
 
