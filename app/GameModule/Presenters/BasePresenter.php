@@ -31,7 +31,7 @@ abstract class BasePresenter extends \Game\Presenters\BasePresenter
 
 		$user = $this->getUser();
 		if (!$user->isLoggedIn()) {
-			$this->flashMessage(_('You are not logged in'), 'error');
+			$this->warningFlashMessage('You are not logged in');
 			$this->redirect(':Index:Homepage:default');
 		}
 
@@ -49,13 +49,10 @@ abstract class BasePresenter extends \Game\Presenters\BasePresenter
 	/**
 	 * Log user has done sth
 	 * Maybe disable for ajax?
-	 *
-	 * @param $response
-	 * @throws \Exception
 	 */
-	public function shutdown($response)
+	public function afterRender()
 	{
-		parent::shutdown($response);
+		parent::afterRender();
 		$this->user->setLastActivityAt($this->timeProvider->getDateTime());
 		$this->em->flush();
 	}
