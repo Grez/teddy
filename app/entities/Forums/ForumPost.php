@@ -183,4 +183,14 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 		return $lastVisitBy->getLastVisitAt() <= $this->createdAt;
 	}
 
+
+
+	/**
+	 * @return Forum
+	 */
+	public function getForum()
+	{
+		return $this->forum;
+	}
+
 }

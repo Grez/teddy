@@ -21,29 +21,18 @@ class ForumsQuery extends \Kdyby\Doctrine\QueryObject
 	 */
 	protected $select = [];
 
-	/**
-	 * @var User
-	 */
-	protected $user;
-
-
-
-	public function __construct(User $user)
-	{
-		$this->user = $user;
-	}
-
 
 
 	/**
+	 * @param \Game\Entities\User\User $user
 	 * @return $this
 	 */
-	public function withUnreadPostsCount()
+	public function withUnreadPostsCount(User $user)
 	{
-		$this->select[] = function (QueryBuilder $qb) {
+		$this->select[] = function (QueryBuilder $qb) use ($user) {
 			$qb->addSelect('COUNT(up.id) AS unread_posts_count, lv');
-			$qb->leftJoin('f.lastVisits', 'lv');
-			$qb->leftJoin('f.posts', 'up', Join::WITH, '(up.createdAt >= lv.lastVisitAt OR lv.lastVisitAt IS NULL) AND up.deletedAt IS NULL');
+			$qb->leftJoin('f.lastVisits', 'lv', Join::WITH, 'lv.user = :unreadPostsFor')->setParameter('unreadPostsFor', $user);
+			$qb->leftJoin('f.posts', 'up', Join::WITH, '(up.createdAt > lv.lastVisitAt OR lv.lastVisitAt IS NULL) AND up.deletedAt IS NULL');
 			$qb->groupBy('f');
 		};
 		return $this;

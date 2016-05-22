@@ -4,6 +4,7 @@ namespace Teddy\Entities\Forums;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Game\Entities\Forums\ForumLastVisit;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
@@ -127,6 +128,20 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 			->setMaxResults(1);
 
 		return $this->lastVisits->matching($criteria)->first();
+	}
+
+
+
+	/**
+	 * @param ForumLastVisit $lastVisit
+	 * @return $this
+	 */
+	public function addLastVisitBy(ForumLastVisit $lastVisit)
+	{
+		if (!$this->lastVisits->contains($lastVisit)) {
+			$this->lastVisits->add($lastVisit);
+		}
+		return $this;
 	}
 
 

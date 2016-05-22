@@ -75,8 +75,8 @@ class Forums extends Entities\Manager
 	public function getForumsWithUnreadPosts(User $user)
 	{
 		$forums = $this->getForumsForUser($user);
-		$query = (new ForumsQuery($user))
-			->withUnreadPostsCount()
+		$query = (new ForumsQuery())
+			->withUnreadPostsCount($user)
 			->onlyForums($forums);
 
 		/** @var \Game\Entities\Forums\Forum[] $forums */
@@ -127,6 +127,7 @@ class Forums extends Entities\Manager
 		$lastVisit = $forum->getLastVisitBy($user);
 		$lastVisit = $lastVisit ?: new \Game\Entities\Forums\ForumLastVisit($user, $forum);
 		$lastVisit->updateLastVisitAt();
+		$forum->addLastVisitBy($lastVisit);
 		$this->em->persist($lastVisit);
 		return $lastVisit;
 	}

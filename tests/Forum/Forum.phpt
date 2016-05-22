@@ -6,6 +6,8 @@
 
 namespace Teddy\Tests;
 
+use Game\Entities\Forums\ForumLastVisit;
+use Game\Entities\Forums\ForumPost;
 use Nette;
 use Teddy\Entities\Forums\AccessDenied;
 use Game\Entities\Forums\Forum;
@@ -122,6 +124,59 @@ class ForumsTest extends TestCase
 					$this->forumsRepository->addPost($user, $forum, 'Subject', 'Text');
 				}, AccessDenied::class);
 			}
+		}
+	}
+
+
+
+	public function testUnreadPosts()
+	{
+		$mario = new User('mario@plumber.it');
+		$luigi = new User('luigi@plumber.it');
+		$quattro = new User('quattro@plumber.it');
+		$this->getEm()->persist([$mario, $luigi, $quattro])->flush();
+
+		/** @var Forum $worldChat */
+		$worldChat = $this->getEm()->find(Forum::class, Forums::WORLD_CHAT);
+
+		// There are no posts
+		$forums = $this->forumsRepository->getForumsWithUnreadPosts($mario);
+		foreach ($forums as $forum) {
+			Assert::equal(0, $forum->getUnreadPostsCountForUser($mario));
+		}
+		$forums = $this->forumsRepository->getForumsWithUnreadPosts($quattro);
+		foreach ($forums as $forum) {
+			Assert::equal(0, $forum->getUnreadPostsCountForUser($quattro));
+		}
+
+		// Let's add two posts (one deleted)
+		$post = new ForumPost($luigi, $worldChat, 'Subject', 'Text');
+		$deletedPost = new ForumPost($luigi, $worldChat, 'Subject', 'Text');
+		$deletedPost->delete($luigi);
+		$this->getEm()->persist([$post, $deletedPost])->flush();
+
+		$lastVisit = new ForumLastVisit($quattro, $forums[1]);
+		$lastVisit->setLastVisitAt((new \DateTime())->modify('+ 10 seconds'));
+
+		$this->getEm()->persist($lastVisit)->flush();
+
+		// Mario sees has one new post, Quattro doesn't
+		$forums = $this->forumsRepository->getForumsWithUnreadPosts($mario);
+		foreach ($forums as $forum) {
+			$posts = $post->getForum() === $forum ? 1 : 0;
+			Assert::equal($posts, $forum->getUnreadPostsCountForUser($mario));
+		}
+		$forums = $this->forumsRepository->getForumsWithUnreadPosts($quattro);
+		foreach ($forums as $forum) {
+			Assert::equal(0, $forum->getUnreadPostsCountForUser($quattro));
+		}
+
+		// Mario checks forum, now he has no new posts
+		$this->forumsRepository->updateLastVisit($mario, $worldChat);
+		$this->getEm()->flush();
+		$forums = $this->forumsRepository->getForumsWithUnreadPosts($mario);
+		foreach ($forums as $forum) {
+			Assert::equal(0, $forum->getUnreadPostsCountForUser($mario));
 		}
 	}
 
