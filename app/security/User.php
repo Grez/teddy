@@ -43,6 +43,7 @@ class User extends Nette\Security\User
 	{
 		$this->logout(TRUE);
 		$identity = $this->getAuthenticator()->authenticate(func_get_args());
+		$this->setExpiration('30 minutes', TRUE); // @FIXME: JavaScript gets crazy after coming back to site after XY days/hours
 		$this->storage->setIdentity($identity);
 		$this->storage->setAuthenticated(TRUE);
 		$this->entity = $this->users->find($identity->getId());
