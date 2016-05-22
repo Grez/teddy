@@ -22,21 +22,21 @@ $(function() {
         weekStart: 1,
         orientation: 'top',
     });
-});
 
-// Fingerprint
-// Maybe make in iframe and allow fonts?
-if (Cookies.get('fingerprint') === undefined) {
-    var options = {
-        excludeJsFonts: true,
-        excludeFlashFonts: true,
-    };
-    var fp = new Fingerprint2(options);
-    fp.get(function (result) {
-        var d2 = new Date();
-        Cookies.set('fingerprint', result, {expires: 1});
-    });
-}
+    // Fingerprint
+    // Maybe make in iframe and allow fonts?
+    if (Cookies.get('fingerprint') === undefined) {
+        var options = {
+            excludeJsFonts: true,
+            excludeFlashFonts: true,
+        };
+        var fp = new Fingerprint2(options);
+        fp.get(function (result) {
+            var d2 = new Date();
+            Cookies.set('fingerprint', result, {expires: 1});
+        });
+    }
+});
 
 
 /**
