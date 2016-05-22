@@ -48,7 +48,7 @@ class HomepagePresenter extends \Game\IndexModule\Presenters\BasePresenter
 	public function registrationFormSuccess(Form $form, $values)
 	{
 		$this->users->register($values);
-		$this->flashMessage('Your registration was successful');
+		$this->successFlashMessage('Your registration was successful');
 		$this->redirect('this');
 	}
 
