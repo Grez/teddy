@@ -121,7 +121,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function register(ArrayHash $data)
 	{
-		$user = new User($data->email, $data->nick);
+		$user = new \Game\Entities\User\User($data->email, $data->nick);
 		$this->changePassword($user, $data['password']); // also makes flush
 	}
 
