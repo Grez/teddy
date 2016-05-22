@@ -53,26 +53,6 @@ class UsersPresenter extends \Game\AdminModule\Presenters\BasePresenter
 
 
 	/**
-	 * Logs in as user, redirects to :Game:Homepage
-	 *
-	 * @param int $userId
-	 */
-	public function handleLoginAsUser($userId)
-	{
-		/** @var \Teddy\Entities\User\User $user */
-		$user = $this->users->find($userId);
-		if (!$user) {
-			$this->warningFlashMessage('This user doesn\'t exist');
-			$this->redirect('this');
-		}
-
-		$this->getUser()->passwordLessLogin($user->getId());
-		$this->redirect(':Game:Main:');
-	}
-
-
-
-	/**
 	 * @return Form
 	 */
 	protected function createComponentSearchUserForm()
@@ -117,6 +97,10 @@ class UsersPresenter extends \Game\AdminModule\Presenters\BasePresenter
 		$control->onUserPasswordChange = function (UserControl $userControl, User $user) {
 			$this->successFlashMessage('User\'s password changed');
 			$this->redirect('this');
+		};
+		$control->onDaemon = function (UserControl $userControl, User $user) {
+			$this->successFlashMessage('You were logged in as user');
+			$this->redirect(':Game:Main:');
 		};
 		return $control;
 	}

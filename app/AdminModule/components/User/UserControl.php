@@ -46,6 +46,11 @@ class UserControl extends Control
 	public $onUserPasswordChange = [];
 
 	/**
+	 * @var array
+	 */
+	public $onDaemon = [];
+
+	/**
 	 * @var EntityManager
 	 */
 	protected $em;
@@ -126,6 +131,18 @@ class UserControl extends Control
 		$this->users->reactivate($this->editedUser);
 		$this->logs->logAdminAction($this->userContext->getEntity(), UserLog::ADMIN_REACTIVATE_USER, $this->editedUser->getNick());
 		$this->onUserReactivated($this, $this->editedUser);
+	}
+
+
+
+	/**
+	 * Logs in as user, redirects to :Game:Homepage
+	 */
+	public function handleLoginAsUser()
+	{
+		$this->userContext->passwordLessLogin($this->editedUser);
+		$this->logs->logAdminAction($this->userContext->getEntity(), UserLog::ADMIN_DAEMON, $this->editedUser->getNick());
+		$this->onDaemon($this, $this->editedUser);
 	}
 
 
