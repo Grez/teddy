@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class StatDaily extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
+	use \Game\Entities\Stats\StatsTrait;
+
 	/**
 	 * @ORM\Column(type="date", unique=true)
 	 * @var \DateTime
@@ -21,22 +23,22 @@ abstract class StatDaily extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $date;
 
 	/**
-	 * @ORM\Column(type="integer")
-	 * @var int
+	 * @ORM\Column(type="float", nullable=true)
+	 * @var float
 	 */
-	protected $playersTotal = 0;
+	protected $avgLoad;
 
 	/**
-	 * @ORM\Column(type="integer")
-	 * @var int
+	 * @ORM\Column(type="float", nullable=true)
+	 * @var float
 	 */
-	protected $playersActive = 0;
+	protected $maxLoad5;
 
 	/**
-	 * @ORM\Column(type="integer")
-	 * @var int
+	 * @ORM\Column(type="float", nullable=true)
+	 * @var float
 	 */
-	protected $playersOnline = 0;
+	protected $maxLoad15;
 
 
 
@@ -47,23 +49,38 @@ abstract class StatDaily extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 
-	public function setPlayersTotal($playersTotal)
+	/**
+	 * @param float $avgLoad
+	 * @return StatDaily
+	 */
+	public function setAvgLoad($avgLoad)
 	{
-		$this->playersTotal = intVal($playersTotal);
+		$this->avgLoad = $avgLoad;
+		return $this;
 	}
 
 
 
-	public function setPlayersActive($playersActive)
+	/**
+	 * @param float $maxLoad5
+	 * @return StatDaily
+	 */
+	public function setMaxLoad5($maxLoad5)
 	{
-		$this->playersActive = intVal($playersActive);
+		$this->maxLoad5 = $maxLoad5;
+		return $this;
 	}
 
 
 
-	public function setPlayersOnline($playersOnline)
+	/**
+	 * @param float $maxLoad15
+	 * @return StatDaily
+	 */
+	public function setMaxLoad15($maxLoad15)
 	{
-		$this->playersOnline = intVal($playersOnline);
+		$this->maxLoad15 = $maxLoad15;
+		return $this;
 	}
 
 }

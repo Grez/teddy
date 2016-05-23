@@ -28,7 +28,13 @@ class StatDailyManager extends Entities\Manager
 	public function create(\DateTime $date)
 	{
 		$query = $this->em->createQuery('
-			SELECT MAX(sd.playersTotal) AS playersTotal, MAX(sd.playersActive) AS playersActive, MAX(sd.playersOnline) AS playersOnline
+			SELECT
+				MAX(sd.playersTotal) AS playersTotal,
+				MAX(sd.playersActive) AS playersActive,
+				MAX(sd.playersOnline) AS playersOnline,
+				AVG(sd.load1) AS avgLoad,
+				MAX(sd.load5) AS maxLoad5,
+				MAX(sd.load15) AS maxLoad15
 			FROM ' . StatDetailed::class . ' sd
 			WHERE sd.date = ?1
 		');
@@ -40,6 +46,9 @@ class StatDailyManager extends Entities\Manager
 		$statDaily->setPlayersTotal($stats[0]['playersTotal']);
 		$statDaily->setPlayersActive($stats[0]['playersActive']);
 		$statDaily->setPlayersOnline($stats[0]['playersOnline']);
+		$statDaily->setAvgLoad($stats[0]['avgLoad']);
+		$statDaily->setMaxLoad5($stats[0]['maxLoad5']);
+		$statDaily->setMaxLoad15($stats[0]['maxLoad15']);
 
 		$this->em->persist($statDaily);
 		$this->em->flush();

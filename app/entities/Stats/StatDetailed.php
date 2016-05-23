@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class StatDetailed extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
+	use \Game\Entities\Stats\StatsTrait;
+
 	/**
 	 * @ORM\Column(type="date")
 	 * @var \DateTime
@@ -27,24 +29,6 @@ abstract class StatDetailed extends \Kdyby\Doctrine\Entities\BaseEntity
 	 * Generated in __construct()
 	 */
 	protected $time;
-
-	/**
-	 * @ORM\Column(type="integer")
-	 * @var int
-	 */
-	protected $playersTotal;
-
-	/**
-	 * @ORM\Column(type="integer")
-	 * @var int
-	 */
-	protected $playersActive;
-
-	/**
-	 * @ORM\Column(type="integer")
-	 * @var int
-	 */
-	protected $playersOnline;
 
 	/**
 	 * @ORM\Column(type="float", nullable=true)
