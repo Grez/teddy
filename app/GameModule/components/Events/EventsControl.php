@@ -10,14 +10,14 @@ use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI\Control;
-use Teddy\Security\User;
+use Teddy\Security\UserContext;
 
 
 class EventsControl extends Control
 {
 
 	/**
-	 * @var User
+	 * @var UserContext
 	 */
 	protected $user;
 
@@ -38,7 +38,7 @@ class EventsControl extends Control
 
 
 
-	public function __construct(User $user, Messages $messagesFacade)
+	public function __construct(UserContext $user, Messages $messagesFacade)
 	{
 		$this->user = $user;
 		$this->messagesFacade = $messagesFacade;

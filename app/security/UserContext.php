@@ -9,7 +9,7 @@ use Teddy\Entities\User\Users;
 
 
 
-class User extends Nette\Security\User
+class UserContext extends Nette\Security\User
 {
 
 	/**

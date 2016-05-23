@@ -61,7 +61,7 @@ class UserControl extends Control
 	protected $editedUser;
 
 	/**
-	 * @var Teddy\Security\User
+	 * @var Teddy\Security\UserContext
 	 */
 	protected $userContext;
 
@@ -90,7 +90,7 @@ class UserControl extends Control
 
 
 
-	public function __construct($salt, User $editedUser, EntityManager $em, Users $users, Teddy\Security\User $userContext, ImageService $imageService, UserLogs $logs)
+	public function __construct($salt, User $editedUser, EntityManager $em, Users $users, Teddy\Security\UserContext $userContext, ImageService $imageService, UserLogs $logs)
 	{
 		parent::__construct();
 		$this->salt = $salt;
