@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity(readOnly=TRUE)
+ * @ORM\Entity()
  */
 class CoinSack extends \Teddy\Entities\Coins\CoinSack
 {
