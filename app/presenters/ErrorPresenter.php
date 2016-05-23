@@ -33,4 +33,14 @@ class ErrorPresenter extends \Game\Presenters\BasePresenter
 		}
 	}
 
+
+
+	/**
+	 * @return void
+	 */
+	protected function checkTotalBan()
+	{
+		return;
+	}
+
 }

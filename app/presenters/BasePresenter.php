@@ -86,10 +86,24 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 
 
+	/**
+	 * @careful: This code is also used in ErrorPresenter!
+	 */
 	protected function startup()
 	{
 		parent::startup();
-		$ban = $this->bans->hasTotalBan($_SERVER['REMOTE_ADDR']);
+		$this->checkTotalBan();
+	}
+
+
+
+	/**
+	 * @throws Nette\Application\BadRequestException
+	 * @return void
+	 */
+	protected function checkTotalBan()
+	{
+		$ban = $this->bans->hasTotalBan($this->getIp());
 		if ($ban) {
 			$this->error('Your IP is banned until ' . $ban->getEndsAt()->format('j.m.Y H:i:s') . ': ' . $ban->getReason(), 403);
 		}
@@ -209,6 +223,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$template = parent::createTemplate();
 		$this->templateHelpers->register($template->getLatte());
 		return $template;
+	}
+
+
+
+	/**
+	 * @return NULL|string
+	 */
+	private function getIp()
+	{
+		return $this->getHttpRequest()->getRemoteAddress();
 	}
 
 }
