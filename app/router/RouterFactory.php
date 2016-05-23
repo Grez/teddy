@@ -22,14 +22,7 @@ class RouterFactory
 		$router = new RouteList();
 
 		$router[] = new Route('', 'Index:Homepage:default');
-
-		$router[] = new Route('zapomenute-heslo/nastavit-nove/<token>', [
-			'module' => 'Index',
-			'presenter' => 'ForgottenPassword',
-			'action' => 'setNew',
-			'token' => NULL,
-		]);
-		$router[] = new Route('zapomenute-heslo/<action>/<token>', [
+		$router[] = new Route('forgotten-password/<action>/<token>', [
 			'module' => 'Index',
 			'presenter' => 'ForgottenPassword',
 			'action' => 'default',
