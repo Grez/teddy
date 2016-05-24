@@ -65,7 +65,7 @@ class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
 	public function getSubscribedEvents()
 	{
 		return [
-			'\Teddy\Security\User::onLoggedIn',
+			'\Teddy\Security\UserContext::onLoggedIn',
 			'\Teddy\Entities\User\Users::onWrongNick',
 			'\Teddy\Entities\User\Users::onWrongPassword',
 		];
