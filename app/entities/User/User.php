@@ -145,18 +145,6 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 	protected $admin = FALSE;
 
 	/**
-	 * @ORM\Column(type="string")
-	 * @var string
-	 */
-	protected $adminDescription = '';
-
-	/**
-	 * @ORM\OneToMany(targetEntity="\Game\Entities\User\AdminPermission", mappedBy="user", cascade={"persist", "remove"})
-	 * @var AdminPermission[]|ArrayCollection
-	 */
-	protected $adminPermissions;
-
-	/**
 	 * @ORM\OneToMany(targetEntity="\Game\Entities\Coins\CoinSack", mappedBy="user", cascade={"persist", "remove"})
 	 * @ORM\OrderBy({"expiresAt" = "ASC"})
 	 * @var CoinSack[]|ArrayCollection
