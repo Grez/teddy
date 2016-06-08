@@ -5,7 +5,7 @@ namespace Teddy\Entities\Forums;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 
 
 
@@ -16,9 +16,9 @@ abstract class ForumLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * @var User
+	 * @var Player
 	 */
 	protected $user;
 
@@ -37,7 +37,7 @@ abstract class ForumLastVisit extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 
-	public function __construct(User $user, Forum $forum)
+	public function __construct(Player $user, Forum $forum)
 	{
 		$this->user = $user;
 		$this->forum = $forum;

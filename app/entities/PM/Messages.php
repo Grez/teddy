@@ -5,7 +5,7 @@ namespace Teddy\Entities\PM;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 
 
 class Messages extends Entities\Manager
@@ -44,15 +44,15 @@ class Messages extends Entities\Manager
 	/**
 	 * Sends new message
 	 *
-	 * @param User $to
-	 * @param User $from
+	 * @param Player $to
+	 * @param Player $from
 	 * @param string $subject
 	 * @param string $text
 	 * @param int $conversation
 	 * @param int $type
 	 * @return \Game\Entities\PM\Message
 	 */
-	public function createMessage(User $to, User $from, $subject = '', $text = '', $conversation = 0, $type = \Game\Entities\PM\Message::NORMAL_MSG)
+	public function createMessage(Player $to, Player $from, $subject = '', $text = '', $conversation = 0, $type = \Game\Entities\PM\Message::NORMAL_MSG)
 	{
 		$msg = new \Game\Entities\PM\Message($to, $from, $subject, $text, $type);
 		if ($conversation > 0) {
@@ -92,10 +92,10 @@ class Messages extends Entities\Manager
 
 	/**
 	 * @param \Game\Entities\PM\Message $msg
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 * @throws \Teddy\User\InvalidArgumentException
 	 */
-	public function deleteBy(\Game\Entities\PM\Message $msg, \Game\Entities\User\User $user)
+	public function deleteBy(\Game\Entities\PM\Message $msg, \Game\Entities\User\Player $user)
 	{
 		$msg->deleteBy($user);
 		$this->onDeleteMessage($msg, $user);
@@ -104,10 +104,10 @@ class Messages extends Entities\Manager
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 * @return int
 	 */
-	public function getUnreadMessagesCount(\Game\Entities\User\User $user)
+	public function getUnreadMessagesCount(\Game\Entities\User\Player $user)
 	{
 		$query = (new Entities\User\MessagesQuery())
 			->onlyReceivedBy($user)

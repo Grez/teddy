@@ -5,7 +5,7 @@ namespace Teddy\Entities\Coins;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 
 
 
@@ -47,9 +47,9 @@ abstract class CoinSack extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $description;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User", inversedBy="coinSacks")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player", inversedBy="coinSacks")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * @var User
+	 * @var Player
 	 */
 	protected $user;
 
@@ -57,10 +57,10 @@ abstract class CoinSack extends \Kdyby\Doctrine\Entities\BaseEntity
 
 	/**
 	 * @param int $coins
-	 * @param User $user
+	 * @param Player $user
 	 * @param \DateTime|NULL $expiresAt
 	 */
-	public function __construct($coins, User $user, \DateTime $expiresAt = NULL)
+	public function __construct($coins, Player $user, \DateTime $expiresAt = NULL)
 	{
 		$this->coins = $coins;
 		$this->remaining = $coins;

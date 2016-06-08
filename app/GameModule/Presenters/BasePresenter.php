@@ -3,7 +3,7 @@
 namespace Teddy\GameModule\Presenters;
 
 use Teddy;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Nette;
 use Game\GameModule\Components\IEventsControlFactory;
 
@@ -13,7 +13,7 @@ abstract class BasePresenter extends \Game\Presenters\BasePresenter
 {
 
 	/**
-	 * @var User
+	 * @var Player
 	 */
 	protected $user;
 

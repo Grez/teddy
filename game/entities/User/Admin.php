@@ -13,6 +13,5 @@ use Doctrine\ORM\Mapping as ORM;
 class Admin extends \Teddy\Entities\User\Admin
 {
 
-	use Identifier;
 
 }

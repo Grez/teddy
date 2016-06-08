@@ -4,7 +4,7 @@ namespace Teddy\AdminModule\Presenters;
 
 use Nette;
 use Teddy;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 use Teddy\Entities\Logs\UserLogs;
 
 
@@ -13,7 +13,7 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 {
 
 	/**
-	 * @var User
+	 * @var Player
 	 */
 	protected $user;
 

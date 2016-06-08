@@ -11,7 +11,7 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 {
 
 	/**
-	 * @var \Teddy\Entities\User\User|NULL
+	 * @var \Teddy\Entities\User\Player|NULL
 	 */
 	protected $user;
 

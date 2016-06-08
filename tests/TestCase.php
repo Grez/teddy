@@ -165,7 +165,7 @@ abstract class TestCase extends \Tester\TestCase
 
 
 	/**
-	 * @return \Teddy\Security\UserContext
+	 * @return \Teddy\Security\User
 	 */
 	protected function getUser()
 	{

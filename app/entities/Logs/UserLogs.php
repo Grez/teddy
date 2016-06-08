@@ -6,7 +6,7 @@ use Game\Entities\Logs\UserLog;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 
 
 
@@ -21,14 +21,14 @@ class UserLogs extends Entities\Manager
 
 
 
-	public function logAdminAction(User $user, $action, $data = NULL)
+	public function logAdminAction(Player $user, $action, $data = NULL)
 	{
 		$this->log($user, UserLog::ADMIN, $action, $data);
 	}
 
 
 
-	public function log(User $user, $type, $action, $data = NULL)
+	public function log(Player $user, $type, $action, $data = NULL)
 	{
 		$userLog = new \Game\Entities\Logs\UserLog;
 		$userLog->setUser($user);

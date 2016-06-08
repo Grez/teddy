@@ -5,7 +5,7 @@ namespace Teddy\Entities\Coins;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 
 
 
@@ -22,10 +22,10 @@ class CoinSacks extends Entities\Manager
 
 	/**
 	 * @param $amount
-	 * @param User $user
+	 * @param Player $user
 	 * @param \DateTime|NULL $expires
 	 */
-	public function addCoinSack($amount, User $user, \DateTime $expires = NULL)
+	public function addCoinSack($amount, Player $user, \DateTime $expires = NULL)
 	{
 		$coinSack = new \Game\Entities\Coins\CoinSack($amount, $user, $expires);
 		$user->addCoinSack($coinSack);
@@ -36,12 +36,12 @@ class CoinSacks extends Entities\Manager
 
 	/**
 	 * @param int $amount
-	 * @param User $user
+	 * @param Player $user
 	 * @throws AlreadyExpired
 	 * @throws NotEnoughRemaining
 	 * @throws NotEnoughTotal
 	 */
-	public function useCoins($amount, User $user)
+	public function useCoins($amount, Player $user)
 	{
 		if ($user->getTotalUsableCoins() < $amount) {
 			throw new NotEnoughTotal();

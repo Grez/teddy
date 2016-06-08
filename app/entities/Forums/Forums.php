@@ -5,7 +5,7 @@ namespace Teddy\Entities\Forums;
 use Nette;
 use Teddy\Entities;
 use Kdyby\Doctrine\EntityManager;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 
 
 
@@ -50,10 +50,10 @@ class Forums extends Entities\Manager
 	 * Returns list of Forums for User
 	 *
 	 * @TODO: cache?
-	 * @param User $user
+	 * @param Player $user
 	 * @return Forum[]
 	 */
-	public function getForumsForUser(User $user)
+	public function getForumsForUser(Player $user)
 	{
 		$forums = $this->getForums();
 		foreach ($forums as $id => $forum) {
@@ -69,10 +69,10 @@ class Forums extends Entities\Manager
 	/**
 	 * Returns User's Forums with unread posts count
 	 *
-	 * @param User $user
+	 * @param Player $user
 	 * @return \Game\Entities\Forums\Forum[]
 	 */
-	public function getForumsWithUnreadPosts(User $user)
+	public function getForumsWithUnreadPosts(Player $user)
 	{
 		$forums = $this->getForumsForUser($user);
 		$query = (new ForumsQuery())
@@ -96,7 +96,7 @@ class Forums extends Entities\Manager
 
 
 	/**
-	 * @param User $author
+	 * @param Player $author
 	 * @param \Game\Entities\Forums\Forum $forum
 	 * @param string $subject
 	 * @param string $text
@@ -104,7 +104,7 @@ class Forums extends Entities\Manager
 	 * @return ForumPost
 	 * @throw AccessDenied
 	 */
-	public function addPost(User $author, \Game\Entities\Forums\Forum $forum, $subject = '', $text = '', \Game\Entities\Forums\ForumPost $conversation = NULL)
+	public function addPost(Player $author, \Game\Entities\Forums\Forum $forum, $subject = '', $text = '', \Game\Entities\Forums\ForumPost $conversation = NULL)
 	{
 		$post = new \Game\Entities\Forums\ForumPost($author, $forum, $subject, $text);
 		$post->setConversation($conversation);
@@ -118,11 +118,11 @@ class Forums extends Entities\Manager
 	/**
 	 * @non-flushing
 	 *
-	 * @param User $user
+	 * @param Player $user
 	 * @param \Game\Entities\Forums\Forum $forum
 	 * @return \Game\Entities\Forums\ForumLastVisit
 	 */
-	public function updateLastVisit(User $user, \Game\Entities\Forums\Forum $forum)
+	public function updateLastVisit(Player $user, \Game\Entities\Forums\Forum $forum)
 	{
 		$lastVisit = $forum->getLastVisitBy($user);
 		$lastVisit = $lastVisit ?: new \Game\Entities\Forums\ForumLastVisit($user, $forum);

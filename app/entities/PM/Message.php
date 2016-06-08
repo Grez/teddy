@@ -5,7 +5,7 @@ namespace Teddy\Entities\PM;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Teddy\User\InvalidArgumentException;
 
 
@@ -16,16 +16,16 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player")
 	 * @ORM\JoinColumn(name="to_user_id", referencedColumnName="id", nullable=FALSE)
-	 * @var User
+	 * @var Player
 	 */
 	protected $to;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player")
 	 * @ORM\JoinColumn(name="from_user_id", referencedColumnName="id", nullable=FALSE)
-	 * @var User
+	 * @var Player
 	 */
 	protected $from;
 
@@ -85,7 +85,7 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 	const SYSTEM_MSG = 2;
 
 
-	public function __construct(User $to, User $from, $subject = '', $text = '', $type = self::NORMAL_MSG)
+	public function __construct(Player $to, Player $from, $subject = '', $text = '', $type = self::NORMAL_MSG)
 	{
 		$this->sentAt = new \DateTime();
 		$this->to = $to;
@@ -124,10 +124,10 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @throws InvalidArgumentException
 	 */
-	public function deleteBy(User $user)
+	public function deleteBy(Player $user)
 	{
 		if ($user !== $this->from && $user !== $this->to) {
 			throw new InvalidArgumentException('This user can\'t delete this message');
@@ -156,10 +156,10 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return bool
 	 */
-	public function isReadableByUser(User $user)
+	public function isReadableByUser(Player $user)
 	{
 		if ($user !== $this->to && $user !== $this->from) {
 			return FALSE;
@@ -178,7 +178,7 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @return User
+	 * @return Player
 	 */
 	public function getTo()
 	{
@@ -187,7 +187,7 @@ abstract class Message extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @return User
+	 * @return Player
 	 */
 	public function getFrom()
 	{

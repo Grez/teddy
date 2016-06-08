@@ -44,14 +44,14 @@ class Logins extends Entities\Manager
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 * @param string $login
 	 * @param int $error
 	 * @return NULL
 	 */
-	public function log(\Game\Entities\User\User $user = NULL, $login = '', $error = 0)
+	public function log(\Game\Entities\User\Player $user = NULL, $login = '', $error = 0)
 	{
-		if ($user instanceof User) {
+		if ($user instanceof Player) {
 			$user->setLastLoginAt($this->dateTimeProvider->getDateTime());
 		}
 

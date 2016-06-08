@@ -5,7 +5,7 @@ namespace Teddy\Entities\Logs;
 use Kdyby\Doctrine\QueryBuilder;
 use Kdyby\Doctrine\QueryObject;
 use Kdyby\Persistence\Queryable;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 
 
 
@@ -25,12 +25,12 @@ class UserLogsListQuery extends QueryObject
 
 
 	/**
-	 * @param int|User $user
+	 * @param int|Player $user
 	 * @return $this
 	 */
 	public function byUser($user)
 	{
-		$userId = $user instanceof User ? $user->getId() : $user;
+		$userId = $user instanceof Player ? $user->getId() : $user;
 
 		$this->filter[] = function (QueryBuilder $qb) use ($userId) {
 			$qb->andWhere('u.id = :user')->setParameter('user', $userId);

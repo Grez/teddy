@@ -16,9 +16,9 @@ abstract class UserLog extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * @var \Game\Entities\User\User
+	 * @var \Game\Entities\User\Player
 	 */
 	protected $user;
 

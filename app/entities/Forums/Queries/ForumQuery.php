@@ -4,7 +4,7 @@ namespace Teddy\Entities\Forums;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Kdyby\Persistence\Queryable;
 
 
@@ -24,10 +24,10 @@ class ForumsQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 * @return $this
 	 */
-	public function withUnreadPostsCount(User $user)
+	public function withUnreadPostsCount(Player $user)
 	{
 		$this->select[] = function (QueryBuilder $qb) use ($user) {
 			$qb->addSelect('COUNT(up.id) AS unread_posts_count, lv');

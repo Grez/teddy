@@ -5,7 +5,7 @@ namespace Teddy\Entities\Forums;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 
 
 
@@ -23,9 +23,9 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $forum;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * @var User
+	 * @var Player
 	 */
 	protected $author;
 
@@ -55,9 +55,9 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 	protected $deletedAt;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player")
 	 * @ORM\JoinColumn(name="deleted_by", referencedColumnName="id")
-	 * @var User
+	 * @var Player
 	 */
 	protected $deletedBy;
 
@@ -79,7 +79,7 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 
-	public function __construct(User $author, Forum $forum, $subject, $text)
+	public function __construct(Player $author, Forum $forum, $subject, $text)
 	{
 		if (!$forum->canWrite($author)) {
 			throw new AccessDenied('You can\'t write on this forum');
@@ -95,10 +95,10 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return NULL
 	 */
-	public function delete(User $user)
+	public function delete(Player $user)
 	{
 		$this->deletedAt = new \DateTime();
 		$this->deletedBy = $user;
@@ -107,10 +107,10 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return bool
 	 */
-	public function canDelete(User $user)
+	public function canDelete(Player $user)
 	{
 		if ($user->isAdmin()) {
 			return TRUE;
@@ -148,7 +148,7 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @return User
+	 * @return Player
 	 */
 	public function getAuthor()
 	{
@@ -170,10 +170,10 @@ abstract class ForumPost extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return bool
 	 */
-	public function isUnreadBy(User $user)
+	public function isUnreadBy(Player $user)
 	{
 		$lastVisitBy = $this->forum->getLastVisitBy($user);
 		if (!$lastVisitBy) {

@@ -9,11 +9,11 @@ use Teddy\Entities\User\Users;
 
 
 
-class UserContext extends Nette\Security\User
+class User extends Nette\Security\User
 {
 
 	/**
-	 * @var \Game\Entities\User\User
+	 * @var \Game\Entities\User\Player
 	 */
 	protected $entity;
 
@@ -67,7 +67,7 @@ class UserContext extends Nette\Security\User
 
 
 	/**
-	 * @return \Game\Entities\User\User
+	 * @return \Game\Entities\User\Player
 	 */
 	public function getEntity()
 	{

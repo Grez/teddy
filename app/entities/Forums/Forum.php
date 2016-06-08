@@ -8,7 +8,7 @@ use Game\Entities\Forums\ForumLastVisit;
 use Nette;
 use Teddy\Entities;
 use Doctrine\ORM\Mapping as ORM;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 
 
 
@@ -62,10 +62,10 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * Can User view this Forums?
 	 *
-	 * @param User $user
+	 * @param Player $user
 	 * @return bool
 	 */
-	public function canView(User $user)
+	public function canView(Player $user)
 	{
 		switch ($this->getId()) {
 			case Forums::ADMINS:
@@ -92,10 +92,10 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 	/**
 	 * Can User write on this Forums?
 	 *
-	 * @param User $user
+	 * @param Player $user
 	 * @return bool
 	 */
-	public function canWrite(User $user)
+	public function canWrite(Player $user)
 	{
 		switch ($this->getId()) {
 			case Forums::ADMINS:
@@ -117,11 +117,11 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return ForumLastVisit
 	 * @TODO
 	 */
-	public function getLastVisitBy(User $user)
+	public function getLastVisitBy(Player $user)
 	{
 		$criteria = (new Criteria())
 			->where(Criteria::expr()->eq('user', $user))
@@ -147,10 +147,10 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return int
 	 */
-	public function countUnreadPostsForUser(User $user)
+	public function countUnreadPostsForUser(Player $user)
 	{
 		$lastVisit = $this->getLastVisitBy($user);
 		$criteria = (new Criteria())
@@ -166,10 +166,10 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return int
 	 */
-	public function getUnreadPostsCountForUser(User $user)
+	public function getUnreadPostsCountForUser(Player $user)
 	{
 		if (isset($this->unreadPostsCount[$user->getId()])) {
 			return $this->unreadPostsCount[$user->getId()];
@@ -183,11 +183,11 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @param int $unreadPostsCount
 	 * @return Forum
 	 */
-	public function setUnreadPostsCountForUser(User $user, $unreadPostsCount)
+	public function setUnreadPostsCountForUser(Player $user, $unreadPostsCount)
 	{
 		$this->unreadPostsCount[$user->getId()] = intVal($unreadPostsCount);
 		return $this;
@@ -196,10 +196,10 @@ abstract class Forum extends \Kdyby\Doctrine\Entities\BaseEntity
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return bool
 	 */
-	public function hasUnreadPostsForUser(User $user)
+	public function hasUnreadPostsForUser(Player $user)
 	{
 		return $this->getUnreadPostsCountForUser($user) > 0;
 	}

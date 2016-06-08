@@ -2,6 +2,8 @@
 
 namespace Teddy\IndexModule\Presenters;
 
+use Game\Entities\User\Admin;
+use Game\Entities\User\Player;
 use Nette\Utils\ArrayHash;
 use Teddy\Entities\Bans\Ban;
 use Teddy\Forms\Form;

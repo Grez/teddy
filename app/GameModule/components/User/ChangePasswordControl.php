@@ -8,7 +8,7 @@ use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
 use Game\Components\Control;
-use Teddy\Security\UserContext;
+use Teddy\Security\User;
 use Teddy\TemplateHelpers;
 
 
@@ -40,7 +40,7 @@ class ChangePasswordControl extends Control
 	protected $users;
 
 	/**
-	 * @var UserContext
+	 * @var User
 	 */
 	protected $user;
 
@@ -51,7 +51,7 @@ class ChangePasswordControl extends Control
 
 
 
-	public function __construct(TemplateHelpers $templateHelpers, EntityManager $em, Users $users, UserContext $user)
+	public function __construct(TemplateHelpers $templateHelpers, EntityManager $em, Users $users, User $user)
 	{
 		parent::__construct($templateHelpers);
 		$this->em = $em;

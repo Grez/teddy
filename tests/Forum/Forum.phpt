@@ -13,7 +13,7 @@ use Teddy\Entities\Forums\AccessDenied;
 use Game\Entities\Forums\Forum;
 use Teddy\Entities\Forums\ForumPosts;
 use Teddy\Entities\Forums\Forums;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
@@ -49,7 +49,7 @@ class ForumsTest extends TestCase
 
 	public function testAccessDenied()
 	{
-		$author = new User('mario@luigi.it');
+		$author = new Player('mario@luigi.it');
 
 		$writableForum = \Mockery::mock(Forum::class);
 		$writableForum->shouldReceive('canWrite')->andReturn(FALSE);
@@ -69,8 +69,8 @@ class ForumsTest extends TestCase
 
 	public function testAccess()
 	{
-		$user = new User('mario@plumber.it');
-		$admin = new User('luigi@plumber.it');
+		$user = new Player('mario@plumber.it');
+		$admin = new Player('luigi@plumber.it');
 		$admin->setAdmin(TRUE);
 
 		$forum1 = $this->forumsRepository->find(Forums::ADMIN_ANNOUNCEMENTS);
@@ -131,9 +131,9 @@ class ForumsTest extends TestCase
 
 	public function testUnreadPosts()
 	{
-		$mario = new User('mario@plumber.it');
-		$luigi = new User('luigi@plumber.it');
-		$quattro = new User('quattro@plumber.it');
+		$mario = new Player('mario@plumber.it');
+		$luigi = new Player('luigi@plumber.it');
+		$quattro = new Player('quattro@plumber.it');
 		$this->getEm()->persist([$mario, $luigi, $quattro])->flush();
 
 		/** @var Forum $worldChat */

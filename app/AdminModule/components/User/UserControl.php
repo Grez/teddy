@@ -3,7 +3,7 @@
 namespace Teddy\AdminModule\Components;
 
 use Game\Entities\Logs\UserLog;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
 use Teddy;
@@ -17,10 +17,10 @@ use Teddy\Images\ImageService;
 
 
 /**
- * @method void onUserEdited(UserControl $this, User $user)
- * @method void onUserDeleted(UserControl $this, User $user)
- * @method void onUserReactivated(UserControl $this, User $user)
- * @method void onUserPasswordChange(UserControl $this, User $user)
+ * @method void onUserEdited(UserControl $this, Player $user)
+ * @method void onUserDeleted(UserControl $this, Player $user)
+ * @method void onUserReactivated(UserControl $this, Player $user)
+ * @method void onUserPasswordChange(UserControl $this, Player $user)
  */
 class UserControl extends Control
 {
@@ -56,12 +56,12 @@ class UserControl extends Control
 	protected $em;
 
 	/**
-	 * @var \Game\Entities\User\User
+	 * @var \Game\Entities\User\Player
 	 */
 	protected $editedUser;
 
 	/**
-	 * @var Teddy\Security\UserContext
+	 * @var Teddy\Security\User
 	 */
 	protected $userContext;
 
@@ -90,7 +90,7 @@ class UserControl extends Control
 
 
 
-	public function __construct($salt, User $editedUser, EntityManager $em, Users $users, Teddy\Security\UserContext $userContext, ImageService $imageService, UserLogs $logs)
+	public function __construct($salt, Player $editedUser, EntityManager $em, Users $users, Teddy\Security\User $userContext, ImageService $imageService, UserLogs $logs)
 	{
 		parent::__construct();
 		$this->salt = $salt;
@@ -234,12 +234,12 @@ class UserControl extends Control
 	/**
 	 * Returns other Users with same password
 	 *
-	 * @return User[]
+	 * @return Player[]
 	 */
 	protected function getUsersWithSamePassword()
 	{
 		$users = $this->users->getByPassword($this->editedUser->getPassword());
-		return array_filter($users, function (User $user) {
+		return array_filter($users, function (Player $user) {
 			return $user !== $this->editedUser;
 		});
 	}
@@ -251,8 +251,8 @@ interface IUserControlFactory
 {
 
 	/**
-	 * @param User $editedUser
+	 * @param Player $editedUser
 	 * @return UserControl
 	 */
-	public function create(User $editedUser);
+	public function create(Player $editedUser);
 }

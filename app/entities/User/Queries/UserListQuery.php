@@ -54,12 +54,12 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param \Game\Entities\User\User|int $user
+	 * @param \Game\Entities\User\Player|int $user
 	 * @return $this
 	 */
 	public function excludeUser($user)
 	{
-		$userId = $user instanceof \Game\Entities\User\User ? $userId = $user->getId() : $user;
+		$userId = $user instanceof \Game\Entities\User\Player ? $userId = $user->getId() : $user;
 		$this->blackListedUserIds[] = $userId;
 		return $this;
 	}
@@ -174,7 +174,7 @@ class UserListQuery extends \Kdyby\Doctrine\QueryObject
 	private function createBasicDql(Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder()
-			->select('u')->from(\Game\Entities\User\User::class, 'u')
+			->select('u')->from(\Game\Entities\User\Player::class, 'u')
 			->andWhere('u.id NOT IN (:blackListedUserIds)', $this->blackListedUserIds);
 
 		foreach ($this->filter as $modifier) {

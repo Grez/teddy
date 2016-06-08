@@ -38,10 +38,10 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 	/**
 	 * Careful! This doesn't handle deleted messages, use $this->onlyNotDeletedByUser()
 	 *
-	 * @param User $user
+	 * @param Player $user
 	 * @return $this
 	 */
-	public function onlyReadableBy(User $user)
+	public function onlyReadableBy(Player $user)
 	{
 		$this->filter[] = function (QueryBuilder $qb) use ($user) {
 			$qb->andWhere('m.from = :user OR m.to = :user')->setParameter('user', $user);
@@ -52,10 +52,10 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return $this
 	 */
-	public function onlyReceivedBy(User $user)
+	public function onlyReceivedBy(Player $user)
 	{
 		$this->filter[] = function (QueryBuilder $qb) use ($user) {
 			$qb->andWhere('m.to = :to')->setParameter('to', $user);
@@ -66,10 +66,10 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return $this
 	 */
-	public function onlySentBy(User $user)
+	public function onlySentBy(Player $user)
 	{
 		$this->filter[] = function (QueryBuilder $qb) use ($user) {
 			$qb->andWhere('m.from = :from')->setParameter('from', $user);
@@ -80,10 +80,10 @@ class MessagesQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return $this
 	 */
-	public function onlyNotDeletedByUser(User $user)
+	public function onlyNotDeletedByUser(Player $user)
 	{
 		$this->filter[] = function (QueryBuilder $qb) use ($user) {
 			$qb->andWhere('m.deletedByRecipient = FALSE OR m.to != :notDeletedBy', $user);

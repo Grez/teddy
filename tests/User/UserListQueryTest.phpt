@@ -10,7 +10,7 @@ use Kdyby\Doctrine\ResultSet;
 use Nette;
 use Game\Entities\PM\Message;
 use Teddy\Entities\PM\Messages;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Teddy\Entities\User\MessagesQuery;
 use Teddy\Entities\User\UserListQuery;
 use Tester\Assert;
@@ -24,12 +24,12 @@ class UserListQueryTest extends TestCase
 {
 
 	/**
-	 * @var User
+	 * @var Player
 	 */
 	private $user1;
 
 	/**
-	 * @var User
+	 * @var Player
 	 */
 	private $user2;
 
@@ -38,9 +38,9 @@ class UserListQueryTest extends TestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->user1 = new User('mario@luigi.it');
-		$this->user2 = new User('quattro@formaggi.it');
-		$this->user3 = new User('pizza@plumber.it');
+		$this->user1 = new Player('mario@luigi.it');
+		$this->user2 = new Player('quattro@formaggi.it');
+		$this->user3 = new Player('pizza@plumber.it');
 		$this->user3->setDeleted(TRUE);
 
 		$this->getEm()->persist($this->user1, $this->user2, $this->user3);

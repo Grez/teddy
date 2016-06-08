@@ -8,7 +8,7 @@ use Teddy\Entities\Bans\Bans;
 use Teddy\Entities\Logs\BansQuery;
 use Game\Entities\Logs\UserLog;
 use Teddy\Entities\User\LoginListQuery;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Game\Entities\User\UserAgent;
 use Teddy\Entities\User\UserListQuery;
 use Teddy\Forms\Form;
@@ -28,7 +28,7 @@ class AntimultiPresenter extends \Game\AdminModule\Presenters\BasePresenter
 
 	public function renderNewUsers()
 	{
-		$this->template->users = $this->em->getRepository(User::class)
+		$this->template->users = $this->em->getRepository(Player::class)
 			->fetch((new UserListQuery())->orderByRegistration())
 			->applyPaginator($this['visualPaginator']->getPaginator());
 	}

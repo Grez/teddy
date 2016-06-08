@@ -5,6 +5,15 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `admin_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_880E0D76BF396750` FOREIGN KEY (`id`) REFERENCES `player` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `admin_permission`;
 CREATE TABLE `admin_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -12,7 +21,7 @@ CREATE TABLE `admin_permission` (
   `presenter` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_2877342FA76ED395` (`user_id`),
-  CONSTRAINT `FK_2877342FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_2877342FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `admin` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -26,21 +35,7 @@ CREATE TABLE `ban` (
   `reason` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_62FED0E5C06EBDF6` (`range_start`),
-  KEY `IDX_62FED0E5D7645AE8` (`range_end`),
-  KEY `IDX_62FED0E52F4A8AA7` (`ends_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `chat_message`;
-CREATE TABLE `chat_message` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `message` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `posted_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_FAB3FC16A76ED395` (`user_id`),
-  CONSTRAINT `FK_FAB3FC16A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  KEY `IDX_62FED0E5C06EBDF6D7645AE82F4A8AA78CDE5729` (`range_start`,`range_end`,`ends_at`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -55,7 +50,7 @@ CREATE TABLE `coin_sack` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_B8900A0FA76ED395` (`user_id`),
-  CONSTRAINT `FK_B8900A0FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_B8900A0FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `player` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -85,7 +80,7 @@ CREATE TABLE `forum_last_visit` (
   KEY `IDX_A3036267A76ED395` (`user_id`),
   KEY `IDX_A303626729CCBAD0` (`forum_id`),
   CONSTRAINT `FK_A303626729CCBAD0` FOREIGN KEY (`forum_id`) REFERENCES `forum` (`id`),
-  CONSTRAINT `FK_A3036267A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_A3036267A76ED395` FOREIGN KEY (`user_id`) REFERENCES `player` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -106,11 +101,11 @@ CREATE TABLE `forum_post` (
   KEY `IDX_996BCC5AA76ED395` (`user_id`),
   KEY `IDX_996BCC5A9AC0396` (`conversation_id`),
   KEY `IDX_996BCC5A1F6FA0AF` (`deleted_by`),
-  KEY `IDX_996BCC5A4AF38FD1` (`deleted_at`),
-  CONSTRAINT `FK_996BCC5A1F6FA0AF` FOREIGN KEY (`deleted_by`) REFERENCES `user` (`id`),
+  KEY `IDX_996BCC5A29CCBAD04AF38FD18B8E8428` (`forum_id`,`deleted_at`,`created_at`),
+  CONSTRAINT `FK_996BCC5A1F6FA0AF` FOREIGN KEY (`deleted_by`) REFERENCES `player` (`id`),
   CONSTRAINT `FK_996BCC5A29CCBAD0` FOREIGN KEY (`forum_id`) REFERENCES `forum` (`id`),
   CONSTRAINT `FK_996BCC5A9AC0396` FOREIGN KEY (`conversation_id`) REFERENCES `forum_post` (`id`),
-  CONSTRAINT `FK_996BCC5AA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_996BCC5AA76ED395` FOREIGN KEY (`user_id`) REFERENCES `player` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -131,27 +126,16 @@ CREATE TABLE `login` (
   KEY `IDX_AA08CB10A5E3B32D` (`ip`),
   KEY `IDX_AA08CB108AE0BA66` (`cookie`),
   KEY `IDX_AA08CB10FC0B754A` (`fingerprint`),
-  CONSTRAINT `FK_AA08CB10A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_AA08CB10A76ED395` FOREIGN KEY (`user_id`) REFERENCES `player` (`id`),
   CONSTRAINT `FK_AA08CB10D499950B` FOREIGN KEY (`user_agent_id`) REFERENCES `user_agent` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `map`;
-CREATE TABLE `map` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `radius` int(11) NOT NULL,
-  `seed` int(11) NOT NULL,
-  `octaves` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-  `positions_last_modified_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `to_user_id` int(11) DEFAULT NULL,
-  `from_user_id` int(11) DEFAULT NULL,
+  `to_user_id` int(11) NOT NULL,
+  `from_user_id` int(11) NOT NULL,
   `conversation_id` int(11) DEFAULT NULL,
   `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `text` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -164,68 +148,15 @@ CREATE TABLE `message` (
   KEY `IDX_B6BD307F29F6EE60` (`to_user_id`),
   KEY `IDX_B6BD307F2130303A` (`from_user_id`),
   KEY `IDX_B6BD307F9AC0396` (`conversation_id`),
-  KEY `IDX_B6BD307F1DD4B870` (`deleted_by_sender`),
-  KEY `IDX_B6BD307F132D7D4` (`deleted_by_recipient`),
-  CONSTRAINT `FK_B6BD307F2130303A` FOREIGN KEY (`from_user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FK_B6BD307F29F6EE60` FOREIGN KEY (`to_user_id`) REFERENCES `user` (`id`),
+  KEY `IDX_B6BD307F29F6EE602130303A1DD4B870132D7D4` (`to_user_id`,`from_user_id`,`deleted_by_sender`,`deleted_by_recipient`),
+  CONSTRAINT `FK_B6BD307F2130303A` FOREIGN KEY (`from_user_id`) REFERENCES `player` (`id`),
+  CONSTRAINT `FK_B6BD307F29F6EE60` FOREIGN KEY (`to_user_id`) REFERENCES `player` (`id`),
   CONSTRAINT `FK_B6BD307F9AC0396` FOREIGN KEY (`conversation_id`) REFERENCES `message` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `position`;
-CREATE TABLE `position` (
-  `x` int(11) NOT NULL,
-  `y` int(11) NOT NULL,
-  `height` double NOT NULL,
-  `map_id` int(11) DEFAULT NULL,
-  `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_462CE4F553C55F64` (`map_id`),
-  CONSTRAINT `FK_462CE4F553C55F64` FOREIGN KEY (`map_id`) REFERENCES `map` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `stat_daily`;
-CREATE TABLE `stat_daily` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  `players_total` int(11) NOT NULL,
-  `players_active` int(11) NOT NULL,
-  `players_online` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_E2BA767CAA9E377A` (`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `stat_detailed`;
-CREATE TABLE `stat_detailed` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  `time` time NOT NULL,
-  `players_total` int(11) NOT NULL,
-  `players_active` int(11) NOT NULL,
-  `players_online` int(11) NOT NULL,
-  `load1` double DEFAULT NULL,
-  `load5` double DEFAULT NULL,
-  `load15` double DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_6D62B9AA9E377A6F949845` (`date`,`time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `system_log`;
-CREATE TABLE `system_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `script` int(11) NOT NULL,
-  `action` int(11) NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `player`;
+CREATE TABLE `player` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nick` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -244,12 +175,56 @@ CREATE TABLE `user` (
   `deleted` tinyint(1) NOT NULL,
   `affiliate` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token_expires_at` datetime DEFAULT NULL,
-  `admin` tinyint(1) NOT NULL,
-  `admin_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `api_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `token_expires_at` datetime DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_8D93D649290B2F37` (`nick`)
+  UNIQUE KEY `UNIQ_98197A65290B2F37` (`nick`),
+  KEY `IDX_98197A65290B2F37` (`nick`),
+  KEY `IDX_98197A65E7927C74` (`email`),
+  KEY `IDX_98197A65EB3B4E33` (`deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `stat_daily`;
+CREATE TABLE `stat_daily` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `avg_load` double DEFAULT NULL,
+  `max_load5` double DEFAULT NULL,
+  `max_load15` double DEFAULT NULL,
+  `players_total` int(11) NOT NULL,
+  `players_active` int(11) NOT NULL,
+  `players_online` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_E2BA767CAA9E377A` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `stat_detailed`;
+CREATE TABLE `stat_detailed` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `load1` double DEFAULT NULL,
+  `load5` double DEFAULT NULL,
+  `load15` double DEFAULT NULL,
+  `players_total` int(11) NOT NULL,
+  `players_active` int(11) NOT NULL,
+  `players_online` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_6D62B9AA9E377A6F949845` (`date`,`time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `system_log`;
+CREATE TABLE `system_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `script` int(11) NOT NULL,
+  `action` int(11) NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -275,8 +250,8 @@ CREATE TABLE `user_log` (
   KEY `IDX_6429094E47CC8C92` (`action`),
   KEY `IDX_6429094E8CDE5729` (`type`),
   KEY `IDX_6429094EAA9E377A` (`date`),
-  CONSTRAINT `FK_6429094EA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_6429094EA76ED395` FOREIGN KEY (`user_id`) REFERENCES `player` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2016-05-05 12:23:27
+-- 2016-05-29 18:14:12

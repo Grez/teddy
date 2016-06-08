@@ -9,7 +9,7 @@ use Teddy;
 use Teddy\Entities\User\Users;
 use Teddy\Forms\Form;
 use Kdyby\Doctrine\EntityManager;
-use Teddy\Security\UserContext;
+use Teddy\Security\User;
 use Teddy\Images\ImageService;
 use Teddy\TemplateHelpers;
 
@@ -47,7 +47,7 @@ class UserInfoControl extends Control
 	protected $users;
 
 	/**
-	 * @var UserContext
+	 * @var User
 	 */
 	protected $user;
 
@@ -58,7 +58,7 @@ class UserInfoControl extends Control
 
 
 
-	public function __construct(TemplateHelpers $templateHelpers, EntityManager $em, Users $users, UserContext $user, ImageService $imageService)
+	public function __construct(TemplateHelpers $templateHelpers, EntityManager $em, Users $users, User $user, ImageService $imageService)
 	{
 		parent::__construct($templateHelpers);
 		$this->em = $em;

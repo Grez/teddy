@@ -27,7 +27,7 @@ class StatDetailedManager extends Entities\Manager
 	 */
 	public function create()
 	{
-		$userRepository = $this->em->getRepository(\Game\Entities\User\User::class);
+		$userRepository = $this->em->getRepository(\Game\Entities\User\Player::class);
 		$userListQuery = new UserListQuery();
 		$total = $userListQuery->count($userRepository);
 		$active = $userListQuery->onlyActive()->count($userRepository);

@@ -15,10 +15,10 @@ abstract class AdminPermission extends \Kdyby\Doctrine\Entities\BaseEntity
 {
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User", inversedBy="adminPermissions")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Admin", inversedBy="adminPermissions")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
-	protected $user;
+	protected $admin;
 
 	/**
 	 * @ORM\Column(type="string")

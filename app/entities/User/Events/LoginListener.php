@@ -45,7 +45,7 @@ class LoginListener extends Nette\Object implements Kdyby\Events\Subscriber
 
 
 
-	public function onWrongPassword(User $user)
+	public function onWrongPassword(Player $user)
 	{
 		$this->logins->log($user, $user->getNick(), Login::ERROR_WRONG_PASSWORD);
 		if ($this->logins->isTryingToHack($_SERVER['REMOTE_ADDR'])) {

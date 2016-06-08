@@ -11,8 +11,8 @@ use Teddy\TemplateHelpers;
 
 
 /**
- * @method \Teddy\Security\UserContext getUser()
- * @property-read \Teddy\Security\UserContext $user
+ * @method \Teddy\Security\User getUser()
+ * @property-read \Teddy\Security\User $user
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {

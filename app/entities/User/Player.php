@@ -2,7 +2,6 @@
 
 namespace Teddy\Entities\User;
 
-use Game\Entities\User\AdminPermission;
 use Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper;
 use Nette;
 use Nette\Security\Passwords;
@@ -19,7 +18,7 @@ use Teddy\Images\ImageService;
 /**
  * @ORM\MappedSuperclass()
  */
-abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithImage
+abstract class Player extends \Kdyby\Doctrine\Entities\BaseEntity implements WithImage
 {
 
 	/**
@@ -139,12 +138,6 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 	protected $tokenExpiresAt;
 
 	/**
-	 * @ORM\Column(type="boolean")
-	 * @var bool
-	 */
-	protected $admin = FALSE;
-
-	/**
 	 * @ORM\OneToMany(targetEntity="\Game\Entities\Coins\CoinSack", mappedBy="user", cascade={"persist", "remove"})
 	 * @ORM\OrderBy({"expiresAt" = "ASC"})
 	 * @var CoinSack[]|ArrayCollection
@@ -173,7 +166,6 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 		$this->registeredAt = new \DateTime();
 		$this->lastLoginAt = new \DateTime("@0");
 		$this->lastActivityAt = new \DateTime("@0");
-		$this->adminPermissions = new ArrayCollection();
 		$this->coinSacks = new ArrayCollection();
 	}
 
@@ -236,54 +228,16 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 	 */
 	public function isAdmin()
 	{
-		return $this->admin;
+		return ($this instanceof \Game\Entities\User\Admin);
 	}
 
 
 
 	/**
-	 * Checks if user is allowed in $presenter in AdminModule
-	 *
-	 * @param string $presenter
+	 * @param Player $user
 	 * @return bool
 	 */
-	public function isAllowed($presenter)
-	{
-		foreach ($this->adminPermissions as $permission) {
-			if ($permission->getPresenter() == $presenter) {
-				return TRUE;
-			}
-		}
-
-		return FALSE;
-	}
-
-
-
-	/**
-	 * @param bool $array
-	 * @return array|ArrayCollection
-	 */
-	public function getAdminPermissions($array = FALSE)
-	{
-		if (!$array) {
-			return $this->adminPermissions;
-		} else {
-			$adminPermissions = [];
-			foreach ($this->adminPermissions as $adminPermission) {
-				$adminPermissions[] = $adminPermission->getPresenter();
-			}
-			return $adminPermissions;
-		}
-	}
-
-
-
-	/**
-	 * @param User $user
-	 * @return bool
-	 */
-	public function canEdit(User $user)
+	public function canEdit(Player $user)
 	{
 		return ($user === $this || $user->isAdmin());
 	}
@@ -292,7 +246,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 
 	/**
 	 * @param \DateTime $lastLoginAt
-	 * @return User
+	 * @return Player
 	 */
 	public function setLastLoginAt(\DateTime $lastLoginAt)
 	{
@@ -358,7 +312,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 
 	/**
 	 * @param bool $admin
-	 * @return User
+	 * @return Player
 	 */
 	public function setAdmin($admin)
 	{
@@ -380,7 +334,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 
 	/**
 	 * @param string $email
-	 * @return User
+	 * @return Player
 	 */
 	public function setEmail($email)
 	{
@@ -402,7 +356,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 
 	/**
 	 * @param string $avatar
-	 * @return User
+	 * @return Player
 	 */
 	public function setAvatar($avatar)
 	{
@@ -461,7 +415,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 
 	/**
 	 * @param boolean $deleted
-	 * @return User
+	 * @return Player
 	 */
 	public function setDeleted($deleted)
 	{
@@ -483,7 +437,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 
 	/**
 	 * @param \DateTime $lastActivityAt
-	 * @return User
+	 * @return Player
 	 */
 	public function setLastActivityAt($lastActivityAt)
 	{
@@ -505,7 +459,7 @@ abstract class User extends \Kdyby\Doctrine\Entities\BaseEntity implements WithI
 
 	/**
 	 * @param string $nick
-	 * @return User
+	 * @return Player
 	 */
 	public function setNick($nick)
 	{

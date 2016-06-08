@@ -10,7 +10,7 @@ use Nette;
 use Teddy\Entities\User\Users;
 use Tester;
 use Tester\Assert;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 
 require __DIR__ . '/../bootstrap.php';
 require __DIR__ . '/../TestCase.php';
@@ -22,7 +22,7 @@ class UserTest extends TestCase
 
 	public function testMailHiding()
 	{
-		$user = new User('mario.luigi@quattro.formaggi.it');
+		$user = new Player('mario.luigi@quattro.formaggi.it');
 		$user->setEmail('john.doe@gmail.com');
 		Assert::equal('john.doe@gmail.com', $user->getEmail());
 		Assert::equal('j******e@gmail.com', $user->getAnonymizedEmail());
@@ -40,8 +40,8 @@ class UserTest extends TestCase
 
 	public function testDeletingAndReactivating()
 	{
-		$mario = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi');
-		$trollMario = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi (deleted #0)');
+		$mario = new Player('mario.luigi@quattro.formaggi.it', 'Mario Luigi');
+		$trollMario = new Player('mario.luigi@quattro.formaggi.it', 'Mario Luigi (deleted #0)');
 		$this->getEm()->persist([$mario, $trollMario]);
 		$this->getEm()->flush();
 
@@ -51,11 +51,11 @@ class UserTest extends TestCase
 		Assert::true($mario->isDeleted());
 		Assert::equal('Mario Luigi (deleted #1)', $mario->getNick());
 
-		$newMario = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi');
+		$newMario = new Player('mario.luigi@quattro.formaggi.it', 'Mario Luigi');
 		$this->getEm()->persist($newMario);
 		$this->getEm()->flush();
 
-		$ultraTroll = new User('mario.luigi@quattro.formaggi.it', 'Mario Luigi (reactivated #1)');
+		$ultraTroll = new Player('mario.luigi@quattro.formaggi.it', 'Mario Luigi (reactivated #1)');
 		$this->getEm()->persist($ultraTroll);
 		$this->getEm()->flush();
 
@@ -64,7 +64,7 @@ class UserTest extends TestCase
 		Assert::equal('Mario Luigi (reactivated #2)', $mario->getNick());
 
 		// Check behaviour for normal User
-		$normalUser = new User('normal@user.cz', 'Normal User');
+		$normalUser = new Player('normal@user.cz', 'Normal User');
 		$this->getEm()->persist($normalUser);
 		$this->getEm()->flush();
 

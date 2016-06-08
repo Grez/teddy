@@ -14,7 +14,7 @@ use Kdyby\Doctrine\EntityManager;
 
 /**
  * @method onWrongNick(string $nick)
- * @method onWrongPassword(\Game\Entities\User\User $user)
+ * @method onWrongPassword(\Game\Entities\User\Player $user)
  */
 class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 {
@@ -50,14 +50,14 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	{
 		parent::__construct($em);
 		$this->salt = $salt;
-		$this->repository = $this->em->getRepository(\Game\Entities\User\User::class);
+		$this->repository = $this->em->getRepository(\Game\Entities\User\Player::class);
 	}
 
 
 
 	/**
 	 * @param string $nick
-	 * @return \Game\Entities\User\User|false
+	 * @return \Game\Entities\User\Player|false
 	 */
 	public function getByNick($nick)
 	{
@@ -69,7 +69,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 	/**
 	 * @param string $email
-	 * @return \Game\Entities\User\User|false
+	 * @return \Game\Entities\User\Player|false
 	 */
 	public function getByEmail($email)
 	{
@@ -81,7 +81,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 	/**
 	 * @param int $token
-	 * @return \Game\Entities\User\User|false
+	 * @return \Game\Entities\User\Player|false
 	 */
 	public function getByToken($token)
 	{
@@ -93,7 +93,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 	/**
 	 * @param string $password
-	 * @return \Game\Entities\User\User[]
+	 * @return \Game\Entities\User\Player[]
 	 */
 	public function getByPassword($password)
 	{
@@ -106,7 +106,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	/**
 	 * @param int $id
 	 * @param string $apikey
-	 * @return \Game\Entities\User\User|NULL
+	 * @return \Game\Entities\User\Player|NULL
 	 */
 	public function getByIdAndApikey($id, $apikey)
 	{
@@ -121,7 +121,7 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	 */
 	public function register(ArrayHash $data)
 	{
-		$user = new \Game\Entities\User\User($data->email, $data->nick);
+		$user = new \Game\Entities\User\Player($data->email, $data->nick);
 		$this->changePassword($user, $data['password']); // also makes flush
 	}
 
@@ -141,10 +141,10 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 	/**
 	 * Marks User as deleted and deletes his roles
 	 *
-	 * @param \Game\Entities\User\User $user
-	 * @return \Game\Entities\User\User
+	 * @param \Game\Entities\User\Player $user
+	 * @return \Game\Entities\User\Player
 	 */
-	public function markDeleted(\Game\Entities\User\User $user)
+	public function markDeleted(\Game\Entities\User\Player $user)
 	{
 		// Change nick so other User can have it
 		$i = 0;
@@ -164,10 +164,10 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
-	 * @return \Game\Entities\User\User
+	 * @param \Game\Entities\User\Player $user
+	 * @return \Game\Entities\User\Player
 	 */
-	public function reactivate(\Game\Entities\User\User $user)
+	public function reactivate(\Game\Entities\User\Player $user)
 	{
 		// Try to change nick back, otherwise set dummy name
 		$i = 0;
@@ -188,11 +188,11 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 * @param string $password
 	 * @return null
 	 */
-	public function changePassword(\Game\Entities\User\User $user, $password)
+	public function changePassword(\Game\Entities\User\Player $user, $password)
 	{
 		$options = $this->salt ? ['salt' => $this->salt] : [];
 		$hashed = Passwords::hash($password, $options);
@@ -203,9 +203,9 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 */
-	public function deleteAdminPermissions(\Game\Entities\User\User $user)
+	public function deleteAdminPermissions(\Game\Entities\User\Player $user)
 	{
 		foreach ($user->getAdminPermissions() as $permission) {
 			$this->em->remove($permission);
@@ -216,23 +216,25 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 */
-	public function deleteAdmin(\Game\Entities\User\User $user)
+	public function deleteAdmin(\Game\Entities\User\Player $user)
 	{
-		$this->deleteAdminPermissions($user);
-		$user->setAdminDescription('');
-		$user->setAdmin(FALSE);
-		$this->save($user);
+		if ($user instanceof \Game\Entities\User\Admin) {
+			$this->deleteAdminPermissions($user);
+			$user->setAdminDescription('');
+			$user->setAdmin(FALSE);
+			$this->save($user);
+		}
 	}
 
 
 
 	/**
-	 * @param \Game\Entities\User\User $user
+	 * @param \Game\Entities\User\Player $user
 	 * @param array $permissions
 	 */
-	public function setAdminPermissions(\Game\Entities\User\User $user, $permissions)
+	public function setAdminPermissions(\Game\Entities\User\Player $user, $permissions)
 	{
 		// Delete old
 		$this->deleteAdminPermissions($user);
@@ -262,7 +264,6 @@ class Users extends Entities\Manager implements Nette\Security\IAuthenticator
 		list($nick, $password) = $credentials;
 		$user = $this->getByNick($nick);
 
-		\Tracy\Debugger::barDump($user);
 		if (!$user || $user->isDeleted()) {
 			$this->onWrongNick($nick);
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);

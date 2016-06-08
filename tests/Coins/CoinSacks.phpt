@@ -11,7 +11,7 @@ use Nette;
 use Game\Entities\Coins\CoinSack;
 use Teddy\Entities\Coins\CoinSacks;
 use Tester\Assert;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 
 require __DIR__ . '/../bootstrap.php';
 require __DIR__ . '/../TestCase.php';
@@ -22,7 +22,7 @@ class CoinSacksTest extends TestCase
 {
 
 	/**
-	 * @var User
+	 * @var Player
 	 */
 	private $user;
 
@@ -47,7 +47,7 @@ class CoinSacksTest extends TestCase
 	{
 		parent::setUp();
 		$timeProvider = $this->getService(IDateTimeProvider::class);
-		$this->user = new User('mario.luigi@quattro.formaggi.it');
+		$this->user = new Player('mario.luigi@quattro.formaggi.it');
 		$this->sack100 = new CoinSack(100, $this->user, $timeProvider->getDateTime()->modify('+ 10 min'));
 		$this->user->addCoinSack($this->sack100);
 

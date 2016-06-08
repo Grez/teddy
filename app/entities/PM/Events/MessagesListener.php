@@ -5,7 +5,7 @@ namespace Teddy\Entities\PM;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Kdyby;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 
 
 
@@ -53,14 +53,14 @@ class MessagesListener extends Nette\Object implements Kdyby\Events\Subscriber
 
 
 
-	public function onDeleteMessage(\Game\Entities\PM\Message $message, User $deletedBy)
+	public function onDeleteMessage(\Game\Entities\PM\Message $message, Player $deletedBy)
 	{
 		$this->sendUnreadMessagesWS($deletedBy);
 	}
 
 
 
-	protected function sendUnreadMessagesWS(User $user)
+	protected function sendUnreadMessagesWS(Player $user)
 	{
 		$this->em->flush(); // we need flush because getUnreadMessagesCount() is asking db
 		// blabla ve skeletonu

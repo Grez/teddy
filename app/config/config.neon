@@ -47,7 +47,7 @@ services:
 		implement: Teddy\AdminModule\Components\IUserControlFactory
 
 	router: Teddy\Router\RouterFactory::create
-	user: Teddy\Security\UserContext
+	user: Teddy\Security\User
 	wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
 	lessFilter: WebLoader\Filter\LessFilter
 

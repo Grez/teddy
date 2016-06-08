@@ -16,9 +16,9 @@ abstract class Login extends BaseEntity
 {
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\User")
+	 * @ORM\ManyToOne(targetEntity="\Game\Entities\User\Player")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * @var \Game\Entities\User\User
+	 * @var \Game\Entities\User\Player
 	 */
 	protected $user;
 
@@ -73,7 +73,7 @@ abstract class Login extends BaseEntity
 
 
 
-	public function __construct($ip, $cookie, $fingerprint, UserAgent $userAgent, $login = '', User $user = NULL, $error = 0)
+	public function __construct($ip, $cookie, $fingerprint, UserAgent $userAgent, $login = '', Player $user = NULL, $error = 0)
 	{
 		$this->date = new \DateTime();
 		$this->userAgent = $userAgent;

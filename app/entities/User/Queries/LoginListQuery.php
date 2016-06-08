@@ -23,10 +23,10 @@ class LoginListQuery extends \Kdyby\Doctrine\QueryObject
 
 
 	/**
-	 * @param User $user
+	 * @param Player $user
 	 * @return $this
 	 */
-	public function byUser(User $user = NULL)
+	public function byUser(Player $user = NULL)
 	{
 		$this->filter[] = function (QueryBuilder $qb) use ($user) {
 			$qb->andWhere('l.user = :user')->setParameter('user', $user);

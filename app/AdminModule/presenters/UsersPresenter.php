@@ -6,7 +6,7 @@ use Nette\Utils\ArrayHash;
 use Teddy\AdminModule\Components\IUserControlFactory;
 use Teddy\AdminModule\Components\IUserControlFactory2;
 use Teddy\AdminModule\Components\UserControl;
-use Teddy\Entities\User\User;
+use Teddy\Entities\User\Player;
 use Teddy\Forms\Form;
 use Teddy\User\UserDoesNotExistException;
 
@@ -18,7 +18,7 @@ class UsersPresenter extends \Game\AdminModule\Presenters\BasePresenter
 {
 
 	/**
-	 * @var \Game\Entities\User\User|NULL
+	 * @var \Game\Entities\User\Player|NULL
 	 */
 	protected $editedUser;
 
@@ -82,23 +82,23 @@ class UsersPresenter extends \Game\AdminModule\Presenters\BasePresenter
 	protected function createComponentUser()
 	{
 		$control = $this->userControlFactory->create($this->editedUser);
-		$control->onUserEdited = function (UserControl $userControl, User $user) {
+		$control->onUserEdited = function (UserControl $userControl, Player $user) {
 			$this->successFlashMessage('User edited');
 			$this->redirect('this');
 		};
-		$control->onUserDeleted = function (UserControl $userControl, User $user) {
+		$control->onUserDeleted = function (UserControl $userControl, Player $user) {
 			$this->successFlashMessage('User deleted');
 			$this->redirect('this');
 		};
-		$control->onUserReactivated = function (UserControl $userControl, User $user) {
+		$control->onUserReactivated = function (UserControl $userControl, Player $user) {
 			$this->successFlashMessage('User reactivated');
 			$this->redirect('this');
 		};
-		$control->onUserPasswordChange = function (UserControl $userControl, User $user) {
+		$control->onUserPasswordChange = function (UserControl $userControl, Player $user) {
 			$this->successFlashMessage('User\'s password changed');
 			$this->redirect('this');
 		};
-		$control->onDaemon = function (UserControl $userControl, User $user) {
+		$control->onDaemon = function (UserControl $userControl, Player $user) {
 			$this->successFlashMessage('You were logged in as user');
 			$this->redirect(':Game:Main:');
 		};

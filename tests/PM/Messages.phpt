@@ -10,7 +10,7 @@ use Kdyby\Doctrine\ResultSet;
 use Nette;
 use Game\Entities\PM\Message;
 use Teddy\Entities\PM\Messages;
-use Game\Entities\User\User;
+use Game\Entities\User\Player;
 use Teddy\Entities\User\MessagesQuery;
 use Tester\Assert;
 
@@ -23,12 +23,12 @@ class MessagesTest extends TestCase
 {
 
 	/**
-	 * @var User
+	 * @var Player
 	 */
 	private $from;
 
 	/**
-	 * @var User
+	 * @var Player
 	 */
 	private $to;
 
@@ -47,8 +47,8 @@ class MessagesTest extends TestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->from = new User('email@from.cz');
-		$this->to = new User('email@to.cz');
+		$this->from = new Player('email@from.cz');
+		$this->to = new Player('email@to.cz');
 
 		/** @var Messages messages */
 		$this->messages = $this->getService(Messages::class);
@@ -62,7 +62,7 @@ class MessagesTest extends TestCase
 
 	public function testReadability()
 	{
-		$mario = new User('mario.luigi@quattro.formaggi.it');
+		$mario = new Player('mario.luigi@quattro.formaggi.it');
 
 		Assert::true($this->msg->isReadableByUser($this->from));
 		Assert::true($this->msg->isReadableByUser($this->to));
