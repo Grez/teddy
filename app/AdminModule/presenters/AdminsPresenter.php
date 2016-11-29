@@ -137,4 +137,18 @@ class AdminsPresenter extends \Game\AdminModule\Presenters\BasePresenter
 		$this->redirect('this');
 	}
 
+
+
+	/**
+	 * @return array<string;string>
+	 */
+	protected function getPresenters()
+	{
+		$presenters = [];
+		foreach ($this->presenters as $presenter => $value) {
+			$presenters[$presenter] = is_array($value) ? $value['name'] : $value;
+		}
+		return $presenters;
+	}
+
 }

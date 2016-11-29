@@ -82,17 +82,6 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 
 
 
-	protected function getPresenters()
-	{
-		$presenters = [];
-		foreach ($this->presenters as $presenter => $value) {
-			$presenters[$presenter] = is_array($value) ? $value['name'] : $value;
-		}
-		return $presenters;
-	}
-
-
-
 	/**
 	 * Checks if user is logged + is admin + can access current presenter
 	 * if not redirects to proper section (IndexModule:Homepage / AdminModule:Main)
