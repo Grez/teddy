@@ -30,7 +30,7 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 
 	public function renderDefault()
 	{
-		$this->template->forums = $this->forumFacade->getForumsWithUnreadPosts($this->user);
+		$this->template->forums = $this->forumFacade->getForumsWithUnreadPosts($this->player);
 	}
 
 
@@ -42,12 +42,12 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 	{
 		/** @var Forum $forum */
 		$forum = $this->forumFacade->find($id);
-		if ($forum === NULL || !$forum->canView($this->user)) {
+		if ($forum === NULL || !$forum->canView($this->player)) {
 			$this->warningFlashMessage('You can\'t view this forum or it doesn\'t exist');
 			$this->redirect('default');
 		}
 
-		$this->forumFacade->updateLastVisit($this->user, $forum);
+		$this->forumFacade->updateLastVisit($this->player, $forum);
 
 		$query = (new PostsQuery())
 			->onlyFromForum($forum)
@@ -70,13 +70,13 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 	{
 		/** @var ForumPost $post */
 		$post = $this->forumPostsFacade->find($postId);
-		if (!$post || !$post->canDelete($this->user)) {
+		if (!$post || !$post->canDelete($this->player)) {
 			$this->warningFlashMessage('This post doesn\'t exist or you can\'t delete it');
 			$this->refreshPage();
 			return;
 		}
 
-		$post->delete($this->user);
+		$post->delete($this->player);
 		$this->em->flush();
 
 		$this->successFlashMessage('Post has been deleted');
@@ -112,7 +112,7 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 	{
 		/** @var Forum $forum */
 		$forum = $this->forumFacade->find($values->forum);
-		if (!$forum || !$forum->canView($this->user)) {
+		if (!$forum || !$forum->canView($this->player)) {
 			$this->warningFlashMessage('This forum doesn\'t exist');
 			$this->refreshPage();
 			return;
@@ -122,7 +122,7 @@ class ForumPresenter extends \Game\GameModule\Presenters\BasePresenter
 		$conversation = $this->forumPostsFacade->find($values->conversation);
 
 		try {
-			$this->forumFacade->addPost($this->user, $forum, $values->subject, $values->text, $conversation);
+			$this->forumFacade->addPost($this->player, $forum, $values->subject, $values->text, $conversation);
 
 		} catch (AccessDenied $e) {
 			$this->warningFlashMessage($e->getMessage());

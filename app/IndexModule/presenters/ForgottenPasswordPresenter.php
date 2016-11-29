@@ -13,7 +13,7 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 	/**
 	 * @var \Teddy\Entities\User\User|NULL
 	 */
-	protected $user;
+	protected $player;
 
 
 
@@ -22,8 +22,8 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 	 */
 	public function actionSetNew($token)
 	{
-		$this->user = $this->users->getByToken($token);
-		if (!$this->user) {
+		$this->player = $this->users->getByToken($token);
+		if (!$this->player) {
 			$this->warningFlashMessage('This token isn\'t valid or has already expired. Please ask for another e-mail.');
 			$this->redirect('default');
 		}
@@ -97,8 +97,8 @@ class ForgottenPasswordPresenter extends \Game\IndexModule\Presenters\BasePresen
 	public function setNewFormSuccess(Form $form, $values)
 	{
 		$password = \Nette\Security\Passwords::hash($values->password);
-		$this->user->setPassword($password);
-		$this->user->invalidateToken();
+		$this->player->setPassword($password);
+		$this->player->invalidateToken();
 		$this->em->flush();
 		$this->successFlashMessage('Your password has been changed. You may login now.');
 		$this->redirect('Homepage:default');

@@ -29,8 +29,8 @@ class MessagesPresenter extends \Game\GameModule\Presenters\BasePresenter
 	public function renderDefault()
 	{
 		$query = (new MessagesQuery())
-			->onlyReadableBy($this->user)
-			->onlyNotDeletedByUser($this->user)
+			->onlyReadableBy($this->player)
+			->onlyNotDeletedByUser($this->player)
 			->orderBySentAt();
 		$msgs = $this->msgsFacade->fetch($query);
 		$msgs->applyPaginator($this['visualPaginator']->getPaginator(), 20);
@@ -58,7 +58,7 @@ class MessagesPresenter extends \Game\GameModule\Presenters\BasePresenter
 	{
 		/** @var Message $msg */
 		$msg = $this->msgsFacade->find($id);
-		if (!$msg || !$msg->isReadableByUser($this->user)) {
+		if (!$msg || !$msg->isReadableByUser($this->player)) {
 			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
 			$this->redirect('default');
 		}
@@ -87,13 +87,13 @@ class MessagesPresenter extends \Game\GameModule\Presenters\BasePresenter
 	{
 		/** @var Message $msg */
 		$msg = $this->msgsFacade->find($id);
-		if (!$msg || !$msg->isReadableByUser($this->user)) {
+		if (!$msg || !$msg->isReadableByUser($this->player)) {
 			$this->warningFlashMessage('This message doesn\'t exist or wasn\'t intended for you.');
 			$this->refreshPage('default');
 			return;
 		}
 
-		$this->msgsFacade->deleteBy($msg, $this->user);
+		$this->msgsFacade->deleteBy($msg, $this->player);
 		$this->em->flush();
 
 		$this->successFlashMessage('Message has been deleted');
@@ -134,7 +134,7 @@ class MessagesPresenter extends \Game\GameModule\Presenters\BasePresenter
 			return;
 		}
 
-		$this->msgsFacade->createMessage($recipient, $this->user, $values->subject, $values->text, $values->conversation);
+		$this->msgsFacade->createMessage($recipient, $this->player, $values->subject, $values->text, $values->conversation);
 		$this->em->flush();
 
 		$this->successFlashMessage('Message sent');

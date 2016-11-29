@@ -15,7 +15,7 @@ abstract class BasePresenter extends \Game\Presenters\BasePresenter
 	/**
 	 * @var User
 	 */
-	protected $user;
+	protected $player;
 
 	/**
 	 * @var IEventsControlFactory
@@ -40,8 +40,8 @@ abstract class BasePresenter extends \Game\Presenters\BasePresenter
 			setcookie('teddy.apiKey', $this->getUser()->getEntity()->getApiKey(), time() + 86400);
 		}
 
-		$this->user = $this->users->find($user->id);
-		$this->template->user = $this->user;
+		$this->player = $this->users->find($user->id);
+		$this->template->user = $this->player;
 	}
 
 
@@ -53,7 +53,7 @@ abstract class BasePresenter extends \Game\Presenters\BasePresenter
 	public function afterRender()
 	{
 		parent::afterRender();
-		$this->user->setLastActivityAt($this->timeProvider->getDateTime());
+		$this->player->setLastActivityAt($this->timeProvider->getDateTime());
 		$this->em->flush();
 	}
 
