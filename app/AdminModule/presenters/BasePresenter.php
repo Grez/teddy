@@ -24,6 +24,7 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 	public $userLogs;
 
 	/**
+	 * Used for generating menu
 	 * @var array
 	 */
 	protected $presenters = [
@@ -48,33 +49,13 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 
 
 
-	/**
-	 * Is logged, is admin, is allowed?
-	 */
 	protected function startup()
 	{
 		parent::startup();
-
-		$user = $this->getUser();
-		if (!$user->isLoggedIn()) {
-			$this->warningFlashMessage('You are not logged in');
-			$this->redirect(':Index:Homepage:default');
-		}
-
-		$this->admin = $this->users->find($user->id);
-		if (!$this->admin->isAdmin()) {
-			$this->warningFlashMessage('You are not admin');
-			$this->redirect(':Index:Homepage:default');
-		}
-
-		if ($this->presenter->getName() !== 'Admin:Main' && !$this->admin->isAllowed($this->presenter->getName())) {
-			$this->warningFlashMessage('You are not allowed here');
-			$this->redirect(':Admin:Main:default');
-		}
-
+		$this->checkPermissions();
 		$this->template->user = $this->admin;
-		$this->template->presenters = $this->presenters;
 
+		$this->template->presenters = $this->presenters;
 		$activePresenter = $this->presenters[$this->getPresenter()->getName()];
 		$this->template->presenterName = is_array($activePresenter) ? $activePresenter['name'] : $activePresenter;
 	}
@@ -108,6 +89,32 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 			$presenters[$presenter] = is_array($value) ? $value['name'] : $value;
 		}
 		return $presenters;
+	}
+
+
+
+	/**
+	 * Checks if user is logged + is admin + can access current presenter
+	 * if not redirects to proper section (IndexModule:Homepage / AdminModule:Main)
+	 */
+	protected function checkPermissions()
+	{
+		$user = $this->getUser();
+		if (!$user->isLoggedIn()) {
+			$this->warningFlashMessage('You are not logged in');
+			$this->redirect(':Index:Homepage:default');
+		}
+
+		$this->admin = $this->users->find($user->id);
+		if (!$this->admin->isAdmin()) {
+			$this->warningFlashMessage('You are not admin');
+			$this->redirect(':Index:Homepage:default');
+		}
+
+		if ($this->presenter->getName() !== 'Admin:Main' && !$this->admin->isAllowed($this->presenter->getName())) {
+			$this->warningFlashMessage('You are not allowed here');
+			$this->redirect(':Admin:Main:default');
+		}
 	}
 
 }
