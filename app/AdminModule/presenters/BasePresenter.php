@@ -15,7 +15,7 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 	/**
 	 * @var User
 	 */
-	protected $user;
+	protected $admin;
 
 	/**
 	 * @var UserLogs
@@ -61,18 +61,18 @@ class BasePresenter extends \Game\Presenters\BasePresenter
 			$this->redirect(':Index:Homepage:default');
 		}
 
-		$this->user = $this->users->find($user->id);
-		if (!$this->user->isAdmin()) {
+		$this->admin = $this->users->find($user->id);
+		if (!$this->admin->isAdmin()) {
 			$this->warningFlashMessage('You are not admin');
 			$this->redirect(':Index:Homepage:default');
 		}
 
-		if ($this->presenter->getName() !== 'Admin:Main' && !$this->user->isAllowed($this->presenter->getName())) {
+		if ($this->presenter->getName() !== 'Admin:Main' && !$this->admin->isAllowed($this->presenter->getName())) {
 			$this->warningFlashMessage('You are not allowed here');
 			$this->redirect(':Admin:Main:default');
 		}
 
-		$this->template->user = $this->user;
+		$this->template->user = $this->admin;
 		$this->template->presenters = $this->presenters;
 
 		$activePresenter = $this->presenters[$this->getPresenter()->getName()];

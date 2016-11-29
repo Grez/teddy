@@ -104,7 +104,7 @@ class AntimultiPresenter extends \Game\AdminModule\Presenters\BasePresenter
 	{
 		$ban = $this->bans->find($id);
 		$this->bans->delete($ban);
-		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_UNBAN_IP, [$ban->getIp(), $ban->getReason()]);
+		$this->userLogs->log($this->admin, UserLog::ADMIN, UserLog::ADMIN_UNBAN_IP, [$ban->getIp(), $ban->getReason()]);
 		$this->flashMessage('Ban has been deleted', 'success');
 		$this->redirect('bans');
 	}
@@ -155,7 +155,7 @@ class AntimultiPresenter extends \Game\AdminModule\Presenters\BasePresenter
 		$form->onSuccess[] = function (Form $form, ArrayHash $values) {
 			$days = (($values['days'] > 0) ? $values['days'] : '∞');
 			$this->bans->ban($values['ip'], $values['reason'], $values['days'], $values['type']);
-			$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_BAN_IP, [$values['ip'], $days, $values['reason']]);
+			$this->userLogs->log($this->admin, UserLog::ADMIN, UserLog::ADMIN_BAN_IP, [$values['ip'], $days, $values['reason']]);
 			$this->flashMessage('Ban has been created', 'success');
 			$this->redirect('this');
 		};

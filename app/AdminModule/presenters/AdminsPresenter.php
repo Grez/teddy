@@ -64,7 +64,7 @@ class AdminsPresenter extends \Game\AdminModule\Presenters\BasePresenter
 
 		$user->setAdmin(TRUE);
 		$this->users->save($user);
-		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_CREATE_ADMIN, $user->getNick());
+		$this->userLogs->log($this->admin, UserLog::ADMIN, UserLog::ADMIN_CREATE_ADMIN, $user->getNick());
 		$this->flashMessage('Admin created');
 		$this->redirect('this');
 	}
@@ -115,7 +115,7 @@ class AdminsPresenter extends \Game\AdminModule\Presenters\BasePresenter
 		}
 
 		$this->users->deleteAdmin($admin);
-		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_DELETE_ADMIN, $admin->getNick());
+		$this->userLogs->log($this->admin, UserLog::ADMIN, UserLog::ADMIN_DELETE_ADMIN, $admin->getNick());
 		$this->flashMessage('Admin deleted', 'success');
 		$this->redirect('this');
 	}
@@ -132,7 +132,7 @@ class AdminsPresenter extends \Game\AdminModule\Presenters\BasePresenter
 		$this->users->setAdminPermissions($admin, $values['adminPermissions']);
 		$admin->setAdminDescription($values['adminDescription']);
 		$this->users->save($admin);
-		$this->userLogs->log($this->user, UserLog::ADMIN, UserLog::ADMIN_EDIT_ADMIN, $admin->getNick());
+		$this->userLogs->log($this->admin, UserLog::ADMIN, UserLog::ADMIN_EDIT_ADMIN, $admin->getNick());
 		$this->successFlashMessage('Admin edited');
 		$this->redirect('this');
 	}
